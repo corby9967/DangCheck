@@ -1,15 +1,14 @@
-import 'package:dangcheck/pages/signup_email.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+class SignupPage5 extends StatefulWidget {
+  const SignupPage5({super.key});
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  State<SignupPage5> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _SignupPageState extends State<SignupPage5> {
   final nickNameController = TextEditingController();
 
   @override
@@ -20,7 +19,7 @@ class _SignupPageState extends State<SignupPage> {
           horizontal: 17,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             AppBar(
               backgroundColor: Theme.of(context).colorScheme.background,
@@ -42,7 +41,7 @@ class _SignupPageState extends State<SignupPage> {
               children: [
                 Container(
                   height: 3,
-                  width: 68,
+                  width: 341,
                   decoration: const BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -50,7 +49,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 Container(
                   height: 3,
-                  width: 273,
+                  width: 0,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(
@@ -62,10 +61,10 @@ class _SignupPageState extends State<SignupPage> {
               ],
             ),
             const SizedBox(
-              height: 40,
+              height: 220,
             ),
             const Text(
-              '닉네임을 입력해주세요.',
+              '회원가입 완료!',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w300,
@@ -74,15 +73,22 @@ class _SignupPageState extends State<SignupPage> {
             const SizedBox(
               height: 15,
             ),
-            SizedBox(
-              height: 54,
-              child: MyTextField(
-                  controller: nickNameController,
-                  hintText: '닉네임',
-                  obscureText: false),
+            const Text(
+              '000님',
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const Text(
+              '환영합니다!',
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.w800,
+              ),
             ),
             const SizedBox(
-              height: 470,
+              height: 225,
             ),
             SizedBox(
               height: 54,
@@ -98,14 +104,9 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                 ),
-                onPressed: () {
-                  Get.to(
-                    const SignupPage2(),
-                    transition: Transition.cupertino,
-                  );
-                },
+                onPressed: () {},
                 child: Text(
-                  '다음',
+                  '시작하기',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),

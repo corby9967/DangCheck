@@ -1,4 +1,8 @@
+import 'package:dangcheck/pages/signup_agree.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_profile_picture/flutter_profile_picture.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/instance_manager.dart';
 
 class SignupPage3 extends StatefulWidget {
   const SignupPage3({super.key});
@@ -23,13 +27,15 @@ class _SignupPageState extends State<SignupPage3> {
             AppBar(
               backgroundColor: Theme.of(context).colorScheme.background,
               leading: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                },
                 icon: const Icon(Icons.arrow_back_ios),
               ),
               title: const Text(
                 '회원가입',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -37,16 +43,16 @@ class _SignupPageState extends State<SignupPage3> {
             Row(
               children: [
                 Container(
-                  height: 5,
-                  width: 180,
+                  height: 3,
+                  width: 224,
                   decoration: const BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
                 ),
                 Container(
-                  height: 5,
-                  width: 161,
+                  height: 3,
+                  width: 117,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(
@@ -58,21 +64,28 @@ class _SignupPageState extends State<SignupPage3> {
               ],
             ),
             const SizedBox(
-              height: 15,
+              height: 40,
             ),
             const Text(
               '프로필 사진을 설정해주세요.',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 20,
                 fontWeight: FontWeight.w300,
               ),
             ),
             const SizedBox(
-              height: 15,
+              height: 40,
             ),
-            //
-            // profile image
-            //
+            const Center(
+              child: ProfilePicture(
+                name: '',
+                radius: 95,
+                fontsize: 21,
+              ),
+            ),
+            const SizedBox(
+              height: 245,
+            ),
             SizedBox(
               height: 54,
               width: 356,
@@ -87,7 +100,12 @@ class _SignupPageState extends State<SignupPage3> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(
+                    const SignupPage4(),
+                    transition: Transition.cupertino,
+                  );
+                },
                 child: Text(
                   '다음에 할래요',
                   style: TextStyle(
@@ -113,7 +131,12 @@ class _SignupPageState extends State<SignupPage3> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(
+                    const SignupPage4(),
+                    transition: Transition.cupertino,
+                  );
+                },
                 child: Text(
                   '완료',
                   style: TextStyle(

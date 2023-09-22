@@ -1,3 +1,4 @@
+import 'package:dangcheck/pages/signup_profile.dart';
 import 'package:dangcheck/pages/login.dart';
 import 'package:flutter/material.dart';
 

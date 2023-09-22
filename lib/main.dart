@@ -1,4 +1,5 @@
 import 'package:dangcheck/pages/signup_profile.dart';
+import 'package:dangcheck/pages/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
           seedColor: const Color(0xffF5F5F5),
         ),
       ),
-      home: const SignupPage3(),
+      home: const LoginPage(),
     );
   }
 }

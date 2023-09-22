@@ -1,15 +1,15 @@
-import 'package:dangcheck/pages/signup_email.dart';
+import 'package:dangcheck/pages/signup_end.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+class SignupPage4 extends StatefulWidget {
+  const SignupPage4({super.key});
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  State<SignupPage4> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _SignupPageState extends State<SignupPage4> {
   final nickNameController = TextEditingController();
 
   @override
@@ -42,7 +42,7 @@ class _SignupPageState extends State<SignupPage> {
               children: [
                 Container(
                   height: 3,
-                  width: 68,
+                  width: 273,
                   decoration: const BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -50,7 +50,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 Container(
                   height: 3,
-                  width: 273,
+                  width: 68,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(
@@ -65,24 +65,24 @@ class _SignupPageState extends State<SignupPage> {
               height: 40,
             ),
             const Text(
-              '닉네임을 입력해주세요.',
+              '댕Check의 서비스 이용약관에\n동의해주세요.',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w300,
               ),
             ),
             const SizedBox(
-              height: 15,
+              height: 20,
             ),
-            SizedBox(
-              height: 54,
-              child: MyTextField(
-                  controller: nickNameController,
-                  hintText: '닉네임',
-                  obscureText: false),
+            const Text(
+              '<댕 check>과 관련하여 아래와 같이 귀하의 개인정보를 수집 및 이용 내용을 개인정보보호법 제15조 (개인정보의 수집. 이용) 및 제17조(개인정보의 제공)에 의거하여 안내 드리니 확인하여 주시기 바랍니다.\n\n1. 수집하는 개인정보 항목: 닉네임, 이메일\n2. <댕 check>은 다음의 목적을 위하여 개인정보를 처리 하고 있으며, 다음의 목적 이외의 용도로는 이용하지 않습니다.\n\t- 고객 가입 의사 확인, 고객에 대한 서비스 제공에 따른 본인 식별 인증, 회원자격 유지/ 관리 등\n3. 개인정보의 보유 및 이용 기간\n수집된 개인정보 보유 기간은 <댕 check> 앱 탈퇴 시까지 이며, 이용 및 제공목적이 달성된 경우 개인정보 보호법 제21조(개인정보의 파기)에 따라 처리합니다.\n\n귀하는 이에 대한 동의를 거부할 수 있습니다.\n다만, 동의가 없으면 <댕 check> 앱 이용이 불가함을 알려드립니다.',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w300,
+              ),
             ),
             const SizedBox(
-              height: 470,
+              height: 145,
             ),
             SizedBox(
               height: 54,
@@ -100,12 +100,12 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 onPressed: () {
                   Get.to(
-                    const SignupPage2(),
+                    const SignupPage5(),
                     transition: Transition.cupertino,
                   );
                 },
                 child: Text(
-                  '다음',
+                  '동의합니다',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),

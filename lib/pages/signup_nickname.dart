@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -23,7 +25,9 @@ class _SignupPageState extends State<SignupPage> {
             AppBar(
               backgroundColor: Theme.of(context).colorScheme.background,
               leading: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                },
                 icon: const Icon(Icons.arrow_back_ios),
               ),
               title: const Text(

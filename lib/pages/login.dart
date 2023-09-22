@@ -1,6 +1,7 @@
-import 'dart:ffi';
-
+import 'package:dangcheck/pages/signup_nickname.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -141,7 +142,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(const SignupPage(),
+                      transition: Transition.noTransition);
+                },
                 child: const Text(
                   '회원가입',
                   style: TextStyle(

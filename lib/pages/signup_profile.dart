@@ -91,7 +91,8 @@ class _SignupPageState extends State<SignupPage3> {
               width: 356,
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black),
+                  backgroundColor:
+                      MaterialStateProperty.all(const Color(0xFFF2F4F6)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -103,13 +104,13 @@ class _SignupPageState extends State<SignupPage3> {
                 onPressed: () {
                   Get.to(
                     const SignupPage4(),
-                    transition: Transition.cupertino,
+                    transition: Transition.noTransition,
                   );
                 },
-                child: Text(
-                  '다음에 할래요',
+                child: const Text(
+                  '나중에 할래요',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSecondary,
+                    color: Color(0xFF7B7B7B),
                   ),
                 ),
               ),
@@ -122,7 +123,8 @@ class _SignupPageState extends State<SignupPage3> {
               width: 356,
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black),
+                  backgroundColor: MaterialStateProperty.all(
+                      Theme.of(context).colorScheme.primary),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -134,49 +136,18 @@ class _SignupPageState extends State<SignupPage3> {
                 onPressed: () {
                   Get.to(
                     const SignupPage4(),
-                    transition: Transition.cupertino,
+                    transition: Transition.noTransition,
                   );
                 },
                 child: Text(
                   '완료',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSecondary,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                 ),
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class MyTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
-  final bool obscureText;
-
-  const MyTextField({
-    super.key,
-    required this.controller,
-    required this.hintText,
-    required this.obscureText,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 54,
-      width: 356,
-      child: TextField(
-        controller: controller,
-        obscureText: obscureText,
-        decoration: InputDecoration(
-          hintText: hintText,
-          border: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black38),
-              borderRadius: BorderRadius.all(Radius.circular(15))),
         ),
       ),
     );

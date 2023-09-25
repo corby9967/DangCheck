@@ -1,17 +1,16 @@
-import 'package:dangcheck/pages/signup_profile.dart';
+import 'package:dangcheck/pages/make_house2.dart';
 import 'package:dangcheck/pages/textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 
-class SignupPage2 extends StatefulWidget {
-  const SignupPage2({super.key});
+class JoinPage2 extends StatefulWidget {
+  const JoinPage2({super.key});
 
   @override
-  State<SignupPage2> createState() => _SignupPageState();
+  State<JoinPage2> createState() => _JoinPage2State();
 }
 
-class _SignupPageState extends State<SignupPage2> {
+class _JoinPage2State extends State<JoinPage2> {
   final nickNameController = TextEditingController();
   bool isButtonActive = false;
 
@@ -46,7 +45,7 @@ class _SignupPageState extends State<SignupPage2> {
                 icon: const Icon(Icons.arrow_back_ios),
               ),
               title: const Text(
-                '회원가입',
+                '하우스 만들기',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -57,7 +56,7 @@ class _SignupPageState extends State<SignupPage2> {
               children: [
                 Container(
                   height: 3,
-                  width: 136,
+                  width: 42,
                   decoration: const BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -65,7 +64,7 @@ class _SignupPageState extends State<SignupPage2> {
                 ),
                 Container(
                   height: 3,
-                  width: 205,
+                  width: 299,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(
@@ -80,7 +79,7 @@ class _SignupPageState extends State<SignupPage2> {
               height: 40,
             ),
             const Text(
-              '이메일을 입력해주세요.',
+              '하우스 이름을 입력해주세요.',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w300,
@@ -93,7 +92,7 @@ class _SignupPageState extends State<SignupPage2> {
               height: 54,
               child: MyTextField(
                 controller: nickNameController,
-                hintText: '이메일',
+                hintText: '하우스 이름',
                 obscureText: false,
               ),
             ),
@@ -105,7 +104,7 @@ class _SignupPageState extends State<SignupPage2> {
               width: 356,
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(isButtonActive
+                  backgroundColor: MaterialStatePropertyAll(isButtonActive
                       ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).colorScheme.primary.withOpacity(0.6)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -119,7 +118,7 @@ class _SignupPageState extends State<SignupPage2> {
                 onPressed: isButtonActive
                     ? () {
                         Get.to(
-                          const SignupPage3(),
+                          const JoinPage3(),
                           transition: Transition.noTransition,
                         );
                       }

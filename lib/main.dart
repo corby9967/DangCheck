@@ -1,4 +1,4 @@
-import 'package:dangcheck/pages/login.dart';
+import 'package:dangcheck/pages/join.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xffF5F5F5),
+        colorScheme: const ColorScheme.light().copyWith(
+          primary: const Color(0xFFFF961A),
         ),
       ),
-      home: const LoginPage(),
+      home: const JoinPage(),
     );
   }
 }

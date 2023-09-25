@@ -1,4 +1,5 @@
 import 'package:dangcheck/pages/signup_email.dart';
+import 'package:dangcheck/pages/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,19 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   final nickNameController = TextEditingController();
+  bool isButtonActive = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    nickNameController.addListener(() {
+      final isButtonActive = nickNameController.text.isNotEmpty;
+      setState(() {
+        this.isButtonActive = isButtonActive;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +91,10 @@ class _SignupPageState extends State<SignupPage> {
             SizedBox(
               height: 54,
               child: MyTextField(
-                  controller: nickNameController,
-                  hintText: '닉네임',
-                  obscureText: false),
+                controller: nickNameController,
+                hintText: '닉네임',
+                obscureText: false,
+              ),
             ),
             const SizedBox(
               height: 470,
@@ -89,7 +104,9 @@ class _SignupPageState extends State<SignupPage> {
               width: 356,
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black),
+                  backgroundColor: MaterialStatePropertyAll(isButtonActive
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.primary.withOpacity(0.6)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -98,52 +115,23 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                 ),
-                onPressed: () {
-                  Get.to(
-                    const SignupPage2(),
-                    transition: Transition.cupertino,
-                  );
-                },
+                onPressed: isButtonActive
+                    ? () {
+                        Get.to(
+                          const SignupPage2(),
+                          transition: Transition.noTransition,
+                        );
+                      }
+                    : null,
                 child: Text(
                   '다음',
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSecondary,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                 ),
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class MyTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
-  final bool obscureText;
-
-  const MyTextField({
-    super.key,
-    required this.controller,
-    required this.hintText,
-    required this.obscureText,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 54,
-      width: 356,
-      child: TextField(
-        controller: controller,
-        obscureText: obscureText,
-        decoration: InputDecoration(
-          hintText: hintText,
-          border: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black38),
-              borderRadius: BorderRadius.all(Radius.circular(15))),
         ),
       ),
     );

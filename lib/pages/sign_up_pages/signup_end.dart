@@ -1,4 +1,4 @@
-import 'package:dangcheck/pages/join.dart';
+import 'package:dangcheck/pages/house.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,8 +10,6 @@ class SignupPage5 extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage5> {
-  final nickNameController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +106,7 @@ class _SignupPageState extends State<SignupPage5> {
                 ),
                 onPressed: () {
                   Get.to(
-                    const JoinPage(),
+                    const HousePage(),
                     transition: Transition.noTransition,
                   );
                 },

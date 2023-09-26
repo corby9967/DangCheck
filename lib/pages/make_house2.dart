@@ -1,29 +1,52 @@
-import 'package:dangcheck/pages/textfield.dart';
+import 'package:dangcheck/my%20classes/textfield.dart';
+import 'package:dangcheck/pages/make_house4.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-class JoinPage3 extends StatefulWidget {
-  const JoinPage3({super.key});
+class MakeHousePage2 extends StatefulWidget {
+  const MakeHousePage2({super.key});
 
   @override
-  State<JoinPage3> createState() => _SignupPageState();
+  State<MakeHousePage2> createState() => _MakeHousePage2();
 }
 
-class _SignupPageState extends State<JoinPage3> {
+class _MakeHousePage2 extends State<MakeHousePage2> {
   final dogNameController = TextEditingController();
   final dogBdayController = TextEditingController();
   final dogBreedController = TextEditingController();
+
   bool isButtonActive = false;
+  bool name = false;
+  bool bday = false;
+  bool breed = false;
+
+  bool boy = false;
+  bool girl = false;
+
+  bool small = false;
+  bool middle = false;
+  bool big = false;
 
   @override
   void initState() {
     super.initState();
-
     dogNameController.addListener(() {
-      final isButtonActive = dogNameController.text.isNotEmpty;
+      name = dogNameController.text.isNotEmpty;
       setState(() {
-        this.isButtonActive = isButtonActive;
+        name && bday && breed ? isButtonActive = true : isButtonActive = false;
+      });
+    });
+    dogBdayController.addListener(() {
+      bday = dogBdayController.text.isNotEmpty;
+      setState(() {
+        name && bday && breed ? isButtonActive = true : isButtonActive = false;
+      });
+    });
+    dogBreedController.addListener(() {
+      breed = dogBreedController.text.isNotEmpty;
+      setState(() {
+        name && bday && breed ? isButtonActive = true : isButtonActive = false;
       });
     });
   }
@@ -139,15 +162,36 @@ class _SignupPageState extends State<JoinPage3> {
                       height: 37,
                       width: 77,
                       child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Theme.of(context).colorScheme.primary),
-                        ),
-                        onPressed: () {},
+                        style: boy
+                            ? ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Theme.of(context).colorScheme.primary),
+                              )
+                            : ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                  const RoundedRectangleBorder(
+                                    side: BorderSide(color: Colors.black54),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                                backgroundColor: MaterialStateProperty.all(boy
+                                    ? Theme.of(context).colorScheme.onBackground
+                                    : Theme.of(context).colorScheme.background),
+                              ),
+                        onPressed: () {
+                          setState(() {
+                            boy = true;
+                            girl = false;
+                          });
+                        },
                         child: Text(
                           '남자',
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.background,
+                            color: boy
+                                ? Theme.of(context).colorScheme.background
+                                : Theme.of(context).colorScheme.onBackground,
                           ),
                         ),
                       ),
@@ -159,15 +203,36 @@ class _SignupPageState extends State<JoinPage3> {
                       height: 37,
                       width: 77,
                       child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Theme.of(context).colorScheme.primary),
-                        ),
-                        onPressed: () {},
+                        style: girl
+                            ? ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Theme.of(context).colorScheme.primary),
+                              )
+                            : ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                  const RoundedRectangleBorder(
+                                    side: BorderSide(color: Colors.black54),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                                backgroundColor: MaterialStateProperty.all(girl
+                                    ? Theme.of(context).colorScheme.onBackground
+                                    : Theme.of(context).colorScheme.background),
+                              ),
+                        onPressed: () {
+                          setState(() {
+                            girl = true;
+                            boy = false;
+                          });
+                        },
                         child: Text(
                           '여자',
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.background,
+                            color: girl
+                                ? Theme.of(context).colorScheme.background
+                                : Theme.of(context).colorScheme.onBackground,
                           ),
                         ),
                       ),
@@ -195,15 +260,37 @@ class _SignupPageState extends State<JoinPage3> {
                       height: 37,
                       width: 77,
                       child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Theme.of(context).colorScheme.primary),
-                        ),
-                        onPressed: () {},
+                        style: small
+                            ? ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Theme.of(context).colorScheme.primary),
+                              )
+                            : ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                  const RoundedRectangleBorder(
+                                    side: BorderSide(color: Colors.black54),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                                backgroundColor: MaterialStateProperty.all(small
+                                    ? Theme.of(context).colorScheme.onBackground
+                                    : Theme.of(context).colorScheme.background),
+                              ),
+                        onPressed: () {
+                          setState(() {
+                            small = true;
+                            middle = false;
+                            big = false;
+                          });
+                        },
                         child: Text(
                           '소형',
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.background,
+                            color: small
+                                ? Theme.of(context).colorScheme.background
+                                : Theme.of(context).colorScheme.onBackground,
                           ),
                         ),
                       ),
@@ -215,15 +302,42 @@ class _SignupPageState extends State<JoinPage3> {
                       height: 37,
                       width: 77,
                       child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Theme.of(context).colorScheme.primary),
-                        ),
-                        onPressed: () {},
+                        style: middle
+                            ? ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Theme.of(context).colorScheme.primary),
+                              )
+                            : ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                  const RoundedRectangleBorder(
+                                    side: BorderSide(color: Colors.black54),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                                backgroundColor: MaterialStateProperty.all(
+                                    middle
+                                        ? Theme.of(context)
+                                            .colorScheme
+                                            .onBackground
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .background),
+                              ),
+                        onPressed: () {
+                          setState(() {
+                            small = false;
+                            middle = true;
+                            big = false;
+                          });
+                        },
                         child: Text(
                           '중형',
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.background,
+                            color: middle
+                                ? Theme.of(context).colorScheme.background
+                                : Theme.of(context).colorScheme.onBackground,
                           ),
                         ),
                       ),
@@ -235,15 +349,37 @@ class _SignupPageState extends State<JoinPage3> {
                       height: 37,
                       width: 77,
                       child: TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Theme.of(context).colorScheme.primary),
-                        ),
-                        onPressed: () {},
+                        style: big
+                            ? ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Theme.of(context).colorScheme.primary),
+                              )
+                            : ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                  const RoundedRectangleBorder(
+                                    side: BorderSide(color: Colors.black54),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                                backgroundColor: MaterialStateProperty.all(big
+                                    ? Theme.of(context).colorScheme.onBackground
+                                    : Theme.of(context).colorScheme.background),
+                              ),
+                        onPressed: () {
+                          setState(() {
+                            small = false;
+                            middle = false;
+                            big = true;
+                          });
+                        },
                         child: Text(
-                          '대형',
+                          '중형',
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.background,
+                            color: big
+                                ? Theme.of(context).colorScheme.background
+                                : Theme.of(context).colorScheme.onBackground,
                           ),
                         ),
                       ),
@@ -274,7 +410,7 @@ class _SignupPageState extends State<JoinPage3> {
                 onPressed: isButtonActive
                     ? () {
                         Get.to(
-                          const Placeholder(),
+                          const MakeHousePage4(),
                           transition: Transition.noTransition,
                         );
                       }

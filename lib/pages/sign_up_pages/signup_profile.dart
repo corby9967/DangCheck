@@ -1,4 +1,4 @@
-import 'package:dangcheck/pages/signup_agree.dart';
+import 'package:dangcheck/pages/sign_up_pages/signup_agree.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -12,8 +12,6 @@ class SignupPage3 extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage3> {
-  final nickNameController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

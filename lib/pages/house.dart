@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
+import 'house_join.dart';
 import 'make_house.dart';
 
-class JoinPage extends StatefulWidget {
-  const JoinPage({super.key});
+class HousePage extends StatefulWidget {
+  const HousePage({super.key});
 
   @override
-  State<JoinPage> createState() => _JoinPageState();
+  State<HousePage> createState() => _HousePageState();
 }
 
-class _JoinPageState extends State<JoinPage> {
+class _HousePageState extends State<HousePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +29,7 @@ class _JoinPageState extends State<JoinPage> {
             const Text(
               '댕CHECK,\n소중한 강아지를 가족과 함께 관리해보세요',
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 18,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -44,15 +45,13 @@ class _JoinPageState extends State<JoinPage> {
                   decoration: ShapeDecoration(
                     color: Theme.of(context).colorScheme.primary,
                     shape: RoundedRectangleBorder(
-                      side:
-                          const BorderSide(width: 1, color: Color(0xFF7B7B7B)),
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                   child: TextButton(
                     onPressed: () {
                       Get.to(
-                        const JoinPage2(),
+                        const MakeHousePage(),
                         transition: Transition.noTransition,
                       );
                     },
@@ -73,15 +72,28 @@ class _JoinPageState extends State<JoinPage> {
                   width: 160,
                   height: 160,
                   decoration: ShapeDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.background,
                     shape: RoundedRectangleBorder(
                       side:
                           const BorderSide(width: 1, color: Color(0xFF7B7B7B)),
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
-                  child: const Center(
-                    child: Text('하우스 참가하기'),
+                  child: TextButton(
+                    onPressed: () {
+                      Get.to(
+                        const JoinHousePage(),
+                        transition: Transition.noTransition,
+                      );
+                    },
+                    child: const Center(
+                      child: Text(
+                        '하우스 들어가기',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],

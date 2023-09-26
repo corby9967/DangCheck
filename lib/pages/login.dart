@@ -1,8 +1,8 @@
-import 'package:dangcheck/pages/signup_nickname.dart';
+import 'package:dangcheck/pages/sign_up_pages/signup_nickname.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'textfield.dart';
+import '../my classes/textfield.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

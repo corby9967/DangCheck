@@ -1,25 +1,26 @@
-import 'package:dangcheck/pages/make_house2.dart';
+import 'package:dangcheck/pages/sign_up_pages/signup_profile.dart';
 import 'package:dangcheck/my%20classes/textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
-class MakeHousePage extends StatefulWidget {
-  const MakeHousePage({super.key});
+class SignupPage2 extends StatefulWidget {
+  const SignupPage2({super.key});
 
   @override
-  State<MakeHousePage> createState() => _MakeHousePage();
+  State<SignupPage2> createState() => _SignupPageState();
 }
 
-class _MakeHousePage extends State<MakeHousePage> {
-  final houseNameController = TextEditingController();
+class _SignupPageState extends State<SignupPage2> {
+  final emailController = TextEditingController();
   bool isButtonActive = false;
 
   @override
   void initState() {
     super.initState();
 
-    houseNameController.addListener(() {
-      final isButtonActive = houseNameController.text.isNotEmpty;
+    emailController.addListener(() {
+      final isButtonActive = emailController.text.isNotEmpty;
       setState(() {
         this.isButtonActive = isButtonActive;
       });
@@ -45,7 +46,7 @@ class _MakeHousePage extends State<MakeHousePage> {
                 icon: const Icon(Icons.arrow_back_ios),
               ),
               title: const Text(
-                '하우스 만들기',
+                '회원가입',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -56,7 +57,7 @@ class _MakeHousePage extends State<MakeHousePage> {
               children: [
                 Container(
                   height: 3,
-                  width: 42,
+                  width: 136,
                   decoration: const BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -64,7 +65,7 @@ class _MakeHousePage extends State<MakeHousePage> {
                 ),
                 Container(
                   height: 3,
-                  width: 299,
+                  width: 205,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(
@@ -79,7 +80,7 @@ class _MakeHousePage extends State<MakeHousePage> {
               height: 40,
             ),
             const Text(
-              '하우스 이름을 입력해주세요.',
+              '이메일을 입력해주세요.',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w300,
@@ -91,8 +92,8 @@ class _MakeHousePage extends State<MakeHousePage> {
             SizedBox(
               height: 54,
               child: MyTextField(
-                controller: houseNameController,
-                hintText: '하우스 이름',
+                controller: emailController,
+                hintText: '이메일',
                 obscureText: false,
               ),
             ),
@@ -104,7 +105,7 @@ class _MakeHousePage extends State<MakeHousePage> {
               width: 356,
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(isButtonActive
+                  backgroundColor: MaterialStateProperty.all(isButtonActive
                       ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).colorScheme.primary.withOpacity(0.6)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -118,7 +119,7 @@ class _MakeHousePage extends State<MakeHousePage> {
                 onPressed: isButtonActive
                     ? () {
                         Get.to(
-                          const MakeHousePage2(),
+                          const SignupPage3(),
                           transition: Transition.noTransition,
                         );
                       }

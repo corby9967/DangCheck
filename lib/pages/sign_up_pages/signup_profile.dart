@@ -12,8 +12,6 @@ class SignupPage3 extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage3> {
-  final nickNameController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

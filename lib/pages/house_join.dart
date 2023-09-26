@@ -3,23 +3,23 @@ import 'package:dangcheck/my%20classes/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MakeHousePage extends StatefulWidget {
-  const MakeHousePage({super.key});
+class JoinHousePage extends StatefulWidget {
+  const JoinHousePage({super.key});
 
   @override
-  State<MakeHousePage> createState() => _MakeHousePage();
+  State<JoinHousePage> createState() => _JoinPageState();
 }
 
-class _MakeHousePage extends State<MakeHousePage> {
-  final houseNameController = TextEditingController();
+class _JoinPageState extends State<JoinHousePage> {
+  final houseCodeController = TextEditingController();
   bool isButtonActive = false;
 
   @override
   void initState() {
     super.initState();
 
-    houseNameController.addListener(() {
-      final isButtonActive = houseNameController.text.isNotEmpty;
+    houseCodeController.addListener(() {
+      final isButtonActive = houseCodeController.text.isNotEmpty;
       setState(() {
         this.isButtonActive = isButtonActive;
       });
@@ -45,41 +45,18 @@ class _MakeHousePage extends State<MakeHousePage> {
                 icon: const Icon(Icons.arrow_back_ios),
               ),
               title: const Text(
-                '하우스 만들기',
+                '하우스 입장',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            Row(
-              children: [
-                Container(
-                  height: 3,
-                  width: 42,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                ),
-                Container(
-                  height: 3,
-                  width: 299,
-                  decoration: const BoxDecoration(
-                    color: Colors.black12,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                    ),
-                  ),
-                ),
-              ],
-            ),
             const SizedBox(
-              height: 40,
+              height: 43,
             ),
             const Text(
-              '하우스 이름을 입력해주세요.',
+              '하우스 코드를 입력해주세요.',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w300,
@@ -91,8 +68,8 @@ class _MakeHousePage extends State<MakeHousePage> {
             SizedBox(
               height: 54,
               child: MyTextField(
-                controller: houseNameController,
-                hintText: '하우스 이름',
+                controller: houseCodeController,
+                hintText: '하우스 코드',
                 obscureText: false,
               ),
             ),
@@ -124,7 +101,7 @@ class _MakeHousePage extends State<MakeHousePage> {
                       }
                     : null,
                 child: Text(
-                  '다음',
+                  '입장하기',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.background,
                   ),

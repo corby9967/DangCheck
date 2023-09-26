@@ -12,15 +12,15 @@ class SignupPage2 extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage2> {
-  final nickNameController = TextEditingController();
+  final emailController = TextEditingController();
   bool isButtonActive = false;
 
   @override
   void initState() {
     super.initState();
 
-    nickNameController.addListener(() {
-      final isButtonActive = nickNameController.text.isNotEmpty;
+    emailController.addListener(() {
+      final isButtonActive = emailController.text.isNotEmpty;
       setState(() {
         this.isButtonActive = isButtonActive;
       });
@@ -92,7 +92,7 @@ class _SignupPageState extends State<SignupPage2> {
             SizedBox(
               height: 54,
               child: MyTextField(
-                controller: nickNameController,
+                controller: emailController,
                 hintText: '이메일',
                 obscureText: false,
               ),

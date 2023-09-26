@@ -1,16 +1,16 @@
-import 'package:dangcheck/pages/textfield.dart';
+import 'package:dangcheck/my%20classes/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-class JoinPage3 extends StatefulWidget {
-  const JoinPage3({super.key});
+class MakeHousePage2 extends StatefulWidget {
+  const MakeHousePage2({super.key});
 
   @override
-  State<JoinPage3> createState() => _SignupPageState();
+  State<MakeHousePage2> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<JoinPage3> {
+class _SignupPageState extends State<MakeHousePage2> {
   final dogNameController = TextEditingController();
   final dogBdayController = TextEditingController();
   final dogBreedController = TextEditingController();

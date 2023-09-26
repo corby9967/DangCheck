@@ -1,16 +1,16 @@
 import 'package:dangcheck/pages/make_house2.dart';
-import 'package:dangcheck/pages/textfield.dart';
+import 'package:dangcheck/my%20classes/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class JoinPage2 extends StatefulWidget {
-  const JoinPage2({super.key});
+class MakeHousePage extends StatefulWidget {
+  const MakeHousePage({super.key});
 
   @override
-  State<JoinPage2> createState() => _JoinPage2State();
+  State<MakeHousePage> createState() => _JoinPage2State();
 }
 
-class _JoinPage2State extends State<JoinPage2> {
+class _JoinPage2State extends State<MakeHousePage> {
   final nickNameController = TextEditingController();
   bool isButtonActive = false;
 
@@ -118,7 +118,7 @@ class _JoinPage2State extends State<JoinPage2> {
                 onPressed: isButtonActive
                     ? () {
                         Get.to(
-                          const JoinPage3(),
+                          const MakeHousePage2(),
                           transition: Transition.noTransition,
                         );
                       }

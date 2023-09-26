@@ -1,16 +1,31 @@
-import 'package:dangcheck/pages/join.dart';
+import 'package:dangcheck/pages/sign_up_pages/signup_profile.dart';
+import 'package:dangcheck/my%20classes/textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
-class SignupPage5 extends StatefulWidget {
-  const SignupPage5({super.key});
+class SignupPage2 extends StatefulWidget {
+  const SignupPage2({super.key});
 
   @override
-  State<SignupPage5> createState() => _SignupPageState();
+  State<SignupPage2> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<SignupPage5> {
+class _SignupPageState extends State<SignupPage2> {
   final nickNameController = TextEditingController();
+  bool isButtonActive = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    nickNameController.addListener(() {
+      final isButtonActive = nickNameController.text.isNotEmpty;
+      setState(() {
+        this.isButtonActive = isButtonActive;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +35,7 @@ class _SignupPageState extends State<SignupPage5> {
           horizontal: 17,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppBar(
               backgroundColor: Theme.of(context).colorScheme.background,
@@ -42,7 +57,7 @@ class _SignupPageState extends State<SignupPage5> {
               children: [
                 Container(
                   height: 3,
-                  width: 341,
+                  width: 136,
                   decoration: const BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -50,7 +65,7 @@ class _SignupPageState extends State<SignupPage5> {
                 ),
                 Container(
                   height: 3,
-                  width: 0,
+                  width: 205,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(
@@ -62,10 +77,10 @@ class _SignupPageState extends State<SignupPage5> {
               ],
             ),
             const SizedBox(
-              height: 220,
+              height: 40,
             ),
             const Text(
-              '회원가입 완료!',
+              '이메일을 입력해주세요.',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w300,
@@ -74,30 +89,25 @@ class _SignupPageState extends State<SignupPage5> {
             const SizedBox(
               height: 15,
             ),
-            const Text(
-              '000님',
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            const Text(
-              '환영합니다!',
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w800,
+            SizedBox(
+              height: 54,
+              child: MyTextField(
+                controller: nickNameController,
+                hintText: '이메일',
+                obscureText: false,
               ),
             ),
             const SizedBox(
-              height: 225,
+              height: 470,
             ),
             SizedBox(
               height: 54,
               width: 356,
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                      Theme.of(context).colorScheme.primary),
+                  backgroundColor: MaterialStateProperty.all(isButtonActive
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.primary.withOpacity(0.6)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -106,14 +116,16 @@ class _SignupPageState extends State<SignupPage5> {
                     ),
                   ),
                 ),
-                onPressed: () {
-                  Get.to(
-                    const JoinPage(),
-                    transition: Transition.noTransition,
-                  );
-                },
+                onPressed: isButtonActive
+                    ? () {
+                        Get.to(
+                          const SignupPage3(),
+                          transition: Transition.noTransition,
+                        );
+                      }
+                    : null,
                 child: Text(
-                  '시작하기',
+                  '다음',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.background,
                   ),

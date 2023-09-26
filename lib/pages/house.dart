@@ -4,14 +4,14 @@ import 'package:get/get_navigation/get_navigation.dart';
 
 import 'make_house.dart';
 
-class JoinPage extends StatefulWidget {
-  const JoinPage({super.key});
+class HousePage extends StatefulWidget {
+  const HousePage({super.key});
 
   @override
-  State<JoinPage> createState() => _JoinPageState();
+  State<HousePage> createState() => _JoinPageState();
 }
 
-class _JoinPageState extends State<JoinPage> {
+class _JoinPageState extends State<HousePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +52,7 @@ class _JoinPageState extends State<JoinPage> {
                   child: TextButton(
                     onPressed: () {
                       Get.to(
-                        const JoinPage2(),
+                        const MakeHousePage(),
                         transition: Transition.noTransition,
                       );
                     },

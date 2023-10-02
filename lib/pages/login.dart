@@ -1,19 +1,19 @@
 import 'package:dangcheck/pages/house.dart';
-import 'package:dangcheck/pages/make_house2.dart';
 import 'package:dangcheck/pages/sign_up_pages/signup_nickname.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../my classes/textfield.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LogInPage extends StatefulWidget {
+  const LogInPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LogInPage> createState() => _LogInPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LogInPageState extends State<LogInPage> {
   final userNameController = TextEditingController();
   final passWordController = TextEditingController();
   bool userNameInserted = false;
@@ -36,6 +36,20 @@ class _LoginPageState extends State<LoginPage> {
         passWordInserted = isButtonActive;
       });
     });
+  }
+
+  Future logIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: userNameController.text.trim(),
+      password: passWordController.text.trim(),
+    );
+  }
+
+  @override
+  void dispose() {
+    userNameController.dispose();
+    passWordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -97,10 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onPressed: (userNameInserted && passWordInserted)
                     ? () {
-                        Get.to(
-                          const HousePage(),
-                          transition: Transition.noTransition,
-                        );
+                        logIn();
                       }
                     : null,
                 child: Text(

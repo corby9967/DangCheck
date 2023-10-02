@@ -7,19 +7,19 @@ class MakeHousePage extends StatefulWidget {
   const MakeHousePage({super.key});
 
   @override
-  State<MakeHousePage> createState() => _JoinPage2State();
+  State<MakeHousePage> createState() => _MakeHousePage();
 }
 
-class _JoinPage2State extends State<MakeHousePage> {
-  final nickNameController = TextEditingController();
+class _MakeHousePage extends State<MakeHousePage> {
+  final houseNameController = TextEditingController();
   bool isButtonActive = false;
 
   @override
   void initState() {
     super.initState();
 
-    nickNameController.addListener(() {
-      final isButtonActive = nickNameController.text.isNotEmpty;
+    houseNameController.addListener(() {
+      final isButtonActive = houseNameController.text.isNotEmpty;
       setState(() {
         this.isButtonActive = isButtonActive;
       });
@@ -86,16 +86,16 @@ class _JoinPage2State extends State<MakeHousePage> {
                   fontWeight: FontWeight.w300,
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              SizedBox(
-                height: 54,
-                child: MyTextField(
-                  controller: nickNameController,
-                  hintText: '하우스 이름',
-                  obscureText: false,
-                ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            SizedBox(
+              height: 54,
+              child: MyTextField(
+                controller: houseNameController,
+                hintText: '하우스 이름',
+                obscureText: false,
               ),
               const SizedBox(
                 height: 470,

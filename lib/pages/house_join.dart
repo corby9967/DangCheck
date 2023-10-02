@@ -1,26 +1,25 @@
-import 'package:dangcheck/pages/sign_up_pages/signup_profile.dart';
+import 'package:dangcheck/pages/make_house2.dart';
 import 'package:dangcheck/my%20classes/textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 
-class SignupPage2 extends StatefulWidget {
-  const SignupPage2({super.key});
+class JoinHousePage extends StatefulWidget {
+  const JoinHousePage({super.key});
 
   @override
-  State<SignupPage2> createState() => _SignupPageState();
+  State<JoinHousePage> createState() => _JoinPageState();
 }
 
-class _SignupPageState extends State<SignupPage2> {
-  final emailController = TextEditingController();
+class _JoinPageState extends State<JoinHousePage> {
+  final houseCodeController = TextEditingController();
   bool isButtonActive = false;
 
   @override
   void initState() {
     super.initState();
 
-    emailController.addListener(() {
-      final isButtonActive = emailController.text.isNotEmpty;
+    houseCodeController.addListener(() {
+      final isButtonActive = houseCodeController.text.isNotEmpty;
       setState(() {
         this.isButtonActive = isButtonActive;
       });
@@ -46,41 +45,18 @@ class _SignupPageState extends State<SignupPage2> {
                 icon: const Icon(Icons.arrow_back_ios),
               ),
               title: const Text(
-                '회원가입',
+                '하우스 입장',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            Row(
-              children: [
-                Container(
-                  height: 3,
-                  width: 136,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                ),
-                Container(
-                  height: 3,
-                  width: 205,
-                  decoration: const BoxDecoration(
-                    color: Colors.black12,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
-                    ),
-                  ),
-                ),
-              ],
-            ),
             const SizedBox(
-              height: 40,
+              height: 43,
             ),
             const Text(
-              '이메일을 입력해주세요.',
+              '하우스 코드를 입력해주세요.',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w300,
@@ -92,8 +68,8 @@ class _SignupPageState extends State<SignupPage2> {
             SizedBox(
               height: 54,
               child: MyTextField(
-                controller: emailController,
-                hintText: '이메일',
+                controller: houseCodeController,
+                hintText: '하우스 코드',
                 obscureText: false,
               ),
             ),
@@ -105,7 +81,7 @@ class _SignupPageState extends State<SignupPage2> {
               width: 356,
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(isButtonActive
+                  backgroundColor: MaterialStatePropertyAll(isButtonActive
                       ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).colorScheme.primary.withOpacity(0.6)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -119,13 +95,13 @@ class _SignupPageState extends State<SignupPage2> {
                 onPressed: isButtonActive
                     ? () {
                         Get.to(
-                          const SignupPage3(),
+                          const MakeHousePage2(),
                           transition: Transition.noTransition,
                         );
                       }
                     : null,
                 child: Text(
-                  '다음',
+                  '입장하기',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.background,
                   ),

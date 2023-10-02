@@ -1,3 +1,5 @@
+import 'package:dangcheck/pages/house.dart';
+import 'package:dangcheck/pages/make_house2.dart';
 import 'package:dangcheck/pages/sign_up_pages/signup_nickname.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +16,27 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final userNameController = TextEditingController();
   final passWordController = TextEditingController();
+  bool userNameInserted = false;
+  bool passWordInserted = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    userNameController.addListener(() {
+      final isButtonActive = userNameController.text.isNotEmpty;
+      setState(() {
+        userNameInserted = isButtonActive;
+      });
+    });
+
+    passWordController.addListener(() {
+      final isButtonActive = passWordController.text.isNotEmpty;
+      setState(() {
+        passWordInserted = isButtonActive;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +83,10 @@ class _LoginPageState extends State<LoginPage> {
               width: 356,
               child: TextButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black12),
+                  backgroundColor: MaterialStatePropertyAll((userNameInserted &&
+                          passWordInserted)
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.primary.withOpacity(0.6)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
@@ -69,11 +95,18 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                onPressed: () {},
-                child: const Text(
+                onPressed: (userNameInserted && passWordInserted)
+                    ? () {
+                        Get.to(
+                          const HousePage(),
+                          transition: Transition.noTransition,
+                        );
+                      }
+                    : null,
+                child: Text(
                   '로그인',
                   style: TextStyle(
-                    color: Colors.black54,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                 ),
               ),

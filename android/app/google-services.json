@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1034772184006",
+    "project_id": "dangcheck-6abe6",
+    "storage_bucket": "dangcheck-6abe6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1034772184006:android:a9f204a4adc9367fb490c7",
+        "android_client_info": {
+          "package_name": "com.example.dangcheck"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHojAjLZtUYfqwkdXmXBPFgatdOhduj6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

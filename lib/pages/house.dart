@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -23,8 +24,19 @@ class _HousePageState extends State<HousePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
+            SizedBox(
               height: 120,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                    icon: const Icon(Icons.logout),
+                  )
+                ],
+              ),
             ),
             const Text(
               '댕CHECK,\n소중한 강아지를 가족과 함께 관리해보세요',

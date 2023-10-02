@@ -86,16 +86,16 @@ class _MakeHousePage extends State<MakeHousePage> {
                   fontWeight: FontWeight.w300,
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            SizedBox(
-              height: 54,
-              child: MyTextField(
-                controller: houseNameController,
-                hintText: '하우스 이름',
-                obscureText: false,
+              const SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                height: 54,
+                child: MyTextField(
+                  controller: houseNameController,
+                  hintText: '하우스 이름',
+                  obscureText: false,
+                ),
               ),
               const SizedBox(
                 height: 470,

@@ -1,5 +1,5 @@
 import 'package:dangcheck/my%20classes/textfield.dart';
-import 'package:dangcheck/pages/make_house4.dart';
+import 'package:dangcheck/pages/make_house3.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -34,19 +34,25 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
     dogNameController.addListener(() {
       name = dogNameController.text.isNotEmpty;
       setState(() {
-        name && bday && breed ? isButtonActive = true : isButtonActive = false;
+        name && bday && breed && (boy || girl) && (small || middle || big)
+            ? isButtonActive = true
+            : isButtonActive = false;
       });
     });
     dogBdayController.addListener(() {
       bday = dogBdayController.text.isNotEmpty;
       setState(() {
-        name && bday && breed ? isButtonActive = true : isButtonActive = false;
+        name && bday && breed && (boy || girl) && (small || middle || big)
+            ? isButtonActive = true
+            : isButtonActive = false;
       });
     });
     dogBreedController.addListener(() {
       breed = dogBreedController.text.isNotEmpty;
       setState(() {
-        name && bday && breed ? isButtonActive = true : isButtonActive = false;
+        name && bday && breed && (boy || girl) && (small || middle || big)
+            ? isButtonActive = true
+            : isButtonActive = false;
       });
     });
   }
@@ -184,6 +190,13 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                           setState(() {
                             boy = true;
                             girl = false;
+                            name &&
+                                    bday &&
+                                    breed &&
+                                    (boy || girl) &&
+                                    (small || middle || big)
+                                ? isButtonActive = true
+                                : isButtonActive = false;
                           });
                         },
                         child: Text(
@@ -225,6 +238,13 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                           setState(() {
                             girl = true;
                             boy = false;
+                            name &&
+                                    bday &&
+                                    breed &&
+                                    (boy || girl) &&
+                                    (small || middle || big)
+                                ? isButtonActive = true
+                                : isButtonActive = false;
                           });
                         },
                         child: Text(
@@ -283,6 +303,13 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                             small = true;
                             middle = false;
                             big = false;
+                            name &&
+                                    bday &&
+                                    breed &&
+                                    (boy || girl) &&
+                                    (small || middle || big)
+                                ? isButtonActive = true
+                                : isButtonActive = false;
                           });
                         },
                         child: Text(
@@ -330,6 +357,13 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                             small = false;
                             middle = true;
                             big = false;
+                            name &&
+                                    bday &&
+                                    breed &&
+                                    (boy || girl) &&
+                                    (small || middle || big)
+                                ? isButtonActive = true
+                                : isButtonActive = false;
                           });
                         },
                         child: Text(
@@ -372,10 +406,17 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                             small = false;
                             middle = false;
                             big = true;
+                            name &&
+                                    bday &&
+                                    breed &&
+                                    (boy || girl) &&
+                                    (small || middle || big)
+                                ? isButtonActive = true
+                                : isButtonActive = false;
                           });
                         },
                         child: Text(
-                          '중형',
+                          '대형',
                           style: TextStyle(
                             color: big
                                 ? Theme.of(context).colorScheme.background
@@ -410,7 +451,7 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                 onPressed: isButtonActive
                     ? () {
                         Get.to(
-                          const MakeHousePage4(),
+                          const MakeHousePage3(),
                           transition: Transition.noTransition,
                         );
                       }

@@ -1,4 +1,4 @@
-import 'package:dangcheck/pages/house.dart';
+import 'package:dangcheck/pages/make_house4.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           primary: const Color(0xFFFF961A),
         ),
       ),
-      home: const HousePage(),
+      home: const MakeHousePage4(),
     );
   }
 }

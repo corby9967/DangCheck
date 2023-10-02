@@ -1,9 +1,7 @@
+import 'package:dangcheck/pages/house_join.dart';
+import 'package:dangcheck/pages/make_house.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-
-import 'house_join.dart';
-import 'make_house.dart';
+import 'package:get/get.dart';
 
 class HousePage extends StatefulWidget {
   const HousePage({super.key});
@@ -13,6 +11,9 @@ class HousePage extends StatefulWidget {
 }
 
 class _HousePageState extends State<HousePage> {
+  bool isButtonSelected1 = false;
+  bool isButtonSelected2 = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,23 +44,30 @@ class _HousePageState extends State<HousePage> {
                   width: 160,
                   height: 160,
                   decoration: ShapeDecoration(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: isButtonSelected1
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.background,
                     shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                          width: 1,
+                          color: Theme.of(context).colorScheme.primary),
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                   child: TextButton(
                     onPressed: () {
-                      Get.to(
-                        const MakeHousePage(),
-                        transition: Transition.noTransition,
-                      );
+                      setState(() {
+                        isButtonSelected1 = true;
+                        isButtonSelected2 = false;
+                      });
                     },
                     child: Center(
                       child: Text(
                         '하우스 만들기',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.background,
+                          color: isButtonSelected1
+                              ? Theme.of(context).colorScheme.background
+                              : Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ),
@@ -72,31 +80,80 @@ class _HousePageState extends State<HousePage> {
                   width: 160,
                   height: 160,
                   decoration: ShapeDecoration(
-                    color: Theme.of(context).colorScheme.background,
+                    color: isButtonSelected2
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.background,
                     shape: RoundedRectangleBorder(
-                      side:
-                          const BorderSide(width: 1, color: Color(0xFF7B7B7B)),
+                      side: BorderSide(
+                        width: 1,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                   child: TextButton(
                     onPressed: () {
-                      Get.to(
-                        const JoinHousePage(),
-                        transition: Transition.noTransition,
-                      );
+                      setState(() {
+                        isButtonSelected2 = true;
+                        isButtonSelected1 = false;
+                      });
                     },
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         '하우스 들어가기',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: isButtonSelected2
+                              ? Theme.of(context).colorScheme.background
+                              : Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ),
                   ),
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 194,
+            ),
+            SizedBox(
+              height: 54,
+              width: 356,
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(isButtonSelected1 ||
+                          isButtonSelected2
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.primary.withOpacity(0.6)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  if (isButtonSelected1) {
+                    Get.to(
+                      const MakeHousePage(),
+                      transition: Transition.noTransition,
+                    );
+                  } else if (isButtonSelected2) {
+                    Get.to(
+                      const JoinHousePage(),
+                      transition: Transition.noTransition,
+                    );
+                  } else {
+                    null;
+                  }
+                },
+                child: Text(
+                  '다음',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.background,
+                  ),
+                ),
+              ),
             ),
           ],
         ),

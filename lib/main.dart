@@ -1,3 +1,4 @@
+
 import 'package:dangcheck/pages/house.dart';
 import 'package:dangcheck/pages/login.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const LoginPage(),
+
     );
   }
 }

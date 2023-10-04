@@ -18,6 +18,7 @@ class _LogInPageState extends State<LogInPage> {
   final passWordController = TextEditingController();
   bool userNameInserted = false;
   bool passWordInserted = false;
+  String errorMsg = '';
 
   @override
   void initState() {
@@ -39,10 +40,38 @@ class _LogInPageState extends State<LogInPage> {
   }
 
   Future logIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: userNameController.text.trim(),
-      password: passWordController.text.trim(),
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
+
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+            email: userNameController.text,
+            password: passWordController.text,
+          )
+          .then((value) => Navigator.pop(context));
+    } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      print(e);
+      if (e.code == 'invalid-email') {
+        setState(() {});
+        errorMsg = '이메일 형식이 올바르지 않습니다.';
+      } else if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
+        setState(() {});
+        //errorMsg = '존재하지 않는 이메일 입니다.';
+        errorMsg = '로그인 정보가 틀렸습니다.';
+      } else if (e.code == 'wrong-password') {
+        setState(() {});
+        errorMsg = '비밀번호가 틀렸습니다.';
+      }
+    }
   }
 
   @override
@@ -125,28 +154,38 @@ class _LogInPageState extends State<LogInPage> {
             const SizedBox(
               height: 15,
             ),
-            const SizedBox(
+            SizedBox(
               height: 15,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
+                  SizedBox(
+                    width: 200,
+                    child: Text(
+                      errorMsg,
+                      style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const Text(
                     '아이디 찾기',
                     style: TextStyle(
                       color: Colors.black54,
                       fontSize: 11,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
-                  VerticalDivider(
+                  const VerticalDivider(
                     color: Colors.black54,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
-                  Text(
+                  const Text(
                     '비밀번호 찾기',
                     style: TextStyle(
                       color: Colors.black54,

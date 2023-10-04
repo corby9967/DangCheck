@@ -1,27 +1,28 @@
-import 'package:dangcheck/pages/sign_up_pages/signup_password.dart';
+import 'package:dangcheck/pages/sign_up_pages/signup_confirm_password.dart';
 import 'package:dangcheck/pages/sign_up_pages/signup_profile.dart';
 import 'package:dangcheck/my%20classes/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-class SignupPage2 extends StatefulWidget {
-  const SignupPage2({super.key});
+class SignupPage6 extends StatefulWidget {
+  final String email;
+  const SignupPage6({required this.email, super.key});
 
   @override
-  State<SignupPage2> createState() => _SignupPageState();
+  State<SignupPage6> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<SignupPage2> {
-  final emailController = TextEditingController();
+class _SignupPageState extends State<SignupPage6> {
+  final passwordController = TextEditingController();
   bool isButtonActive = false;
 
   @override
   void initState() {
     super.initState();
 
-    emailController.addListener(() {
-      final isButtonActive = emailController.text.isNotEmpty;
+    passwordController.addListener(() {
+      final isButtonActive = passwordController.text.isNotEmpty;
       setState(() {
         this.isButtonActive = isButtonActive;
       });
@@ -81,7 +82,7 @@ class _SignupPageState extends State<SignupPage2> {
               height: 40,
             ),
             const Text(
-              '이메일을 입력해주세요.',
+              '비밀번호를 입력해주세요.',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w300,
@@ -93,9 +94,9 @@ class _SignupPageState extends State<SignupPage2> {
             SizedBox(
               height: 54,
               child: MyTextField(
-                controller: emailController,
-                hintText: '이메일',
-                obscureText: false,
+                controller: passwordController,
+                hintText: '비밀번호',
+                obscureText: true,
               ),
             ),
             const SizedBox(
@@ -120,8 +121,9 @@ class _SignupPageState extends State<SignupPage2> {
                 onPressed: isButtonActive
                     ? () {
                         Get.to(
-                          SignupPage6(
-                            email: emailController.text,
+                          SignupPage7(
+                            email: widget.email,
+                            password: passwordController.text,
                           ),
                           transition: Transition.noTransition,
                         );

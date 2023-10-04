@@ -1,4 +1,5 @@
 import 'package:dangcheck/pages/house.dart';
+import 'package:dangcheck/pages/sign_up_pages/signup_email.dart';
 import 'package:dangcheck/pages/sign_up_pages/signup_nickname.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -227,7 +228,7 @@ class _LogInPageState extends State<LogInPage> {
                   ),
                 ),
                 onPressed: () {
-                  Get.to(const SignupPage(),
+                  Get.to(const SignupPage2(),
                       transition: Transition.noTransition);
                 },
                 child: const Text(

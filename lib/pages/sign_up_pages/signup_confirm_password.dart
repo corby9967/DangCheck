@@ -1,31 +1,98 @@
+import 'package:dangcheck/pages/sign_up_pages/signup_email.dart';
 import 'package:dangcheck/pages/sign_up_pages/signup_password.dart';
 import 'package:dangcheck/pages/sign_up_pages/signup_profile.dart';
 import 'package:dangcheck/my%20classes/textfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-class SignupPage2 extends StatefulWidget {
-  const SignupPage2({super.key});
+class SignupPage7 extends StatefulWidget {
+  final String email;
+  final String password;
+  const SignupPage7({required this.email, required this.password, super.key});
 
   @override
-  State<SignupPage2> createState() => _SignupPageState();
+  State<SignupPage7> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<SignupPage2> {
-  final emailController = TextEditingController();
+class _SignupPageState extends State<SignupPage7> {
+  final confirmPasswordController = TextEditingController();
   bool isButtonActive = false;
+  String errorMsg = '';
 
   @override
   void initState() {
     super.initState();
 
-    emailController.addListener(() {
-      final isButtonActive = emailController.text.isNotEmpty;
+    confirmPasswordController.addListener(() {
+      final isButtonActive = confirmPasswordController.text.isNotEmpty;
       setState(() {
         this.isButtonActive = isButtonActive;
       });
     });
+  }
+
+  void signUserUp() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    try {
+      if (widget.password == confirmPasswordController.text) {
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: widget.email,
+              password: widget.password,
+            )
+            .then((value) => {
+                  Navigator.pop(context),
+                  Get.to(
+                    const SignupPage3(),
+                    transition: Transition.noTransition,
+                  ),
+                });
+      } else {
+        Navigator.pop(context);
+        setState(() {});
+        errorMsg = '비밀번호가 일치하지 않습니다.';
+        Get.to(
+          SignupPage6(email: widget.email),
+          transition: Transition.noTransition,
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      print(e);
+      if (e.code == 'email-already-in-use') {
+        setState(() {});
+        errorMsg = '이미 사용중인 이메일 입니다.';
+        Get.to(
+          const SignupPage2(),
+          transition: Transition.noTransition,
+        );
+      } else if (e.code == 'invalid-email') {
+        setState(() {});
+        errorMsg = '존재하지 않는 이메일 입니다.';
+        Get.to(
+          const SignupPage2(),
+          transition: Transition.noTransition,
+        );
+      } else if (e.code == 'weak-password') {
+        setState(() {});
+        errorMsg = '비밀번호가 6자리 이상이어야 합니다.';
+        Get.to(
+          SignupPage6(email: widget.email),
+          transition: Transition.noTransition,
+        );
+      }
+    }
   }
 
   @override
@@ -81,7 +148,7 @@ class _SignupPageState extends State<SignupPage2> {
               height: 40,
             ),
             const Text(
-              '이메일을 입력해주세요.',
+              '비밀번호를 다시 한번 입력해주세요.',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w300,
@@ -93,9 +160,9 @@ class _SignupPageState extends State<SignupPage2> {
             SizedBox(
               height: 54,
               child: MyTextField(
-                controller: emailController,
-                hintText: '이메일',
-                obscureText: false,
+                controller: confirmPasswordController,
+                hintText: '비밀번호',
+                obscureText: true,
               ),
             ),
             const SizedBox(
@@ -119,12 +186,7 @@ class _SignupPageState extends State<SignupPage2> {
                 ),
                 onPressed: isButtonActive
                     ? () {
-                        Get.to(
-                          SignupPage6(
-                            email: emailController.text,
-                          ),
-                          transition: Transition.noTransition,
-                        );
+                        signUserUp();
                       }
                     : null,
                 child: Text(

@@ -1,5 +1,5 @@
 import 'package:dangcheck/my%20classes/textfield.dart';
-import 'package:dangcheck/pages/make_house3.dart';
+import 'package:dangcheck/pages/make_house_pages/make_house3.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';

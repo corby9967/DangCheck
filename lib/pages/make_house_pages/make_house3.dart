@@ -1,4 +1,4 @@
-import 'package:dangcheck/pages/make_house4.dart';
+import 'package:dangcheck/pages/make_house_pages/make_house4.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

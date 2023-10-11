@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/pages/house.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +12,26 @@ class SignupPage5 extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage5> {
+  String nickname = '';
+
+  Future getNickName() async {
+    final user = FirebaseAuth.instance.currentUser!;
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user.email!)
+        .get()
+        .then((snapshot) {
+      nickname = snapshot.get("nickname");
+    });
+    print(nickname);
+  }
+
+  @override
+  void initState() {
+    getNickName();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,9 +94,9 @@ class _SignupPageState extends State<SignupPage5> {
             const SizedBox(
               height: 15,
             ),
-            const Text(
-              '000님',
-              style: TextStyle(
+            Text(
+              '$nickname님',
+              style: const TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.w800,
               ),

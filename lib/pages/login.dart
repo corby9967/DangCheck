@@ -1,6 +1,5 @@
-import 'package:dangcheck/pages/house.dart';
+import 'package:dangcheck/pages/forgot_password.dart';
 import 'package:dangcheck/pages/sign_up_pages/signup_email.dart';
-import 'package:dangcheck/pages/sign_up_pages/signup_nickname.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -66,7 +65,6 @@ class _LogInPageState extends State<LogInPage> {
         errorMsg = '이메일 형식이 올바르지 않습니다.';
       } else if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
         setState(() {});
-        //errorMsg = '존재하지 않는 이메일 입니다.';
         errorMsg = '로그인 정보가 틀렸습니다.';
       } else if (e.code == 'wrong-password') {
         setState(() {});
@@ -186,11 +184,17 @@ class _LogInPageState extends State<LogInPage> {
                   const SizedBox(
                     width: 5,
                   ),
-                  const Text(
-                    '비밀번호 찾기',
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 11,
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(const ForgotPassword(),
+                          transition: Transition.noTransition);
+                    },
+                    child: const Text(
+                      '비밀번호 찾기',
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 11,
+                      ),
                     ),
                   ),
                 ],

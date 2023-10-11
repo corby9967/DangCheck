@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dangcheck/pages/house_join.dart';
-import 'package:dangcheck/pages/make_house.dart';
+import 'package:dangcheck/pages/make_house_pages/make_house.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

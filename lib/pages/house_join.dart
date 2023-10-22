@@ -1,4 +1,5 @@
 import 'package:dangcheck/my%20classes/textfield.dart';
+import 'package:dangcheck/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -94,7 +95,7 @@ class _JoinPageState extends State<JoinHousePage> {
                 onPressed: isButtonActive
                     ? () {
                         Get.to(
-                          const Placeholder(),
+                          const HomePage(),
                           transition: Transition.noTransition,
                         );
                       }

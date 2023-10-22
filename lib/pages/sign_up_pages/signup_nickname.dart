@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/my%20classes/textfield.dart';
+import 'package:dangcheck/pages/sign_up_pages/signup_agree.dart';
 import 'package:dangcheck/pages/sign_up_pages/signup_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,12 +49,7 @@ class _SignupPageState extends State<SignupPage> {
             children: [
               AppBar(
                 backgroundColor: Theme.of(context).colorScheme.background,
-                // leading: IconButton(
-                //   onPressed: () {
-                //     Get.back();
-                //   },
-                //   icon: const Icon(Icons.arrow_back_ios),
-                // ),
+                automaticallyImplyLeading: false,
                 title: const Text(
                   '회원가입',
                   style: TextStyle(
@@ -66,7 +62,7 @@ class _SignupPageState extends State<SignupPage> {
                 children: [
                   Container(
                     height: 3,
-                    width: 68,
+                    width: 205,
                     decoration: const BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -74,7 +70,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   Container(
                     height: 3,
-                    width: 273,
+                    width: 136,
                     decoration: const BoxDecoration(
                       color: Colors.black12,
                       borderRadius: BorderRadius.only(
@@ -132,7 +128,7 @@ class _SignupPageState extends State<SignupPage> {
                       ? () {
                           saveNickName();
                           Get.to(
-                            const SignupPage3(),
+                            const SignupPage4(),
                             transition: Transition.noTransition,
                           );
                         }

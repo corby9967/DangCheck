@@ -58,7 +58,7 @@ class _SignupPageState extends State<SignupPage2> {
                 children: [
                   Container(
                     height: 3,
-                    width: 136,
+                    width: 69,
                     decoration: const BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -66,7 +66,7 @@ class _SignupPageState extends State<SignupPage2> {
                   ),
                   Container(
                     height: 3,
-                    width: 205,
+                    width: 272,
                     decoration: const BoxDecoration(
                       color: Colors.black12,
                       borderRadius: BorderRadius.only(

@@ -3,7 +3,6 @@ import 'package:dangcheck/pages/sign_up_pages/signup_email.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../my classes/textfield.dart';
 
 class LogInPage extends StatefulWidget {
@@ -159,7 +158,7 @@ class _LogInPageState extends State<LogInPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   SizedBox(
-                    width: 200,
+                    width: 278,
                     child: Text(
                       errorMsg,
                       style: const TextStyle(
@@ -168,26 +167,10 @@ class _LogInPageState extends State<LogInPage> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  const Text(
-                    '아이디 찾기',
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 11,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  const VerticalDivider(
-                    color: Colors.black54,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
                   GestureDetector(
                     onTap: () {
-                      Get.to(const ForgotPassword(),
-                          transition: Transition.noTransition);
+                      Get.to(const ForgotPasswordPage(),
+                          transition: Transition.downToUp);
                     },
                     child: const Text(
                       '비밀번호 찾기',

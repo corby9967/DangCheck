@@ -1,17 +1,18 @@
 import 'package:dangcheck/my%20classes/textfield.dart';
+import 'package:dangcheck/pages/forgot_confirm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({super.key});
+class ForgotPasswordPage extends StatefulWidget {
+  const ForgotPasswordPage({super.key});
 
   @override
-  State<ForgotPassword> createState() => _SignupPageState();
+  State<ForgotPasswordPage> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<ForgotPassword> {
+class _SignupPageState extends State<ForgotPasswordPage> {
   final emailController = TextEditingController();
   bool isButtonActive = false;
   String errorMsg = '';
@@ -44,26 +45,8 @@ class _SignupPageState extends State<ForgotPassword> {
           .then(
             (value) => {
               Navigator.pop(context),
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text("이메일이 전송 되었습니다."),
-                    actions: <Widget>[
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          textStyle: Theme.of(context).textTheme.labelLarge,
-                        ),
-                        child: const Text('확인'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Get.back();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ),
+              Get.off(() => const ForgotConfirmPage(),
+                  transition: Transition.downToUp),
             },
           );
     } on FirebaseAuthException catch (e) {

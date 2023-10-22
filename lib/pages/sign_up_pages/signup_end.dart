@@ -1,37 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/pages/house.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignupPage5 extends StatefulWidget {
-  const SignupPage5({super.key});
+  final String nickname;
+  const SignupPage5({required this.nickname, super.key});
 
   @override
   State<SignupPage5> createState() => _SignupPageState();
 }
 
 class _SignupPageState extends State<SignupPage5> {
-  String nickname = '';
-
-  Future getNickName() async {
-    final user = FirebaseAuth.instance.currentUser!;
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(user.email!)
-        .get()
-        .then((snapshot) {
-      nickname = snapshot.get("nickname");
-    });
-    print(nickname);
-  }
-
-  @override
-  void initState() {
-    getNickName();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +61,7 @@ class _SignupPageState extends State<SignupPage5> {
               ],
             ),
             const SizedBox(
-              height: 220,
+              height: 200,
             ),
             const Text(
               '회원가입 완료!',
@@ -95,7 +74,7 @@ class _SignupPageState extends State<SignupPage5> {
               height: 15,
             ),
             Text(
-              '$nickname님',
+              '${widget.nickname}님',
               style: const TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.w800,
@@ -109,7 +88,7 @@ class _SignupPageState extends State<SignupPage5> {
               ),
             ),
             const SizedBox(
-              height: 225,
+              height: 245,
             ),
             SizedBox(
               height: 54,
@@ -127,10 +106,8 @@ class _SignupPageState extends State<SignupPage5> {
                   ),
                 ),
                 onPressed: () {
-                  Get.to(
-                    const HousePage(),
-                    transition: Transition.noTransition,
-                  );
+                  Get.offAll(() => const HousePage(),
+                      transition: Transition.noTransition);
                 },
                 child: Text(
                   '시작하기',

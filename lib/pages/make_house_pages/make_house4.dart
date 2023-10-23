@@ -2,6 +2,8 @@ import 'package:dangcheck/pages/make_house_pages/make_house5.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../my classes/textfield.dart';
+
 class MakeHousePage4 extends StatefulWidget {
   const MakeHousePage4({super.key});
 
@@ -10,12 +12,25 @@ class MakeHousePage4 extends StatefulWidget {
 }
 
 class _MakeHousePage4 extends State<MakeHousePage4> {
-  bool isButtonActive = true;
+  bool isButtonActive = false;
+  bool check = true;
   int feed = 1;
-  List<Text> tempList = [];
+
+  List<TextEditingController> controllers = [TextEditingController()];
+
   @override
   void initState() {
     super.initState();
+
+    for (TextEditingController controller in controllers) {
+      controller.addListener(() {
+        setState(() {
+          controller.text.isNotEmpty
+              ? isButtonActive = true
+              : isButtonActive = false;
+        });
+      });
+    }
   }
 
   @override
@@ -49,9 +64,9 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                 Container(
                   height: 3,
                   width: 126 + 42,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
                   ),
                 ),
                 Container(
@@ -99,7 +114,7 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                       children: [
                         IconButton(
                           style: IconButton.styleFrom(
-                            backgroundColor: feed < 4
+                            backgroundColor: feed == 1
                                 ? const Color(0xFFE8E8E8)
                                 : Theme.of(context).colorScheme.primary,
                             shape: const CircleBorder(),
@@ -112,6 +127,13 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                           ),
                           onPressed: () {
                             setState(() {
+                              // textfield 개수 줄이기
+                              if (feed > 1) {
+                                controllers[feed - 1].clear();
+                                controllers[feed - 1].dispose();
+                                controllers.removeAt(feed - 1);
+                              }
+
                               feed > 1 ? feed-- : feed = 1;
                             });
                           },
@@ -128,7 +150,7 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                         ),
                         IconButton(
                           style: IconButton.styleFrom(
-                            backgroundColor: feed < 4
+                            backgroundColor: feed != 4
                                 ? Theme.of(context).colorScheme.primary
                                 : const Color(0xFFE8E8E8),
                             shape: const CircleBorder(),
@@ -141,11 +163,12 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                           ),
                           onPressed: () {
                             setState(() {
-                              feed < 4 ? feed++ : feed = 4;
+                              // textfield 개수 늘리기
+                              if (feed < 4) {
+                                controllers.add(TextEditingController());
+                              }
 
-                              tempList.add(const Text("hi"));
-                              print("junduck");
-                              print(tempList.length);
+                              feed < 4 ? feed++ : feed = 4;
                             });
                           },
                         ),
@@ -155,15 +178,36 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                 ),
               ),
             ),
-            Container(
-              color: Colors.black,
-              height: 300,
-              child: ListView.builder(
-                  itemCount: tempList.length,
-                  itemBuilder: (BuildContext ctx, int idx) {
-                    return tempList[idx];
-                  }),
+            SizedBox(
+              height: 360,
+              child: Expanded(
+                child: ListView.builder(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 2, vertical: 20),
+                  itemCount: controllers.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 10),
+                        Text(
+                          '🍚 ${index + 1}번째 식사 메뉴',
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                        const SizedBox(height: 5),
+                        MyTextField(
+                          controller: controllers[index],
+                          hintText: '메뉴를 입력하세요',
+                          obscureText: false,
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    );
+                  },
+                ),
+              ),
             ),
+            const SizedBox(height: 36),
             SizedBox(
               height: 54,
               width: 356,

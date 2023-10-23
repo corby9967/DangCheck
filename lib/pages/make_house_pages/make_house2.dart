@@ -88,9 +88,9 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                 Container(
                   height: 3,
                   width: 84,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
                   ),
                 ),
                 Container(

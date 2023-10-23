@@ -1,17 +1,18 @@
-import 'package:dangcheck/pages/make_house_pages/make_house4.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class MakeHousePage3 extends StatefulWidget {
-  const MakeHousePage3({super.key});
+class MakeHousePageFinal extends StatefulWidget {
+  const MakeHousePageFinal({super.key});
 
   @override
-  State<MakeHousePage3> createState() => _MakeHousePage3();
+  State<MakeHousePageFinal> createState() => _MakeHousePageFinal();
 }
 
-class _MakeHousePage3 extends State<MakeHousePage3> {
+class _MakeHousePageFinal extends State<MakeHousePageFinal> {
   bool isButtonActive = true;
-  int feed = 1;
+
+  String hausCode = '78987';
 
   @override
   void initState() {
@@ -48,7 +49,7 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
               children: [
                 Container(
                   height: 3,
-                  width: 126,
+                  width: 126 + 42 + 42 + 42 + 42 + 47,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -56,7 +57,7 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
                 ),
                 Container(
                   height: 3,
-                  width: 215,
+                  width: 215 - 42 - 42 - 42 - 42 - 47,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(
@@ -67,52 +68,60 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 40),
             const Text(
-              '강아지 아이콘을 선택해주세요.',
+              '하우스가 생성되었어요.\n하우스 코드를 친구들에게 알려주세요!',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.w300,
               ),
             ),
-            const SizedBox(
-              height: 150,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.arrow_back_ios_rounded,
-                    color: Color(0xFF8B95A1),
+            const SizedBox(height: 90),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 59, vertical: 40),
+              width: 337,
+              height: 250,
+              decoration: const BoxDecoration(
+                  color: Color(0xFFF2F4F6),
+                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              child: Column(
+                children: [
+                  const Text(
+                    '인동새우깡하우스의 하우스코드에요.\n가족들에게 공유해보세요 😊',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14),
                   ),
-                  iconSize: 40,
-                ),
-                Container(
-                  width: 185,
-                  height: 185,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xFFE8E8E8)),
+                  const SizedBox(
+                    height: 25,
                   ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Color(0xFF8B95A1),
+                  Text(
+                    hausCode,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  iconSize: 40,
-                ),
-              ],
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(text: hausCode));
+                    },
+                    child: Text(
+                      '클립보드 복사',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(
-              height: 204,
-            ),
+            const SizedBox(height: 175),
             SizedBox(
               height: 54,
               width: 356,
@@ -132,13 +141,13 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
                 onPressed: isButtonActive
                     ? () {
                         Get.to(
-                          const MakeHousePage4(),
+                          const Placeholder(),
                           transition: Transition.noTransition,
                         );
                       }
                     : null,
                 child: Text(
-                  '다음',
+                  '하우스로 이동하기',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.background,
                   ),

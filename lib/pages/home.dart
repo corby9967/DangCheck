@@ -8,8 +8,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int foodCircle = 1;
-  final int snackCircle = 3;
+  final int foodCheck = 2;
+  final int snackCheck = 0;
+  final bool showerCheck = true;
+  final bool walkCheck = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,19 +41,26 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Column(
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.rice_bowl_rounded,
-                        size: 35,
+                    if (foodCheck == 0)
+                      const Image(
+                        image: AssetImage('assets/images/food_0.png'),
+                      )
+                    else
+                      const Image(
+                        image: AssetImage('assets/images/food_1.png'),
                       ),
-                    ),
                     Row(
                       children: [
-                        for (int i = 0; i < foodCircle; i++)
+                        for (int i = 0; i < foodCheck; i++)
                           Icon(
                             Icons.circle_rounded,
                             color: Theme.of(context).colorScheme.primary,
+                            size: 16,
+                          ),
+                        for (int i = 0; i < 4 - foodCheck; i++)
+                          const Icon(
+                            Icons.circle_rounded,
+                            color: Colors.black12,
                             size: 16,
                           ),
                       ],
@@ -60,19 +69,26 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Column(
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.shower_rounded,
-                        size: 35,
+                    if (snackCheck == 0)
+                      const Image(
+                        image: AssetImage('assets/images/snack_0.png'),
+                      )
+                    else
+                      const Image(
+                        image: AssetImage('assets/images/snack_1.png'),
                       ),
-                    ),
                     Row(
                       children: [
-                        for (int i = 0; i < snackCircle; i++)
+                        for (int i = 0; i < snackCheck; i++)
                           Icon(
                             Icons.circle_rounded,
                             color: Theme.of(context).colorScheme.primary,
+                            size: 16,
+                          ),
+                        for (int i = 0; i < 4 - snackCheck; i++)
+                          const Icon(
+                            Icons.circle_rounded,
+                            color: Colors.black12,
                             size: 16,
                           ),
                       ],
@@ -81,29 +97,33 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Column(
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.rice_bowl_rounded,
-                        size: 35,
+                    if (showerCheck == false)
+                      const Image(
+                        image: AssetImage('assets/images/shower_0.png'),
+                      )
+                    else
+                      const Image(
+                        image: AssetImage('assets/images/shower_1.png'),
                       ),
-                    ),
                     const SizedBox(
                       height: 16,
+                      width: 64,
                     )
                   ],
                 ),
                 Column(
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.shower_rounded,
-                        size: 35,
+                    if (walkCheck == false)
+                      const Image(
+                        image: AssetImage('assets/images/walk_0.png'),
+                      )
+                    else
+                      const Image(
+                        image: AssetImage('assets/images/walk_1.png'),
                       ),
-                    ),
                     const SizedBox(
                       height: 16,
+                      width: 64,
                     )
                   ],
                 ),

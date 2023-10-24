@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFFAF4),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: const Color(0xFFFFFAF4),
         elevation: 0,
       ),
       body: Padding(
@@ -129,36 +130,58 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 450,
-            ),
-            FloatingActionButton(
-              shape: const CircleBorder(),
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              onPressed: () {},
-            ),
+            const SizedBox(height: 450),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
-        currentIndex: 0,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              size: 30,
-            ),
-            label: "멤버",
+      extendBody: true,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SizedBox(
+        width: 75,
+        height: 75,
+        child: FittedBox(
+          child: FloatingActionButton(
+            shape: const CircleBorder(),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            onPressed: () {},
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.settings,
-              size: 30,
+        ),
+      ),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(25.0),
+          topRight: Radius.circular(25.0),
+        ),
+        child: BottomAppBar(
+          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+          clipBehavior: Clip.antiAlias,
+          shape: const CircularNotchedRectangle(),
+          elevation: 0,
+          notchMargin: 15,
+          color: Theme.of(context).colorScheme.background,
+          child: Expanded(
+            child: BottomNavigationBar(
+              elevation: 0,
+              backgroundColor: Theme.of(context).primaryColor.withAlpha(0),
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.person,
+                    size: 30,
+                  ),
+                  label: "멤버",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.settings,
+                    size: 30,
+                  ),
+                  label: "설정",
+                ),
+              ],
             ),
-            label: "설정",
           ),
-        ],
+        ),
       ),
     );
   }

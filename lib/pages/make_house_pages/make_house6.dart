@@ -232,7 +232,7 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
                 ),
                 onPressed: () {
                   Get.to(
-                    const Placeholder(),
+                    const MakeHousePage7(),
                     transition: Transition.noTransition,
                   );
                 },

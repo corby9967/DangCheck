@@ -225,7 +225,7 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                 ),
                 onPressed: () {
                   Get.to(
-                    const Placeholder(),
+                    const MakeHousePage5(),
                     transition: Transition.noTransition,
                   );
                 },

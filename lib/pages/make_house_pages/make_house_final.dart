@@ -1,3 +1,4 @@
+import 'package:dangcheck/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -141,7 +142,7 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
                 onPressed: isButtonActive
                     ? () {
                         Get.to(
-                          const Placeholder(),
+                          const HomePage(),
                           transition: Transition.noTransition,
                         );
                       }

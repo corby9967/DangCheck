@@ -3,6 +3,7 @@ import 'package:dangcheck/pages/make_house_pages/make_house3.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:intl/intl.dart';
 
 class MakeHousePage2 extends StatefulWidget {
   const MakeHousePage2({super.key});
@@ -132,10 +133,42 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
             ),
             SizedBox(
               height: 54,
-              child: MyTextField(
+              width: 356,
+              child: TextField(
                 controller: dogBdayController,
-                hintText: '강아지 생일',
-                obscureText: false,
+                decoration: const InputDecoration(
+                  hintText: '강아지 생일',
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFFE8E8E8)),
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                ),
+                readOnly: true,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime.now(),
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: ColorScheme.light(
+                              primary: Theme.of(context).colorScheme.primary),
+                        ),
+                        child: child!,
+                      );
+                    },
+                  );
+
+                  if (pickedDate != null) {
+                    String formattedDate =
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
+
+                    setState(() {
+                      dogBdayController.text = formattedDate;
+                    });
+                  }
+                },
               ),
             ),
             const SizedBox(

@@ -95,9 +95,16 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
                   width: 185,
                   height: 185,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.6),
                     shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xFFE8E8E8)),
+                    border: Border.all(
+                        color: Theme.of(context).colorScheme.primary),
+                    image: const DecorationImage(
+                      image: AssetImage('assets/images/dog_profile.png'),
+                      alignment: Alignment.bottomCenter,
+                      scale: 1.94,
+                    ),
                   ),
                 ),
                 IconButton(

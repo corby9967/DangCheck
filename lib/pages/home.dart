@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../my classes/message.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -8,10 +10,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int foodCheck = 2;
-  final int snackCheck = 0;
-  final bool showerCheck = true;
-  final bool walkCheck = false;
+  int foodCheck = 0;
+  int snackCheck = 0;
+  bool showerCheck = false;
+  bool walkCheck = false;
+
+  bool isButtonClicked = true;
+  bool isLongTapped1 = false;
+  bool isLongTapped2 = false;
+  bool isLongTapped3 = false;
+  bool isLongTapped4 = false;
+
+  Alignment alignment1 = const Alignment(0, 0);
+  Alignment alignment2 = const Alignment(0, 0);
+  Alignment alignment3 = const Alignment(0, 0);
+  Alignment alignment4 = const Alignment(0, 0);
+
+  double size = 40;
+
+  bool message1 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,103 +51,417 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           children: [
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     if (foodCheck == 0)
-                      const Image(
-                        image: AssetImage('assets/images/food_0.png'),
+                      const Column(
+                        children: [
+                          SizedBox(height: 7.0),
+                          Image(
+                            image: AssetImage('assets/images/food_0.png'),
+                          ),
+                          SizedBox(height: 7.0),
+                        ],
                       )
                     else
-                      const Image(
-                        image: AssetImage('assets/images/food_1.png'),
+                      GestureDetector(
+                        child: const Text(
+                          '🍚',
+                          style: TextStyle(fontSize: 32),
+                        ),
+                        onLongPress: () {
+                          setState(() {
+                            isLongTapped1 = !isLongTapped1;
+                            isLongTapped2 = false;
+                            isLongTapped3 = false;
+                            isLongTapped4 = false;
+                          });
+                        },
+                        onTap: () {
+                          setState(() {
+                            message1 = !message1;
+                          });
+                        },
                       ),
                     Row(
                       children: [
+                        const SizedBox(width: 5),
                         for (int i = 0; i < foodCheck; i++)
-                          Icon(
-                            Icons.circle_rounded,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 16,
+                          Row(
+                            children: [
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: ShapeDecoration(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  shape: const OvalBorder(),
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                            ],
                           ),
                         for (int i = 0; i < 4 - foodCheck; i++)
-                          const Icon(
-                            Icons.circle_rounded,
-                            color: Colors.black12,
-                            size: 16,
+                          Row(
+                            children: [
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: const ShapeDecoration(
+                                  color: Colors.black12,
+                                  shape: OvalBorder(),
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                            ],
                           ),
                       ],
-                    )
+                    ),
+                    isLongTapped1
+                        ? SizedBox(
+                            width: 65,
+                            height: 40,
+                            child: GestureDetector(
+                              child: const Icon(
+                                Icons.highlight_remove_rounded,
+                                size: 22,
+                                color: Colors.black26,
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  foodCheck > 0 ? foodCheck-- : foodCheck;
+                                  isLongTapped1 = !isLongTapped1;
+                                });
+                              },
+                            ),
+                          )
+                        : const SizedBox(width: 65, height: 40),
                   ],
                 ),
                 Column(
                   children: [
                     if (snackCheck == 0)
-                      const Image(
-                        image: AssetImage('assets/images/snack_0.png'),
+                      const Column(
+                        children: [
+                          SizedBox(height: 7.0),
+                          Image(
+                            image: AssetImage('assets/images/snack_0.png'),
+                          ),
+                          SizedBox(height: 7.0),
+                        ],
                       )
                     else
-                      const Image(
-                        image: AssetImage('assets/images/snack_1.png'),
+                      GestureDetector(
+                        child: const Text(
+                          '🦴',
+                          style: TextStyle(fontSize: 32),
+                        ),
+                        onLongPress: () {
+                          setState(() {
+                            isLongTapped1 = false;
+                            isLongTapped2 = !isLongTapped2;
+                            isLongTapped3 = false;
+                            isLongTapped4 = false;
+                          });
+                        },
                       ),
                     Row(
                       children: [
+                        const SizedBox(width: 5),
                         for (int i = 0; i < snackCheck; i++)
-                          Icon(
-                            Icons.circle_rounded,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 16,
+                          Row(
+                            children: [
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: ShapeDecoration(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  shape: const OvalBorder(),
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                            ],
                           ),
                         for (int i = 0; i < 4 - snackCheck; i++)
-                          const Icon(
-                            Icons.circle_rounded,
-                            color: Colors.black12,
-                            size: 16,
+                          Row(
+                            children: [
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: const ShapeDecoration(
+                                  color: Colors.black12,
+                                  shape: OvalBorder(),
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                            ],
                           ),
                       ],
-                    )
+                    ),
+                    isLongTapped2
+                        ? SizedBox(
+                            width: 65,
+                            height: 40,
+                            child: GestureDetector(
+                              child: const Icon(
+                                Icons.highlight_remove_rounded,
+                                size: 22,
+                                color: Colors.black26,
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  snackCheck > 0 ? snackCheck-- : snackCheck;
+                                  isLongTapped2 = !isLongTapped2;
+                                });
+                              },
+                            ),
+                          )
+                        : const SizedBox(width: 65, height: 40),
                   ],
                 ),
                 Column(
                   children: [
-                    if (showerCheck == false)
-                      const Image(
-                        image: AssetImage('assets/images/shower_0.png'),
-                      )
-                    else
-                      const Image(
-                        image: AssetImage('assets/images/shower_1.png'),
-                      ),
-                    const SizedBox(
-                      height: 16,
-                      width: 64,
-                    )
+                    Row(
+                      children: [
+                        const SizedBox(width: 16),
+                        if (showerCheck == false)
+                          const Column(
+                            children: [
+                              SizedBox(height: 7.0),
+                              Image(
+                                image: AssetImage('assets/images/shower_0.png'),
+                              ),
+                              SizedBox(height: 7.0),
+                            ],
+                          )
+                        else
+                          GestureDetector(
+                            child: const Text(
+                              '🛁',
+                              style: TextStyle(fontSize: 32),
+                            ),
+                            onLongPress: () {
+                              setState(() {
+                                isLongTapped1 = false;
+                                isLongTapped2 = false;
+                                isLongTapped3 = !isLongTapped3;
+                                isLongTapped4 = false;
+                              });
+                            },
+                          ),
+                        const SizedBox(width: 16),
+                      ],
+                    ),
+                    isLongTapped3
+                        ? const SizedBox(
+                            width: 65,
+                            height: 10,
+                            child: Icon(
+                              Icons.highlight_remove_rounded,
+                              size: 22,
+                              color: Colors.black26,
+                            ),
+                          )
+                        : const SizedBox(width: 65, height: 10),
+                    const SizedBox(width: 65, height: 40),
                   ],
                 ),
                 Column(
                   children: [
-                    if (walkCheck == false)
-                      const Image(
-                        image: AssetImage('assets/images/walk_0.png'),
-                      )
-                    else
-                      const Image(
-                        image: AssetImage('assets/images/walk_1.png'),
-                      ),
-                    const SizedBox(
-                      height: 16,
-                      width: 64,
-                    )
+                    Row(
+                      children: [
+                        const SizedBox(width: 16),
+                        if (walkCheck == false)
+                          const Column(
+                            children: [
+                              SizedBox(height: 7.0),
+                              Image(
+                                image: AssetImage('assets/images/walk_0.png'),
+                              ),
+                              SizedBox(height: 7.0),
+                            ],
+                          )
+                        else
+                          GestureDetector(
+                            child: const Text(
+                              '🐕',
+                              style: TextStyle(fontSize: 32),
+                            ),
+                            onLongPress: () {
+                              setState(() {
+                                isLongTapped1 = false;
+                                isLongTapped2 = false;
+                                isLongTapped3 = false;
+                                isLongTapped4 = !isLongTapped4;
+                              });
+                            },
+                          ),
+                        const SizedBox(width: 16),
+                      ],
+                    ),
+                    isLongTapped4
+                        ? const SizedBox(
+                            width: 65,
+                            height: 10,
+                            child: Icon(
+                              Icons.highlight_remove_rounded,
+                              size: 22,
+                              color: Colors.black26,
+                            ),
+                          )
+                        : const SizedBox(width: 65, height: 10),
+                    const SizedBox(width: 65, height: 40),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 450),
+            const SizedBox(height: 17),
+            message1 ? const Message() : const SizedBox(height: 60),
+            const Image(
+              width: 190,
+              height: 280,
+              image: AssetImage('assets/images/dog.png'),
+            ),
+            SizedBox(
+              width: 250,
+              height: 222,
+              child: Stack(
+                children: [
+                  AnimatedAlign(
+                    duration: isButtonClicked
+                        ? const Duration(milliseconds: 275)
+                        : const Duration(milliseconds: 875),
+                    alignment: alignment1,
+                    curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 275),
+                      curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                      height: size,
+                      width: size,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                            color: Theme.of(context).colorScheme.primary),
+                        borderRadius: BorderRadius.circular(40.0),
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            foodCheck < 4 ? foodCheck++ : foodCheck;
+                          });
+                        },
+                        child: const Center(
+                          child: Text(
+                            '🍚',
+                            style: TextStyle(fontSize: 24),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  AnimatedAlign(
+                    duration: isButtonClicked
+                        ? const Duration(milliseconds: 275)
+                        : const Duration(milliseconds: 875),
+                    alignment: alignment2,
+                    curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 275),
+                      curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                      height: size,
+                      width: size,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                            color: Theme.of(context).colorScheme.primary),
+                        borderRadius: BorderRadius.circular(40.0),
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            snackCheck < 4 ? snackCheck++ : snackCheck;
+                          });
+                        },
+                        child: const Center(
+                          child: Text(
+                            '🦴',
+                            style: TextStyle(fontSize: 24),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  AnimatedAlign(
+                    duration: isButtonClicked
+                        ? const Duration(milliseconds: 275)
+                        : const Duration(milliseconds: 875),
+                    alignment: alignment3,
+                    curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 275),
+                      curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                      height: size,
+                      width: size,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                            color: Theme.of(context).colorScheme.primary),
+                        borderRadius: BorderRadius.circular(40.0),
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            showerCheck = true;
+                          });
+                        },
+                        child: const Center(
+                          child: Text(
+                            '🛁',
+                            style: TextStyle(fontSize: 24),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  AnimatedAlign(
+                    duration: isButtonClicked
+                        ? const Duration(milliseconds: 275)
+                        : const Duration(milliseconds: 875),
+                    alignment: alignment4,
+                    curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 275),
+                      curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                      height: size,
+                      width: size,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                            color: Theme.of(context).colorScheme.primary),
+                        borderRadius: BorderRadius.circular(40.0),
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            walkCheck = true;
+                          });
+                        },
+                        child: const Center(
+                          child: Text(
+                            '🐕',
+                            style: TextStyle(fontSize: 24),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -143,7 +474,23 @@ class _HomePageState extends State<HomePage> {
           child: FloatingActionButton(
             shape: const CircleBorder(),
             backgroundColor: Theme.of(context).colorScheme.primary,
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                if (isButtonClicked) {
+                  isButtonClicked = !isButtonClicked;
+                  alignment1 = const Alignment(-0.6, -0.3);
+                  alignment2 = const Alignment(-0.25, -0.7);
+                  alignment3 = const Alignment(0.25, -0.7);
+                  alignment4 = const Alignment(0.6, -0.3);
+                } else {
+                  isButtonClicked = !isButtonClicked;
+                  alignment1 = const Alignment(0.0, 0.0);
+                  alignment2 = const Alignment(0.0, 0.0);
+                  alignment3 = const Alignment(0.0, 0.0);
+                  alignment4 = const Alignment(0.0, 0.0);
+                }
+              });
+            },
           ),
         ),
       ),

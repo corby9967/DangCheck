@@ -15,6 +15,7 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
   bool isButtonActive = false;
   bool check = true;
   int feed = 1;
+  int menu = 1;
 
   List<TextEditingController> controllers = [TextEditingController()];
 
@@ -128,11 +129,11 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                           onPressed: () {
                             setState(() {
                               // textfield 개수 줄이기
-                              if (feed > 1) {
-                                controllers[feed - 1].clear();
-                                controllers[feed - 1].dispose();
-                                controllers.removeAt(feed - 1);
-                              }
+                              // if (feed > 1) {
+                              //   controllers[feed - 1].clear();
+                              //   controllers[feed - 1].dispose();
+                              //   controllers.removeAt(feed - 1);
+                              // }
 
                               feed > 1 ? feed-- : feed = 1;
                             });
@@ -163,11 +164,6 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                           ),
                           onPressed: () {
                             setState(() {
-                              // textfield 개수 늘리기
-                              if (feed < 4) {
-                                controllers.add(TextEditingController());
-                              }
-
                               feed < 4 ? feed++ : feed = 4;
                             });
                           },
@@ -179,7 +175,7 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
               ),
             ),
             SizedBox(
-              height: 360,
+              height: 322,
               child: Expanded(
                 child: ListView.builder(
                   padding:
@@ -207,7 +203,38 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                 ),
               ),
             ),
-            const SizedBox(height: 36),
+            const SizedBox(height: 10),
+            Container(
+              width: 356,
+              height: 54,
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(width: 1, color: Color(0xFFE8E8E8)),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    // textfield 개수 늘리기
+                    if (menu < 4) {
+                      controllers.add(TextEditingController());
+                    }
+
+                    menu < 4 ? menu++ : menu = 4;
+                  });
+                },
+                child: const Text(
+                  '+ 추가하기',
+                  style: TextStyle(
+                    color: Color(0xFFD7D7D7),
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
             SizedBox(
               height: 54,
               width: 356,
@@ -237,9 +264,7 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             SizedBox(
               height: 54,
               width: 356,

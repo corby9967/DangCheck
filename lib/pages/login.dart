@@ -65,9 +65,6 @@ class _LogInPageState extends State<LogInPage> {
       } else if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
         setState(() {});
         errorMsg = '로그인 정보가 틀렸습니다.';
-      } else if (e.code == 'wrong-password') {
-        setState(() {});
-        errorMsg = '비밀번호가 틀렸습니다.';
       }
     }
   }

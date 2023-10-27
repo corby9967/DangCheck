@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/my%20classes/textfield.dart';
 import 'package:dangcheck/pages/make_house_pages/make_house3.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,50 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
             : isButtonActive = false;
       });
     });
+  }
+
+  Future saveHouseName() async {
+    await FirebaseFirestore.instance.collection('house').doc('12345').update({
+      "dogname": dogNameController.text,
+      "dogbirthday": dogBdayController.text,
+      "dogbreed": dogBreedController.text,
+    });
+
+    if (girl == true) {
+      await FirebaseFirestore.instance.collection('house').doc('12345').update(
+        {
+          "gender": '여자',
+        },
+      );
+    }
+    if (boy == true) {
+      await FirebaseFirestore.instance.collection('house').doc('12345').update(
+        {
+          "gender": '남자',
+        },
+      );
+    }
+    if (small == true) {
+      await FirebaseFirestore.instance.collection('house').doc('12345').update(
+        {
+          "size": '소형',
+        },
+      );
+    }
+    if (middle == true) {
+      await FirebaseFirestore.instance.collection('house').doc('12345').update(
+        {
+          "size": '중형',
+        },
+      );
+    }
+    if (big == true) {
+      await FirebaseFirestore.instance.collection('house').doc('12345').update(
+        {
+          "size": '대형',
+        },
+      );
+    }
   }
 
   @override
@@ -483,6 +528,7 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                 ),
                 onPressed: isButtonActive
                     ? () {
+                        saveHouseName();
                         Get.to(
                           const MakeHousePage3(),
                           transition: Transition.noTransition,

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/pages/make_house_pages/make_house2.dart';
 import 'package:dangcheck/my%20classes/textfield.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,12 @@ class _MakeHousePage extends State<MakeHousePage> {
       setState(() {
         this.isButtonActive = isButtonActive;
       });
+    });
+  }
+
+  Future saveHouseName() async {
+    await FirebaseFirestore.instance.collection('house').doc('12345').update({
+      "housename": houseNameController.text,
     });
   }
 
@@ -121,6 +128,7 @@ class _MakeHousePage extends State<MakeHousePage> {
                   ),
                   onPressed: isButtonActive
                       ? () {
+                          saveHouseName();
                           Get.to(
                             const MakeHousePage2(),
                             transition: Transition.noTransition,

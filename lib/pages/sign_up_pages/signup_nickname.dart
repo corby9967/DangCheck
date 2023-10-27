@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/my%20classes/textfield.dart';
 import 'package:dangcheck/pages/sign_up_pages/signup_agree.dart';
-import 'package:dangcheck/pages/sign_up_pages/signup_profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

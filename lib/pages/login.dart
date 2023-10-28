@@ -80,14 +80,14 @@ class _LogInPageState extends State<LogInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "로그인",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
+        // title: const Text(
+        //   "로그인",
+        //   style: TextStyle(
+        //     color: Colors.black,
+        //     fontSize: 16,
+        //     fontWeight: FontWeight.w600,
+        //   ),
+        // ),
         backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 0,
       ),
@@ -99,6 +99,10 @@ class _LogInPageState extends State<LogInPage> {
           children: [
             const SizedBox(
               height: 18,
+            ),
+            Image.asset(
+              'assets/images/dog_login.png',
+              width: 219,
             ),
             MyTextField(
               controller: userNameController,
@@ -181,7 +185,7 @@ class _LogInPageState extends State<LogInPage> {
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 70,
             ),
             const Text(
               '계정이 없으신가요?',

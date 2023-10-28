@@ -33,6 +33,13 @@ class _HomePageState extends State<HomePage> {
 
   List foodList = [];
 
+  int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Future getLists() async {
     await FirebaseFirestore.instance
         .collection('house')
@@ -44,8 +51,434 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
+  Future<dynamic> myBottomDrawer(BuildContext context, String type) {
+    List<bool> isChecked = [false, false];
+    bool b = false;
+
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter myState) {
+          return SingleChildScrollView(
+            child: Container(
+              height: 400,
+              width: 375,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 60,
+                    width: 375,
+                    child: Center(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Text(
+                            '멍췤이의 $type 선택',
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  myState(() {
+                                    setState(() {
+                                      if (b) {
+                                        type == '밥'
+                                            ? foodCheck < 4
+                                                ? foodCheck++
+                                                : foodCheck
+                                            : snackCheck < 4
+                                                ? snackCheck++
+                                                : snackCheck;
+                                      }
+                                    });
+                                  });
+
+                                  if (b) Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  '선택',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: b
+                                          ? Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                          : Colors.black45),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 19,
+                        vertical: 20,
+                      ),
+                      itemCount: isChecked.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 10),
+                            Text(
+                              '🍚 ${index + 1}번째 $type 메뉴',
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                            const SizedBox(height: 5),
+                            GestureDetector(
+                              onTap: () {
+                                myState(() {
+                                  setState(() {
+                                    for (int i = 0; i < isChecked.length; i++) {
+                                      if (i == index) {
+                                        isChecked[i] = true;
+                                      } else {
+                                        isChecked[i] = false;
+                                      }
+                                    }
+                                    b = true;
+                                  });
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(16),
+                                  ),
+                                  border: isChecked[index]
+                                      ? Border(
+                                          top: BorderSide(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            width: 2,
+                                          ),
+                                          bottom: BorderSide(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            width: 2,
+                                          ),
+                                          left: BorderSide(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            width: 2,
+                                          ),
+                                          right: BorderSide(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                            width: 2,
+                                          ),
+                                        )
+                                      : const Border(
+                                          top: BorderSide(
+                                            color: Colors.black12,
+                                            width: 2,
+                                          ),
+                                          bottom: BorderSide(
+                                            color: Colors.black12,
+                                            width: 2,
+                                          ),
+                                          left: BorderSide(
+                                            color: Colors.black12,
+                                            width: 2,
+                                          ),
+                                          right: BorderSide(
+                                            color: Colors.black12,
+                                            width: 2,
+                                          ),
+                                        ),
+                                ),
+                                width: 337,
+                                height: 54,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text(
+                                        '멍멍이표 사료',
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                      Icon(
+                                        Icons.check_circle_rounded,
+                                        color: isChecked[index]
+                                            ? Theme.of(context)
+                                                .colorScheme
+                                                .primary
+                                            : Colors.black12,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+      },
+    );
+  }
+
+  Future<dynamic> myBottomDrawer2(BuildContext context, String type) {
+    bool isTapped = false;
+
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter myState) {
+          return SingleChildScrollView(
+            child: Container(
+              height: 300,
+              width: 375,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 60,
+                    width: 375,
+                    child: Center(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Text(
+                            '멍췤이의 $type',
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  myState(() {
+                                    setState(() {
+                                      if (isTapped) {
+                                        type == '목욕'
+                                            ? showerCheck = true
+                                            : walkCheck = true;
+                                      }
+                                    });
+                                  });
+                                  if (isTapped) Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  '완료',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: isTapped
+                                        ? Theme.of(context).colorScheme.primary
+                                        : Colors.black45,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 19),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          type == '목욕' ? '🛁 목욕 주기' : '🐕 산책 주기',
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                        const SizedBox(height: 7),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 19),
+                          width: 337,
+                          height: 54,
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(
+                                  width: 1, color: Color(0xFFE8E8E8)),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              const Text('일주일에'),
+                              const SizedBox(width: 7),
+                              Text(
+                                '1번',
+                                style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              ),
+                              const SizedBox(width: 100),
+                              Text('4일 전에 $type했어요'),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 70,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            myState(() {
+                              setState(() {
+                                isTapped = !isTapped;
+                              });
+                            });
+                          },
+                          child: Container(
+                            width: 337,
+                            height: 54,
+                            decoration: ShapeDecoration(
+                              color: isTapped
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Colors.white,
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                    width: 1, color: Color(0xFFFF9519)),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '$type했어요!',
+                                  style: TextStyle(
+                                    color: isTapped
+                                        ? Colors.white
+                                        : const Color(0xFFFF9519),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+      },
+    );
+  }
+
+  Future<dynamic> myAlertDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.transparent,
+          alignment: Alignment.center,
+          iconPadding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+          icon: Icon(
+            Icons.error_rounded,
+            color: Theme.of(context).colorScheme.primary,
+            size: 48,
+          ),
+          contentPadding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+          content: const SizedBox(
+            height: 42,
+            width: 305,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('1시간 전에 ‘멍멍이표 사료’를 주었습니다.'),
+                Text('그래도 다시 밥을 주시겠습니까?'),
+              ],
+            ),
+          ),
+          actionsAlignment: MainAxisAlignment.center,
+          actionsPadding: const EdgeInsets.fromLTRB(0, 18, 0, 20),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: 100,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text(
+                      '취소',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 100,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                        color: Theme.of(context).colorScheme.primary),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      '다시 급여',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    switch (_selectedIndex) {
+      case 0:
+        break;
+
+      case 1:
+        break;
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFFAF4),
       appBar: AppBar(
@@ -271,13 +704,21 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     isLongTapped3
-                        ? const SizedBox(
+                        ? SizedBox(
                             width: 65,
                             height: 10,
-                            child: Icon(
-                              Icons.highlight_remove_rounded,
-                              size: 22,
-                              color: Colors.black26,
+                            child: GestureDetector(
+                              child: const Icon(
+                                Icons.highlight_remove_rounded,
+                                size: 22,
+                                color: Colors.black26,
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  showerCheck = false;
+                                  isLongTapped3 = !isLongTapped3;
+                                });
+                              },
                             ),
                           )
                         : const SizedBox(width: 65, height: 10),
@@ -318,13 +759,21 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     isLongTapped4
-                        ? const SizedBox(
+                        ? SizedBox(
                             width: 65,
                             height: 10,
-                            child: Icon(
-                              Icons.highlight_remove_rounded,
-                              size: 22,
-                              color: Colors.black26,
+                            child: GestureDetector(
+                              child: const Icon(
+                                Icons.highlight_remove_rounded,
+                                size: 22,
+                                color: Colors.black26,
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  walkCheck = false;
+                                  isLongTapped4 = !isLongTapped4;
+                                });
+                              },
                             ),
                           )
                         : const SizedBox(width: 65, height: 10),
@@ -333,12 +782,28 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const SizedBox(height: 17),
-            message1 ? const Message() : const SizedBox(height: 60),
-            const Image(
-              width: 190,
-              height: 280,
-              image: AssetImage('assets/images/dog.png'),
+            const SizedBox(height: 25),
+            SizedBox(
+              width: 300,
+              height: 330,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  const Image(
+                    width: 190,
+                    height: 270,
+                    image: AssetImage('assets/images/dog.png'),
+                  ),
+                  Positioned(
+                    bottom: 260,
+                    child: AnimatedOpacity(
+                      opacity: message1 ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 200),
+                      child: const Message(),
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               width: 250,
@@ -350,7 +815,9 @@ class _HomePageState extends State<HomePage> {
                         ? const Duration(milliseconds: 275)
                         : const Duration(milliseconds: 875),
                     alignment: alignment1,
-                    curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                    curve: isButtonClicked
+                        ? Curves.fastOutSlowIn
+                        : Curves.fastOutSlowIn,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 275),
                       curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
@@ -364,10 +831,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          myBottomDrawer(context);
-                          setState(() {
-                            foodCheck < 4 ? foodCheck++ : foodCheck;
-                          });
+                          foodCheck < 4
+                              ? myBottomDrawer(context, '밥')
+                              : myAlertDialog(context);
                         },
                         child: const Center(
                           child: Text(
@@ -383,7 +849,9 @@ class _HomePageState extends State<HomePage> {
                         ? const Duration(milliseconds: 275)
                         : const Duration(milliseconds: 875),
                     alignment: alignment2,
-                    curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                    curve: isButtonClicked
+                        ? Curves.fastOutSlowIn
+                        : Curves.fastOutSlowIn,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 275),
                       curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
@@ -397,9 +865,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          setState(() {
-                            snackCheck < 4 ? snackCheck++ : snackCheck;
-                          });
+                          myBottomDrawer(context, '간식');
                         },
                         child: const Center(
                           child: Text(
@@ -415,7 +881,9 @@ class _HomePageState extends State<HomePage> {
                         ? const Duration(milliseconds: 275)
                         : const Duration(milliseconds: 875),
                     alignment: alignment3,
-                    curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                    curve: isButtonClicked
+                        ? Curves.fastOutSlowIn
+                        : Curves.fastOutSlowIn,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 275),
                       curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
@@ -429,9 +897,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          setState(() {
-                            showerCheck = true;
-                          });
+                          myBottomDrawer2(context, '목욕');
                         },
                         child: const Center(
                           child: Text(
@@ -447,7 +913,9 @@ class _HomePageState extends State<HomePage> {
                         ? const Duration(milliseconds: 275)
                         : const Duration(milliseconds: 875),
                     alignment: alignment4,
-                    curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
+                    curve: isButtonClicked
+                        ? Curves.fastOutSlowIn
+                        : Curves.fastOutSlowIn,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 275),
                       curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
@@ -461,9 +929,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          setState(() {
-                            walkCheck = true;
-                          });
+                          myBottomDrawer2(context, '산책');
                         },
                         child: const Center(
                           child: Text(
@@ -523,6 +989,10 @@ class _HomePageState extends State<HomePage> {
           color: Theme.of(context).colorScheme.background,
           child: Expanded(
             child: BottomNavigationBar(
+              currentIndex: _selectedIndex,
+              onTap: (int index) => setState(() {
+                _selectedIndex = index;
+              }),
               elevation: 0,
               backgroundColor: Theme.of(context).primaryColor.withAlpha(0),
               items: const [
@@ -545,112 +1015,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<dynamic> myBottomDrawer(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SingleChildScrollView(
-          child: SizedBox(
-            height: 400,
-            width: 375,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 60,
-                  width: 375,
-                  child: Center(
-                    child: Stack(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              '멍췤이의 밥 선택',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              '선택',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 19,
-                      vertical: 20,
-                    ),
-                    itemCount: 2,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 10),
-                          Text(
-                            '🍚 ${index + 1}번째 식사 메뉴',
-                            style: const TextStyle(fontSize: 14),
-                          ),
-                          const SizedBox(height: 5),
-                          Container(
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(16),
-                              ),
-                              border: Border(
-                                top: BorderSide(color: Colors.black12),
-                                bottom: BorderSide(color: Colors.black12),
-                                left: BorderSide(color: Colors.black12),
-                                right: BorderSide(color: Colors.black12),
-                              ),
-                            ),
-                            width: 337,
-                            height: 54,
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 15),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '멍멍이표 사료',
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                  Icon(
-                                    Icons.check_circle_rounded,
-                                    color: Colors.black12,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }

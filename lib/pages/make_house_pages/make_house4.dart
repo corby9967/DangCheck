@@ -17,21 +17,26 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
   int feed = 1;
   int menu = 1;
 
-  List<TextEditingController> controllers = [TextEditingController()];
+  List<TextEditingController> controllers = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController()
+  ];
 
   @override
   void initState() {
     super.initState();
 
-    for (TextEditingController controller in controllers) {
-      controller.addListener(() {
+    controllers[0].addListener(() {
+      if (controllers[0].text.isNotEmpty) {
         setState(() {
-          controller.text.isNotEmpty
-              ? isButtonActive = true
-              : isButtonActive = false;
+          isButtonActive = true;
         });
-      });
-    }
+      } else {
+        isButtonActive = false;
+      }
+    });
   }
 
   @override
@@ -128,13 +133,6 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                           ),
                           onPressed: () {
                             setState(() {
-                              // textfield 개수 줄이기
-                              // if (feed > 1) {
-                              //   controllers[feed - 1].clear();
-                              //   controllers[feed - 1].dispose();
-                              //   controllers.removeAt(feed - 1);
-                              // }
-
                               feed > 1 ? feed-- : feed = 1;
                             });
                           },
@@ -174,67 +172,132 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
                 ),
               ),
             ),
+            const SizedBox(height: 10),
             SizedBox(
-              height: 322,
-              child: Expanded(
-                child: ListView.builder(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 2, vertical: 20),
-                  itemCount: controllers.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 10),
-                        Text(
-                          '🍚 ${index + 1}번째 식사 메뉴',
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        const SizedBox(height: 5),
-                        MyTextField(
-                          controller: controllers[index],
-                          hintText: '메뉴를 입력하세요',
-                          obscureText: false,
-                        ),
-                        const SizedBox(height: 10),
-                      ],
-                    );
-                  },
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              width: 356,
-              height: 54,
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(width: 1, color: Color(0xFFE8E8E8)),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              child: TextButton(
-                onPressed: () {
-                  setState(() {
-                    // textfield 개수 늘리기
-                    if (menu < 4) {
-                      controllers.add(TextEditingController());
-                    }
-
-                    menu < 4 ? menu++ : menu = 4;
-                  });
-                },
-                child: const Text(
-                  '+ 추가하기',
-                  style: TextStyle(
-                    color: Color(0xFFD7D7D7),
-                    fontSize: 14,
+              height: 370,
+              child: ListView(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+                children: [
+                  const SizedBox(height: 10),
+                  const Text(
+                    '🍚 1번째 식사 메뉴',
+                    style: TextStyle(fontSize: 14),
                   ),
-                ),
+                  const SizedBox(height: 5),
+                  MyTextField(
+                    controller: controllers[0],
+                    hintText: '메뉴를 입력하세요',
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    '🍚 2번째 식사 메뉴',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  const SizedBox(height: 5),
+                  MyTextField(
+                    controller: controllers[1],
+                    hintText: '메뉴를 입력하세요 (선택)',
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    '🍚 3번째 식사 메뉴',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  const SizedBox(height: 5),
+                  MyTextField(
+                    controller: controllers[2],
+                    hintText: '메뉴를 입력하세요 (선택)',
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    '🍚 4번째 식사 메뉴',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  const SizedBox(height: 5),
+                  MyTextField(
+                    controller: controllers[3],
+                    hintText: '메뉴를 입력하세요 (선택)',
+                    obscureText: false,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 16),
+            // SizedBox(
+            //   height: 322,
+            //   child: Expanded(
+            //     child: ListView.builder(
+            //       padding:
+            //           const EdgeInsets.symmetric(horizontal: 2, vertical: 20),
+            //       itemCount: controllers.length,
+            //       itemBuilder: (context, index) {
+            //         return Column(
+            //           crossAxisAlignment: CrossAxisAlignment.start,
+            //           children: [
+            //             const SizedBox(height: 10),
+            //             Text(
+            //               '🍚 ${index + 1}번째 식사 메뉴',
+            //               style: const TextStyle(fontSize: 14),
+            //             ),
+            //             const SizedBox(height: 5),
+            //             MyTextField(
+            //               controller: controllers[index],
+            //               hintText: '메뉴를 입력하세요',
+            //               obscureText: false,
+            //             ),
+            //             const SizedBox(height: 10),
+            //           ],
+            //         );
+            //       },
+            //     ),
+            //   ),
+            // ),
+            // Container(
+            //   width: 356,
+            //   height: 54,
+            //   decoration: ShapeDecoration(
+            //     color: Colors.white,
+            //     shape: RoundedRectangleBorder(
+            //       side: const BorderSide(width: 1, color: Color(0xFFE8E8E8)),
+            //       borderRadius: BorderRadius.circular(16),
+            //     ),
+            //   ),
+            //   child: TextButton(
+            //     onPressed: () {
+            //       setState(() {
+            //         // textfield 개수 늘리기
+            //         if (menu < 4) {
+            //           controllers.add(TextEditingController());
+            //         }
+
+            //         for (TextEditingController controller in controllers) {
+            //           controller.addListener(() {
+            //             if (controller.text.isNotEmpty) {
+            //               count++;
+            //             }
+            //           });
+            //         }
+
+            //         if (count == controllers.length) {
+            //           isButtonActive = true;
+            //         }
+
+            //         menu < 4 ? menu++ : menu = 4;
+            //       });
+            //     },
+            //     child: const Text(
+            //       '+ 추가하기',
+            //       style: TextStyle(
+            //         color: Color(0xFFD7D7D7),
+            //         fontSize: 14,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             SizedBox(
               height: 54,
               width: 356,

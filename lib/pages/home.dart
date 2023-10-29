@@ -8,8 +8,10 @@ import '../my classes/message.dart';
 import 'chat.dart';
 
 class HomePage extends StatefulWidget {
-  final String newCode;
-  const HomePage({super.key, required this.newCode});
+  final String currentCode;
+  final String houseName;
+  const HomePage(
+      {super.key, required this.currentCode, required this.houseName});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -44,30 +46,54 @@ class _HomePageState extends State<HomePage> {
   String message3 = '지원이가 6시간 전에 목욕을 시켜 줬어멍!';
   String message4 = '지원이가 4시간 전에 산책을 시켜 줬어멍!';
 
+  String showerPeriod = '';
+  String walkPeriod = '';
+  int noOfFood = 0;
+  int noOfSnack = 0;
+  int noOfShower = 0;
+  int noOfWalk = 0;
+
   List foodList = [];
+  List snackList = [];
 
   int _selectedIndex = 0;
 
+
   final List<Widget> _pages = [const ChatPage(), const SettingPage()];
+
 
   @override
   void initState() {
+    getInfo();
     super.initState();
   }
 
-  Future getLists() async {
-    await FirebaseFirestore.instance
+  Future getInfo() async {
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
         .collection('house')
-        .doc('12345')
-        .get()
-        .then((snapshot) {
-      foodList = snapshot.get('foodlist');
-    });
-    setState(() {});
+        .doc(widget.currentCode)
+        .get();
+
+    noOfFood = documentSnapshot.get('음식 개수');
+    noOfSnack = documentSnapshot.get('간식 개수');
+    noOfShower = documentSnapshot.get('목욕 횟수');
+    noOfWalk = documentSnapshot.get('산책 횟수');
+    showerPeriod = documentSnapshot.get('목욕 주기');
+    walkPeriod = documentSnapshot.get('산책 주기');
+
+    for (int i = 0; i < noOfFood; i++) {
+      foodList.add(documentSnapshot.get('식사 메뉴 ${i + 1}'));
+    }
+    for (int i = 0; i < noOfSnack; i++) {
+      snackList.add(documentSnapshot.get('간식 메뉴 ${i + 1}'));
+    }
   }
 
-  Future<dynamic> myBottomDrawer(BuildContext context, String type) {
-    List<bool> isChecked = [false, false];
+  Future<dynamic> myBottomDrawer(BuildContext context, String type, int no) {
+    List<bool> isChecked = [];
+    for (int i = 0; i < no; i++) {
+      isChecked.add(false);
+    }
     bool b = false;
 
     return showModalBottomSheet(
@@ -139,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                         horizontal: 19,
                         vertical: 20,
                       ),
-                      itemCount: isChecked.length,
+                      itemCount: no,
                       itemBuilder: (context, index) {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,10 +251,17 @@ class _HomePageState extends State<HomePage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Text(
-                                        '멍멍이표 사료',
-                                        style: TextStyle(fontSize: 14),
-                                      ),
+                                      type == '밥'
+                                          ? Text(
+                                              foodList[index],
+                                              style:
+                                                  const TextStyle(fontSize: 14),
+                                            )
+                                          : Text(
+                                              snackList[index],
+                                              style:
+                                                  const TextStyle(fontSize: 14),
+                                            ),
                                       Icon(
                                         Icons.check_circle_rounded,
                                         color: isChecked[index]
@@ -341,10 +374,14 @@ class _HomePageState extends State<HomePage> {
                           ),
                           child: Row(
                             children: [
-                              const Text('일주일에'),
+                              Text(
+                                type == '목욕'
+                                    ? '$showerPeriod에'
+                                    : '$walkPeriod에',
+                              ),
                               const SizedBox(width: 7),
                               Text(
-                                '1번',
+                                type == '목욕' ? '$noOfShower번' : '$noOfWalk번',
                                 style: TextStyle(
                                     color:
                                         Theme.of(context).colorScheme.primary),
@@ -490,9 +527,9 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: const Color(0xFFFFFAF4),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text(
-          "멍췤 하우스",
-          style: TextStyle(
+        title: Text(
+          widget.houseName,
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -935,7 +972,7 @@ class _HomePageState extends State<HomePage> {
                       child: GestureDetector(
                         onTap: () {
                           foodCheck < 4
-                              ? myBottomDrawer(context, '밥')
+                              ? myBottomDrawer(context, '밥', noOfFood)
                               : myAlertDialog(context);
                         },
                         child: const Center(
@@ -968,7 +1005,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          myBottomDrawer(context, '간식');
+                          myBottomDrawer(context, '간식', noOfSnack);
                         },
                         child: const Center(
                           child: Text(

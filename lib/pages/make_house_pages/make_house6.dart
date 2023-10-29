@@ -30,7 +30,7 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
         .doc(widget.newCode)
         .update({
       "목욕 주기": dropdowntext,
-      "목욕 횟수": shower.toString(),
+      "목욕 횟수": shower,
     });
   }
 

@@ -15,9 +15,8 @@ class MakeHousePage4 extends StatefulWidget {
 
 class _MakeHousePage4 extends State<MakeHousePage4> {
   bool isButtonActive = false;
-  bool check = true;
   int feed = 1;
-  int menu = 1;
+  int foodMenu = 1;
 
   List<TextEditingController> controllers = [
     TextEditingController(),
@@ -50,6 +49,7 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
       "식사 메뉴 1": controllers[0].text,
     });
     if (controllers[1].text.isNotEmpty) {
+      foodMenu++;
       await FirebaseFirestore.instance
           .collection('house')
           .doc(widget.newCode)
@@ -58,6 +58,7 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
       });
     }
     if (controllers[2].text.isNotEmpty) {
+      foodMenu++;
       await FirebaseFirestore.instance
           .collection('house')
           .doc(widget.newCode)
@@ -66,6 +67,7 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
       });
     }
     if (controllers[3].text.isNotEmpty) {
+      foodMenu++;
       await FirebaseFirestore.instance
           .collection('house')
           .doc(widget.newCode)
@@ -73,6 +75,12 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
         "식사 메뉴 4": controllers[3].text,
       });
     }
+    await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.newCode)
+        .update({
+      "음식 개수": foodMenu,
+    });
   }
 
   @override

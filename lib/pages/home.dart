@@ -30,6 +30,9 @@ class _HomePageState extends State<HomePage> {
   double size = 40;
 
   bool message1 = false;
+  bool message2 = false;
+  bool message3 = false;
+  bool message4 = false;
 
   List foodList = [];
 
@@ -706,12 +709,16 @@ class _HomePageState extends State<HomePage> {
                     isLongTapped3
                         ? SizedBox(
                             width: 65,
-                            height: 10,
+                            height: 22,
                             child: GestureDetector(
-                              child: const Icon(
-                                Icons.highlight_remove_rounded,
-                                size: 22,
-                                color: Colors.black26,
+                              child: const SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: Icon(
+                                  Icons.highlight_remove_rounded,
+                                  size: 22,
+                                  color: Colors.black26,
+                                ),
                               ),
                               onTap: () {
                                 setState(() {
@@ -721,8 +728,8 @@ class _HomePageState extends State<HomePage> {
                               },
                             ),
                           )
-                        : const SizedBox(width: 65, height: 10),
-                    const SizedBox(width: 65, height: 40),
+                        : const SizedBox(width: 65, height: 22),
+                    const SizedBox(width: 65, height: 28),
                   ],
                 ),
                 Column(
@@ -761,12 +768,16 @@ class _HomePageState extends State<HomePage> {
                     isLongTapped4
                         ? SizedBox(
                             width: 65,
-                            height: 10,
+                            height: 22,
                             child: GestureDetector(
-                              child: const Icon(
-                                Icons.highlight_remove_rounded,
-                                size: 22,
-                                color: Colors.black26,
+                              child: const SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: Icon(
+                                  Icons.highlight_remove_rounded,
+                                  size: 22,
+                                  color: Colors.black26,
+                                ),
                               ),
                               onTap: () {
                                 setState(() {
@@ -776,8 +787,8 @@ class _HomePageState extends State<HomePage> {
                               },
                             ),
                           )
-                        : const SizedBox(width: 65, height: 10),
-                    const SizedBox(width: 65, height: 40),
+                        : const SizedBox(width: 65, height: 22),
+                    const SizedBox(width: 65, height: 28),
                   ],
                 ),
               ],
@@ -805,8 +816,9 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+            const SizedBox(height: 8),
             SizedBox(
-              width: 250,
+              width: 240,
               height: 222,
               child: Stack(
                 children: [
@@ -817,7 +829,7 @@ class _HomePageState extends State<HomePage> {
                     alignment: alignment1,
                     curve: isButtonClicked
                         ? Curves.fastOutSlowIn
-                        : Curves.fastOutSlowIn,
+                        : Curves.elasticOut,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 275),
                       curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
@@ -851,7 +863,7 @@ class _HomePageState extends State<HomePage> {
                     alignment: alignment2,
                     curve: isButtonClicked
                         ? Curves.fastOutSlowIn
-                        : Curves.fastOutSlowIn,
+                        : Curves.elasticOut,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 275),
                       curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
@@ -883,7 +895,7 @@ class _HomePageState extends State<HomePage> {
                     alignment: alignment3,
                     curve: isButtonClicked
                         ? Curves.fastOutSlowIn
-                        : Curves.fastOutSlowIn,
+                        : Curves.elasticOut,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 275),
                       curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,
@@ -915,7 +927,7 @@ class _HomePageState extends State<HomePage> {
                     alignment: alignment4,
                     curve: isButtonClicked
                         ? Curves.fastOutSlowIn
-                        : Curves.fastOutSlowIn,
+                        : Curves.elasticOut,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 275),
                       curve: isButtonClicked ? Curves.easeIn : Curves.easeOut,

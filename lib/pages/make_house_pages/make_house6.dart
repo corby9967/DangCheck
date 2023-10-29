@@ -11,7 +11,7 @@ class MakeHousePage6 extends StatefulWidget {
 
 class _MakeHousePage6 extends State<MakeHousePage6> {
   bool isButtonActive = true;
-  int feed = 1;
+  int shower = 1;
 
   List<String> days = ['1주', '2주', '3주', '한달'];
   String dropdowntext = '1주';
@@ -114,7 +114,7 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
                     children: [
                       IconButton(
                         style: IconButton.styleFrom(
-                          backgroundColor: feed == 1
+                          backgroundColor: shower == 1
                               ? const Color(0xFFE8E8E8)
                               : Theme.of(context).colorScheme.primary,
                           shape: const CircleBorder(),
@@ -127,7 +127,7 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
                         ),
                         onPressed: () {
                           setState(() {
-                            feed > 1 ? feed-- : feed = 1;
+                            shower > 1 ? shower-- : shower = 1;
                           });
                         },
                       ),
@@ -135,7 +135,7 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
                         width: 5,
                       ),
                       Text(
-                        '$feed번',
+                        '$shower번',
                         style: const TextStyle(fontSize: 14),
                       ),
                       const SizedBox(
@@ -143,7 +143,7 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
                       ),
                       IconButton(
                         style: IconButton.styleFrom(
-                          backgroundColor: feed != 4
+                          backgroundColor: shower != 4
                               ? Theme.of(context).colorScheme.primary
                               : const Color(0xFFE8E8E8),
                           shape: const CircleBorder(),
@@ -156,7 +156,7 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
                         ),
                         onPressed: () {
                           setState(() {
-                            feed < 4 ? feed++ : feed = 4;
+                            shower < 4 ? shower++ : shower = 4;
                           });
                         },
                       ),
@@ -187,6 +187,7 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
                                   onPressed: () {
                                     setState(() {
                                       dropdowntext = days[index];
+                                      showDropDownMenu = false;
                                     });
                                   },
                                   child: Row(

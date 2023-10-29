@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:dangcheck/pages/make_house_pages/make_house_final.dart';
+import 'package:dangcheck/pages/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -57,7 +58,9 @@ class _HomePageState extends State<HomePage> {
 
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [const ChatPage(), const Placeholder()];
+
+  final List<Widget> _pages = [const ChatPage(), const SettingPage()];
+
 
   @override
   void initState() {
@@ -1138,6 +1141,10 @@ class _HomePageState extends State<HomePage> {
               },
               elevation: 0,
               backgroundColor: Theme.of(context).primaryColor.withAlpha(0),
+              selectedItemColor: Colors.black26,
+              selectedFontSize: 13,
+              unselectedItemColor: Colors.black26,
+              unselectedFontSize: 13,
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(

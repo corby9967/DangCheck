@@ -1,32 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+class SettingPage extends StatefulWidget {
+  const SettingPage({super.key});
 
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  State<SettingPage> createState() => _SettingPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        actions: [
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              '초대',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          )
-        ],
         title: const Text(
-          "멍췤 하우스 멤버",
+          "설정",
           style: TextStyle(
             color: Colors.black,
             fontSize: 16,
@@ -49,29 +38,29 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: const ShapeDecoration(
-                          color: Color(0xFFD9D9D9),
-                          shape: OvalBorder(),
-                        ),
+                      Icon(
+                        Icons.person,
+                        size: 30,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.7),
                       ),
                       const SizedBox(
-                        width: 15,
+                        width: 25,
                       ),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '엄마',
+                            '계정 설정',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -80,7 +69,7 @@ class _ChatPageState extends State<ChatPage> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            '지원아 애기 밥 맛있게 먹더니?',
+                            '계정 정보 설정',
                             style: TextStyle(
                               color: Colors.black45,
                               fontSize: 13,
@@ -88,38 +77,6 @@ class _ChatPageState extends State<ChatPage> {
                             ),
                           )
                         ],
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const Text(
-                        '오후 1:50',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Color(0xFF7B7B7B),
-                          fontSize: 11,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Container(
-                        width: 26,
-                        height: 18,
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFFF9519),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(11),
-                          ),
-                        ),
-                        child: const Text(
-                          '1',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white, fontSize: 12),
-                        ),
                       ),
                     ],
                   ),
@@ -132,32 +89,34 @@ class _ChatPageState extends State<ChatPage> {
             height: 90,
             decoration: const BoxDecoration(
               color: Colors.white,
-              border: Border(bottom: BorderSide(color: Colors.black26)),
+              border: Border(
+                bottom: BorderSide(color: Colors.black12),
+              ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: const ShapeDecoration(
-                          color: Color(0xFFD9D9D9),
-                          shape: OvalBorder(),
-                        ),
+                      Icon(
+                        Icons.pets,
+                        size: 30,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.7),
                       ),
                       const SizedBox(
-                        width: 15,
+                        width: 25,
                       ),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '아빠',
+                            '강아지 설정',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -166,7 +125,7 @@ class _ChatPageState extends State<ChatPage> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            '아빠 오늘 늦게 들어갈거 같으니...',
+                            '강아지 정보 설정',
                             style: TextStyle(
                               color: Colors.black45,
                               fontSize: 13,
@@ -175,22 +134,6 @@ class _ChatPageState extends State<ChatPage> {
                           )
                         ],
                       ),
-                    ],
-                  ),
-                  const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        '오전 11:22',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Color(0xFF7B7B7B),
-                          fontSize: 11,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      SizedBox(height: 5 + 18),
                     ],
                   ),
                 ],
@@ -202,32 +145,34 @@ class _ChatPageState extends State<ChatPage> {
             height: 90,
             decoration: const BoxDecoration(
               color: Colors.white,
-              border: Border(bottom: BorderSide(color: Colors.black26)),
+              border: Border(
+                bottom: BorderSide(color: Colors.black12),
+              ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: const ShapeDecoration(
-                          color: Color(0xFFD9D9D9),
-                          shape: OvalBorder(),
-                        ),
+                      Icon(
+                        Icons.dining,
+                        size: 30,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.7),
                       ),
                       const SizedBox(
-                        width: 15,
+                        width: 25,
                       ),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '언니',
+                            '항목 변경 설정',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -236,7 +181,7 @@ class _ChatPageState extends State<ChatPage> {
                           ),
                           SizedBox(height: 5),
                           Text(
-                            '새로운 멤버가 추가되었어요!',
+                            '밥, 간식, 목욕, 산책 정보 설정',
                             style: TextStyle(
                               color: Colors.black45,
                               fontSize: 13,
@@ -247,20 +192,60 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                     ],
                   ),
-                  const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                ],
+              ),
+            ),
+          ),
+          Container(
+            width: 375,
+            height: 90,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                bottom: BorderSide(color: Colors.black12),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
                     children: [
-                      Text(
-                        '9월 24일',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                          color: Color(0xFF7B7B7B),
-                          fontSize: 11,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      Icon(
+                        Icons.volume_down,
+                        size: 30,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.7),
                       ),
-                      SizedBox(height: 5 + 18),
+                      const SizedBox(
+                        width: 25,
+                      ),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '알림 설정',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            '알림 끄기, 키기',
+                            style: TextStyle(
+                              color: Colors.black45,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 ],
@@ -302,7 +287,7 @@ class _ChatPageState extends State<ChatPage> {
           color: Theme.of(context).colorScheme.primary,
           child: Expanded(
             child: BottomNavigationBar(
-              currentIndex: 0,
+              currentIndex: 1,
               elevation: 0,
               backgroundColor: Theme.of(context).primaryColor.withAlpha(0),
               selectedFontSize: 13,

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MakeHousePage extends StatefulWidget {
-  const MakeHousePage({super.key});
+  final String newCode;
+  const MakeHousePage({super.key, required this.newCode});
 
   @override
   State<MakeHousePage> createState() => _MakeHousePage();
@@ -28,10 +29,15 @@ class _MakeHousePage extends State<MakeHousePage> {
   }
 
   Future saveHouseName() async {
-    await FirebaseFirestore.instance.collection('house').doc('12345').update({
+    await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.newCode)
+        .update({
       "housename": houseNameController.text,
     });
   }
+
+  deleteCode() {}
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +54,7 @@ class _MakeHousePage extends State<MakeHousePage> {
                 backgroundColor: Theme.of(context).colorScheme.background,
                 leading: IconButton(
                   onPressed: () {
+                    deleteCode();
                     Get.back();
                   },
                   icon: const Icon(Icons.arrow_back_ios),
@@ -130,7 +137,7 @@ class _MakeHousePage extends State<MakeHousePage> {
                       ? () {
                           saveHouseName();
                           Get.to(
-                            const MakeHousePage2(),
+                            MakeHousePage2(newCode: widget.newCode),
                             transition: Transition.noTransition,
                           );
                         }

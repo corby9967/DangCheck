@@ -123,7 +123,7 @@ class _SignupPageState extends State<SignupPage4> {
                     SignupPage5(
                       nickname: nickname,
                     ),
-                    transition: Transition.noTransition,
+                    transition: Transition.rightToLeft,
                   );
                 },
                 child: Text(

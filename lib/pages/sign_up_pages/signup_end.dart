@@ -107,7 +107,7 @@ class _SignupPageState extends State<SignupPage5> {
                 ),
                 onPressed: () {
                   Get.offAll(() => const HousePage(),
-                      transition: Transition.noTransition);
+                      transition: Transition.rightToLeft);
                 },
                 child: Text(
                   '시작하기',

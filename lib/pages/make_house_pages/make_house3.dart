@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MakeHousePage3 extends StatefulWidget {
-  const MakeHousePage3({super.key});
+  final String newCode;
+  const MakeHousePage3({super.key, required this.newCode});
 
   @override
   State<MakeHousePage3> createState() => _MakeHousePage3();

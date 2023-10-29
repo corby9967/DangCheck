@@ -128,7 +128,7 @@ class _SignupPageState extends State<SignupPage> {
                           saveNickName();
                           Get.to(
                             const SignupPage4(),
-                            transition: Transition.noTransition,
+                            transition: Transition.rightToLeft,
                           );
                         }
                       : null,

@@ -59,7 +59,7 @@ class _SignupPageState extends State<SignupPage6> {
             .then(
               (value) => {
                 Navigator.pop(context),
-                Get.to(const SignupPage(), transition: Transition.noTransition)
+                Get.to(const SignupPage(), transition: Transition.rightToLeft)
               },
             );
       } else {

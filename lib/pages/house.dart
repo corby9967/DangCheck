@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dangcheck/pages/house_join.dart';
 import 'package:dangcheck/pages/make_house_pages/make_house.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:math';
 
 class HousePage extends StatefulWidget {
   const HousePage({super.key});
@@ -12,8 +14,56 @@ class HousePage extends StatefulWidget {
 }
 
 class _HousePageState extends State<HousePage> {
+  Set<String> generatedNumbers = <String>{};
+
+  String finalCode = '';
+
   bool isButtonSelected1 = false;
   bool isButtonSelected2 = false;
+
+  Future<Set<String>> getDocumentNamesFromCollection(
+      String collectionName) async {
+    Set<String> documentNames = <String>{};
+
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection(collectionName).get();
+
+      for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+        documentNames.add(documentSnapshot.id);
+      }
+      return documentNames;
+    } catch (e) {
+      print("Error getting document names: $e");
+      return documentNames;
+    }
+  }
+
+  Future saveHouseName(String newCode) async {
+    await FirebaseFirestore.instance.collection('house').doc(newCode).set({});
+  }
+
+  Future<String> generateHouseCode() async {
+    generatedNumbers = await getDocumentNamesFromCollection('house');
+    int min = 10000; // Minimum 5-digit number
+    int max = 99999; // Maximum 5-digit number
+    int num = generatedNumbers.length;
+    int next = num + 1;
+    String newCode = '';
+
+    while (true) {
+      Random random = Random();
+      int randomNumber = min + random.nextInt(max - min + 1);
+
+      generatedNumbers.add(randomNumber.toString());
+      if (generatedNumbers.length == next) {
+        newCode = randomNumber.toString();
+        break;
+      }
+    }
+    saveHouseName(newCode);
+    return newCode;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +175,7 @@ class _HousePageState extends State<HousePage> {
               ],
             ),
             const SizedBox(
-              height: 194,
+              height: 188,
             ),
             SizedBox(
               height: 54,
@@ -144,10 +194,11 @@ class _HousePageState extends State<HousePage> {
                     ),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   if (isButtonSelected1) {
+                    finalCode = await generateHouseCode();
                     Get.to(
-                      const MakeHousePage(),
+                      MakeHousePage(newCode: finalCode),
                       transition: Transition.noTransition,
                     );
                   } else if (isButtonSelected2) {

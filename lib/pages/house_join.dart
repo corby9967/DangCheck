@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/my%20classes/textfield.dart';
 import 'package:dangcheck/pages/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,8 +13,12 @@ class JoinHousePage extends StatefulWidget {
 }
 
 class _JoinPageState extends State<JoinHousePage> {
+  final user = FirebaseAuth.instance.currentUser!;
   final houseCodeController = TextEditingController();
+
   bool isButtonActive = false;
+
+  String errorMsg = '';
 
   @override
   void initState() {
@@ -24,6 +30,40 @@ class _JoinPageState extends State<JoinHousePage> {
         this.isButtonActive = isButtonActive;
       });
     });
+  }
+
+  Future saveUserInfo() async {
+    await FirebaseFirestore.instance
+        .collection('house')
+        .doc(houseCodeController.text)
+        .collection('member')
+        .doc(user.email!)
+        .set({});
+  }
+
+  codeVerification() {
+    final CollectionReference myCollection =
+        FirebaseFirestore.instance.collection('house');
+    final DocumentReference myDocument =
+        myCollection.doc(houseCodeController.text);
+    myDocument.get().then(
+      (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          // The document exists in Firestore.
+          saveUserInfo();
+          Get.to(
+            HomePage(
+              newCode: houseCodeController.text,
+            ),
+            transition: Transition.noTransition,
+          );
+        } else {
+          // The document does not exist in Firestore.
+          errorMsg = '존재하지 않는 코드 입니다.';
+          setState(() {});
+        }
+      },
+    );
   }
 
   @override
@@ -74,7 +114,20 @@ class _JoinPageState extends State<JoinHousePage> {
               ),
             ),
             const SizedBox(
-              height: 470,
+              height: 5,
+            ),
+            SizedBox(
+              width: 341,
+              child: Text(
+                errorMsg,
+                style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              height: 447,
             ),
             SizedBox(
               height: 54,
@@ -94,10 +147,7 @@ class _JoinPageState extends State<JoinHousePage> {
                 ),
                 onPressed: isButtonActive
                     ? () {
-                        Get.to(
-                          const HomePage(),
-                          transition: Transition.noTransition,
-                        );
+                        codeVerification();
                       }
                     : null,
                 child: Text(

@@ -140,7 +140,9 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
                 onPressed: isButtonActive
                     ? () {
                         Get.to(
-                          const MakeHousePage4(),
+                          MakeHousePage4(
+                            newCode: widget.newCode,
+                          ),
                           transition: Transition.noTransition,
                         );
                       }

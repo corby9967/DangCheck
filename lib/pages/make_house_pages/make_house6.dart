@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/pages/make_house_pages/make_house7.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MakeHousePage6 extends StatefulWidget {
-  const MakeHousePage6({super.key});
+  final String newCode;
+  const MakeHousePage6({super.key, required this.newCode});
 
   @override
   State<MakeHousePage6> createState() => _MakeHousePage6();
@@ -20,6 +22,16 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future saveShowerInfo() async {
+    await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.newCode)
+        .update({
+      "목욕 주기": dropdowntext,
+      "목욕 횟수": shower.toString(),
+    });
   }
 
   @override
@@ -233,7 +245,9 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
                 ),
                 onPressed: () {
                   Get.to(
-                    const MakeHousePage7(),
+                    MakeHousePage7(
+                      newCode: widget.newCode,
+                    ),
                     transition: Transition.noTransition,
                   );
                 },
@@ -266,8 +280,11 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
                 ),
                 onPressed: isButtonActive
                     ? () {
+                        saveShowerInfo();
                         Get.to(
-                          const MakeHousePage7(),
+                          MakeHousePage7(
+                            newCode: widget.newCode,
+                          ),
                           transition: Transition.noTransition,
                         );
                       }

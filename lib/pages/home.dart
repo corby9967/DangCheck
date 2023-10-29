@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import '../my classes/message.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String newCode;
+  const HomePage({super.key, required this.newCode});
 
   @override
   State<HomePage> createState() => _HomePageState();

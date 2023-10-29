@@ -126,7 +126,7 @@ class _SignupPageState extends State<SignupPage2> {
                             SignupPage6(
                               email: emailController.text,
                             ),
-                            transition: Transition.noTransition,
+                            transition: Transition.rightToLeft,
                           );
                         }
                       : null,

@@ -7,7 +7,8 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:intl/intl.dart';
 
 class MakeHousePage2 extends StatefulWidget {
-  const MakeHousePage2({super.key});
+  final String newCode;
+  const MakeHousePage2({super.key, required this.newCode});
 
   @override
   State<MakeHousePage2> createState() => _MakeHousePage2();
@@ -60,42 +61,60 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
   }
 
   Future saveHouseName() async {
-    await FirebaseFirestore.instance.collection('house').doc('12345').update({
+    await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.newCode)
+        .update({
       "dogname": dogNameController.text,
       "dogbirthday": dogBdayController.text,
       "dogbreed": dogBreedController.text,
     });
 
     if (girl == true) {
-      await FirebaseFirestore.instance.collection('house').doc('12345').update(
+      await FirebaseFirestore.instance
+          .collection('house')
+          .doc(widget.newCode)
+          .update(
         {
           "gender": '여자',
         },
       );
     }
     if (boy == true) {
-      await FirebaseFirestore.instance.collection('house').doc('12345').update(
+      await FirebaseFirestore.instance
+          .collection('house')
+          .doc(widget.newCode)
+          .update(
         {
           "gender": '남자',
         },
       );
     }
     if (small == true) {
-      await FirebaseFirestore.instance.collection('house').doc('12345').update(
+      await FirebaseFirestore.instance
+          .collection('house')
+          .doc(widget.newCode)
+          .update(
         {
           "size": '소형',
         },
       );
     }
     if (middle == true) {
-      await FirebaseFirestore.instance.collection('house').doc('12345').update(
+      await FirebaseFirestore.instance
+          .collection('house')
+          .doc(widget.newCode)
+          .update(
         {
           "size": '중형',
         },
       );
     }
     if (big == true) {
-      await FirebaseFirestore.instance.collection('house').doc('12345').update(
+      await FirebaseFirestore.instance
+          .collection('house')
+          .doc(widget.newCode)
+          .update(
         {
           "size": '대형',
         },
@@ -530,7 +549,9 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                     ? () {
                         saveHouseName();
                         Get.to(
-                          const MakeHousePage3(),
+                          MakeHousePage3(
+                            newCode: widget.newCode,
+                          ),
                           transition: Transition.noTransition,
                         );
                       }

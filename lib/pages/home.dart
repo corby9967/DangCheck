@@ -1,7 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dangcheck/pages/house.dart';
+import 'package:dangcheck/pages/make_house_pages/make_house.dart';
+import 'package:dangcheck/pages/make_house_pages/make_house2.dart';
+import 'package:dangcheck/pages/make_house_pages/make_house_final.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../my classes/message.dart';
+import 'chat.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,14 +35,21 @@ class _HomePageState extends State<HomePage> {
 
   double size = 40;
 
-  bool message1 = false;
-  bool message2 = false;
-  bool message3 = false;
-  bool message4 = false;
+  bool isMessage1 = false;
+  bool isMessage2 = false;
+  bool isMessage3 = false;
+  bool isMessage4 = false;
+
+  String message1 = '지원이가 7시간 전에 사료을 줬어멍!';
+  String message2 = '지원이가 1시간 전에 뼈껌을 줬어멍!';
+  String message3 = '지원이가 6시간 전에 목욕을 시켜 줬어멍!';
+  String message4 = '지원이가 4시간 전에 산책을 시켜 줬어멍!';
 
   List foodList = [];
 
   int _selectedIndex = 0;
+
+  final List<Widget> _pages = [const ChatPage(), const MakeHousePageFinal()];
 
   @override
   void initState() {
@@ -474,14 +487,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    switch (_selectedIndex) {
-      case 0:
-        break;
-
-      case 1:
-        break;
-    }
-
     return Scaffold(
       backgroundColor: const Color(0xFFFFFAF4),
       appBar: AppBar(
@@ -534,7 +539,10 @@ class _HomePageState extends State<HomePage> {
                         },
                         onTap: () {
                           setState(() {
-                            message1 = !message1;
+                            isMessage1 = !isMessage1;
+                            isMessage2 = false;
+                            isMessage3 = false;
+                            isMessage4 = false;
                           });
                         },
                       ),
@@ -616,6 +624,14 @@ class _HomePageState extends State<HomePage> {
                             isLongTapped2 = !isLongTapped2;
                             isLongTapped3 = false;
                             isLongTapped4 = false;
+                          });
+                        },
+                        onTap: () {
+                          setState(() {
+                            isMessage1 = false;
+                            isMessage2 = !isMessage2;
+                            isMessage3 = false;
+                            isMessage4 = false;
                           });
                         },
                       ),
@@ -702,6 +718,14 @@ class _HomePageState extends State<HomePage> {
                                 isLongTapped4 = false;
                               });
                             },
+                            onTap: () {
+                              setState(() {
+                                isMessage1 = false;
+                                isMessage2 = false;
+                                isMessage3 = !isMessage3;
+                                isMessage4 = false;
+                              });
+                            },
                           ),
                         const SizedBox(width: 16),
                       ],
@@ -761,6 +785,14 @@ class _HomePageState extends State<HomePage> {
                                 isLongTapped4 = !isLongTapped4;
                               });
                             },
+                            onTap: () {
+                              setState(() {
+                                isMessage1 = false;
+                                isMessage2 = false;
+                                isMessage3 = false;
+                                isMessage4 = !isMessage4;
+                              });
+                            },
                           ),
                         const SizedBox(width: 16),
                       ],
@@ -805,14 +837,74 @@ class _HomePageState extends State<HomePage> {
                     height: 270,
                     image: AssetImage('assets/images/dog.png'),
                   ),
-                  Positioned(
-                    bottom: 260,
-                    child: AnimatedOpacity(
-                      opacity: message1 ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 200),
-                      child: const Message(),
-                    ),
-                  ),
+                  isMessage1
+                      ? Positioned(
+                          bottom: 260,
+                          child: AnimatedOpacity(
+                            opacity: 1.0,
+                            duration: const Duration(milliseconds: 200),
+                            child: Message(message: message1),
+                          ),
+                        )
+                      : Positioned(
+                          bottom: 260,
+                          child: AnimatedOpacity(
+                            opacity: 0.0,
+                            duration: const Duration(milliseconds: 200),
+                            child: Message(message: message1),
+                          ),
+                        ),
+                  isMessage2
+                      ? Positioned(
+                          bottom: 260,
+                          child: AnimatedOpacity(
+                            opacity: 1.0,
+                            duration: const Duration(milliseconds: 200),
+                            child: Message(message: message2),
+                          ),
+                        )
+                      : Positioned(
+                          bottom: 260,
+                          child: AnimatedOpacity(
+                            opacity: 0.0,
+                            duration: const Duration(milliseconds: 200),
+                            child: Message(message: message2),
+                          ),
+                        ),
+                  isMessage3
+                      ? Positioned(
+                          bottom: 260,
+                          child: AnimatedOpacity(
+                            opacity: 1.0,
+                            duration: const Duration(milliseconds: 200),
+                            child: Message(message: message3),
+                          ),
+                        )
+                      : Positioned(
+                          bottom: 260,
+                          child: AnimatedOpacity(
+                            opacity: 0.0,
+                            duration: const Duration(milliseconds: 200),
+                            child: Message(message: message3),
+                          ),
+                        ),
+                  isMessage4
+                      ? Positioned(
+                          bottom: 260,
+                          child: AnimatedOpacity(
+                            opacity: 1.0,
+                            duration: const Duration(milliseconds: 200),
+                            child: Message(message: message4),
+                          ),
+                        )
+                      : Positioned(
+                          bottom: 260,
+                          child: AnimatedOpacity(
+                            opacity: 0.0,
+                            duration: const Duration(milliseconds: 200),
+                            child: Message(message: message4),
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -1002,9 +1094,15 @@ class _HomePageState extends State<HomePage> {
           child: Expanded(
             child: BottomNavigationBar(
               currentIndex: _selectedIndex,
-              onTap: (int index) => setState(() {
-                _selectedIndex = index;
-              }),
+              onTap: (int index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+                Get.to(
+                  _pages[_selectedIndex],
+                  transition: Transition.noTransition,
+                );
+              },
               elevation: 0,
               backgroundColor: Theme.of(context).primaryColor.withAlpha(0),
               items: const [

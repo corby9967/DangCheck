@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Message extends StatelessWidget {
-  const Message({super.key});
+  final String message;
+
+  const Message({Key? key, required this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +12,7 @@ class Message extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: 241,
+          width: null,
           height: 40,
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           decoration: ShapeDecoration(
@@ -19,23 +21,25 @@ class Message extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          child: const Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                '지원이가 1시간 전에 사료을 줬어멍!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontFamily: '210 Gulim',
-                  fontWeight: FontWeight.w400,
-                  height: 0.10,
+          child: Expanded(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  message,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontFamily: '210 Gulim',
+                    fontWeight: FontWeight.w400,
+                    height: 0.10,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         Transform(

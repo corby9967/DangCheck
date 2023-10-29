@@ -30,7 +30,7 @@ class _MakeHousePage7 extends State<MakeHousePage7> {
         .doc(widget.newCode)
         .update({
       "산책 주기": dropdowntext,
-      "산책 횟수": walk.toString(),
+      "산책 횟수": walk,
     });
   }
 

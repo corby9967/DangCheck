@@ -16,6 +16,7 @@ class MakeHousePageFinal extends StatefulWidget {
 class _MakeHousePageFinal extends State<MakeHousePageFinal> {
   final user = FirebaseAuth.instance.currentUser!;
   bool isButtonActive = true;
+  String houseName = '';
 
   @override
   void initState() {
@@ -29,6 +30,15 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
         .collection('member')
         .doc(user.email!)
         .set({});
+  }
+
+  Future getInfo() async {
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.newCode)
+        .get();
+
+    houseName = documentSnapshot.get('하우스 이름');
   }
 
   @override
@@ -153,9 +163,11 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
                 onPressed: isButtonActive
                     ? () {
                         saveUserInfo();
+                        getInfo();
                         Get.to(
                           HomePage(
-                            newCode: widget.newCode,
+                            currentCode: widget.newCode,
+                            houseName: houseName,
                           ),
                           transition: Transition.noTransition,
                         );

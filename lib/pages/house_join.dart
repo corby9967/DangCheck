@@ -19,6 +19,7 @@ class _JoinPageState extends State<JoinHousePage> {
   bool isButtonActive = false;
 
   String errorMsg = '';
+  String houseName = '';
 
   @override
   void initState() {
@@ -32,13 +33,55 @@ class _JoinPageState extends State<JoinHousePage> {
     });
   }
 
-  Future saveUserInfo() async {
+  Future getInfo() async {
+    print('1');
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+        .collection('house')
+        .doc(houseCodeController.text)
+        .get();
+
+    houseName = documentSnapshot.get('하우스 이름');
+    print(houseName);
+
+    print('2');
+  }
+
+  Future saveUserInfoFirst() async {
     await FirebaseFirestore.instance
         .collection('house')
         .doc(houseCodeController.text)
         .collection('member')
         .doc(user.email!)
         .set({});
+  }
+
+  Future saveUserInfoAgain() async {
+    await FirebaseFirestore.instance
+        .collection('house')
+        .doc(houseCodeController.text)
+        .collection('member')
+        .doc(user.email!)
+        .update({});
+  }
+
+  Future userVarification() async {
+    final CollectionReference myCollection1 =
+        FirebaseFirestore.instance.collection('house');
+    final DocumentReference myDocument1 =
+        myCollection1.doc(houseCodeController.text);
+    final CollectionReference myCollection2 = myDocument1.collection('member');
+    final DocumentReference myDocument2 = myCollection2.doc(user.email!);
+    myDocument2.get().then(
+      (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          // The document exists in Firestore.
+          saveUserInfoAgain();
+        } else {
+          // The document does not exist in Firestore.
+          saveUserInfoFirst();
+        }
+      },
+    );
   }
 
   codeVerification() {
@@ -50,10 +93,13 @@ class _JoinPageState extends State<JoinHousePage> {
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           // The document exists in Firestore.
-          saveUserInfo();
+          userVarification();
+          getInfo();
+          print(houseName);
           Get.to(
             HomePage(
-              newCode: houseCodeController.text,
+              currentCode: houseCodeController.text,
+              houseName: houseName,
             ),
             transition: Transition.noTransition,
           );

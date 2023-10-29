@@ -1,23 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/pages/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class MakeHousePageFinal extends StatefulWidget {
-  const MakeHousePageFinal({super.key});
+  final String newCode;
+  const MakeHousePageFinal({super.key, required this.newCode});
 
   @override
   State<MakeHousePageFinal> createState() => _MakeHousePageFinal();
 }
 
 class _MakeHousePageFinal extends State<MakeHousePageFinal> {
+  final user = FirebaseAuth.instance.currentUser!;
   bool isButtonActive = true;
-
-  String hausCode = '78987';
 
   @override
   void initState() {
     super.initState();
+  }
+
+  Future saveUserInfo() async {
+    await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.newCode)
+        .collection('member')
+        .doc(user.email!)
+        .set({});
   }
 
   @override
@@ -96,7 +107,7 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
                     height: 25,
                   ),
                   Text(
-                    hausCode,
+                    widget.newCode,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 32,
@@ -108,7 +119,7 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: hausCode));
+                      Clipboard.setData(ClipboardData(text: widget.newCode));
                     },
                     child: Text(
                       '클립보드 복사',
@@ -141,8 +152,11 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
                 ),
                 onPressed: isButtonActive
                     ? () {
+                        saveUserInfo();
                         Get.to(
-                          const HomePage(),
+                          HomePage(
+                            newCode: widget.newCode,
+                          ),
                           transition: Transition.noTransition,
                         );
                       }

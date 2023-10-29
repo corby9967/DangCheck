@@ -33,11 +33,21 @@ class _MakeHousePage extends State<MakeHousePage> {
         .collection('house')
         .doc(widget.newCode)
         .update({
-      "housename": houseNameController.text,
+      "하우스 이름": houseNameController.text,
     });
   }
 
-  deleteCode() {}
+  Future<void> deleteCode() async {
+    final collectionReference = FirebaseFirestore.instance.collection('house');
+    final documentID = widget.newCode;
+
+    try {
+      await collectionReference.doc(documentID).delete();
+      print('Document deleted successfully');
+    } catch (e) {
+      print('Error deleting document: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

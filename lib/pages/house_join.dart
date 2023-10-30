@@ -90,12 +90,11 @@ class _JoinPageState extends State<JoinHousePage> {
     final DocumentReference myDocument =
         myCollection.doc(houseCodeController.text);
     myDocument.get().then(
-      (DocumentSnapshot documentSnapshot) {
+      (DocumentSnapshot documentSnapshot) async {
         if (documentSnapshot.exists) {
           // The document exists in Firestore.
           userVarification();
-          getInfo();
-          print(houseName);
+          await getInfo();
           Get.to(
             HomePage(
               currentCode: houseCodeController.text,

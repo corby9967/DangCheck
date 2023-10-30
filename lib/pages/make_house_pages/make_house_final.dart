@@ -30,6 +30,18 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
         .collection('member')
         .doc(user.email!)
         .set({});
+
+    await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.newCode)
+        .collection('dog status')
+        .doc('status')
+        .set({
+      "food status": 0,
+      "snack status": 0,
+      "shower status": 0,
+      "walk status": 0,
+    });
   }
 
   Future getInfo() async {
@@ -161,9 +173,9 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
                   ),
                 ),
                 onPressed: isButtonActive
-                    ? () {
+                    ? () async {
                         saveUserInfo();
-                        getInfo();
+                        await getInfo();
                         Get.to(
                           HomePage(
                             currentCode: widget.newCode,

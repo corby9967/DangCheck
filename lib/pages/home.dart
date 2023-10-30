@@ -58,9 +58,12 @@ class _HomePageState extends State<HomePage> {
 
   int _selectedIndex = 0;
 
+  int foodStatus = 0;
+  int snackStatus = 0;
+  int showerStatus = 0;
+  int walkStatus = 0;
 
   final List<Widget> _pages = [const ChatPage(), const SettingPage()];
-
 
   @override
   void initState() {
@@ -68,25 +71,101 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  Future removeInfo(int type) async {
+    String updateName = '';
+    int updateValue = 0;
+
+    if (type == 1) {
+      if (foodStatus > 0) foodStatus--;
+      updateValue = foodStatus;
+      updateName = 'food status';
+    } else if (type == 2) {
+      if (snackStatus > 0) snackStatus--;
+      updateValue = snackStatus;
+      updateName = 'snack status';
+    } else if (type == 3) {
+      showerStatus = 0;
+      updateValue = showerStatus;
+      updateName = 'shower status';
+    } else if (type == 4) {
+      walkStatus = 0;
+      updateValue = walkStatus;
+      updateName = 'walk status';
+    }
+
+    await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.currentCode)
+        .collection('dog status')
+        .doc('status')
+        .update({
+      updateName: updateValue,
+    });
+  }
+
+  Future addInfo(String type) async {
+    String updateName = '';
+    int updateValue = 0;
+
+    if (type == "밥") {
+      if (foodStatus < 4) foodStatus++;
+      updateValue = foodStatus;
+      updateName = 'food status';
+    } else if (type == "간식") {
+      if (snackStatus < 4) snackStatus++;
+      updateValue = snackStatus;
+      updateName = 'snack status';
+    } else if (type == "목욕") {
+      showerStatus = 1;
+      updateValue = showerStatus;
+      updateName = 'shower status';
+    } else if (type == "산책") {
+      walkStatus = 1;
+      updateValue = walkStatus;
+      updateName = 'walk status';
+    }
+
+    await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.currentCode)
+        .collection('dog status')
+        .doc('status')
+        .update({
+      updateName: updateValue,
+    });
+  }
+
   Future getInfo() async {
-    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+    DocumentSnapshot documentSnapshot1 = await FirebaseFirestore.instance
         .collection('house')
         .doc(widget.currentCode)
         .get();
 
-    noOfFood = documentSnapshot.get('음식 개수');
-    noOfSnack = documentSnapshot.get('간식 개수');
-    noOfShower = documentSnapshot.get('목욕 횟수');
-    noOfWalk = documentSnapshot.get('산책 횟수');
-    showerPeriod = documentSnapshot.get('목욕 주기');
-    walkPeriod = documentSnapshot.get('산책 주기');
+    noOfFood = documentSnapshot1.get('음식 개수');
+    noOfSnack = documentSnapshot1.get('간식 개수');
+    noOfShower = documentSnapshot1.get('목욕 횟수');
+    noOfWalk = documentSnapshot1.get('산책 횟수');
+    showerPeriod = documentSnapshot1.get('목욕 주기');
+    walkPeriod = documentSnapshot1.get('산책 주기');
 
     for (int i = 0; i < noOfFood; i++) {
-      foodList.add(documentSnapshot.get('식사 메뉴 ${i + 1}'));
+      foodList.add(documentSnapshot1.get('식사 메뉴 ${i + 1}'));
     }
     for (int i = 0; i < noOfSnack; i++) {
-      snackList.add(documentSnapshot.get('간식 메뉴 ${i + 1}'));
+      snackList.add(documentSnapshot1.get('간식 메뉴 ${i + 1}'));
     }
+
+    DocumentSnapshot documentSnapshot2 = await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.currentCode)
+        .collection('dog status')
+        .doc('status')
+        .get();
+
+    foodStatus = documentSnapshot2.get('food status');
+    snackStatus = documentSnapshot2.get('snack status');
+    showerStatus = documentSnapshot2.get('shower status');
+    walkStatus = documentSnapshot2.get('walk status');
   }
 
   Future<dynamic> myBottomDrawer(BuildContext context, String type, int no) {
@@ -129,6 +208,7 @@ class _HomePageState extends State<HomePage> {
                                   myState(() {
                                     setState(() {
                                       if (b) {
+                                        addInfo(type);
                                         type == '밥'
                                             ? foodCheck < 4
                                                 ? foodCheck++
@@ -326,6 +406,7 @@ class _HomePageState extends State<HomePage> {
                                   myState(() {
                                     setState(() {
                                       if (isTapped) {
+                                        addInfo(type);
                                         type == '목욕'
                                             ? showerCheck = true
                                             : walkCheck = true;
@@ -626,6 +707,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black26,
                               ),
                               onTap: () {
+                                removeInfo(1);
                                 setState(() {
                                   foodCheck > 0 ? foodCheck-- : foodCheck;
                                   isLongTapped1 = !isLongTapped1;
@@ -715,6 +797,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black26,
                               ),
                               onTap: () {
+                                removeInfo(2);
                                 setState(() {
                                   snackCheck > 0 ? snackCheck-- : snackCheck;
                                   isLongTapped2 = !isLongTapped2;
@@ -781,6 +864,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               onTap: () {
+                                removeInfo(3);
                                 setState(() {
                                   showerCheck = false;
                                   isLongTapped3 = !isLongTapped3;
@@ -848,6 +932,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               onTap: () {
+                                removeInfo(4);
                                 setState(() {
                                   walkCheck = false;
                                   isLongTapped4 = !isLongTapped4;

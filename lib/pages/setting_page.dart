@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dangcheck/pages/chat.dart';
+import 'package:dangcheck/pages/home.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +13,10 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  int _index = 0;
+
+  final List<Widget> _pages = [const ChatPage(), const SettingPage()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -287,7 +295,16 @@ class _SettingPageState extends State<SettingPage> {
           color: Theme.of(context).colorScheme.primary,
           child: Expanded(
             child: BottomNavigationBar(
-              currentIndex: 1,
+              currentIndex: _index,
+              onTap: (int index) {
+                setState(() {
+                  _index = index;
+                });
+                Get.to(
+                  _pages[_index],
+                  transition: Transition.noTransition,
+                );
+              },
               elevation: 0,
               backgroundColor: Theme.of(context).primaryColor.withAlpha(0),
               selectedFontSize: 13,

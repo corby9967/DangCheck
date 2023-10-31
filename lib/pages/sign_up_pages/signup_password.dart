@@ -156,7 +156,7 @@ class _SignupPageState extends State<SignupPage6> {
                 ),
               ),
               const SizedBox(
-                height: 6,
+                height: 10,
               ),
               SizedBox(
                 height: 54,
@@ -167,7 +167,7 @@ class _SignupPageState extends State<SignupPage6> {
                 ),
               ),
               const SizedBox(
-                height: 2,
+                height: 4,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 2),
@@ -180,7 +180,7 @@ class _SignupPageState extends State<SignupPage6> {
                 ),
               ),
               const SizedBox(
-                height: 390,
+                height: 390 - 6,
               ),
               SizedBox(
                 height: 54,

@@ -98,7 +98,6 @@ class _JoinPageState extends State<JoinHousePage> {
           Get.to(
             HomePage(
               currentCode: houseCodeController.text,
-              houseName: houseName,
             ),
             transition: Transition.noTransition,
           );

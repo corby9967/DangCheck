@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  final String currentCode;
+
+  const ChatPage({super.key, required this.currentCode});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -15,12 +17,16 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   int _index = 0;
 
+  List<Widget> _pages = [];
+
   @override
   void initState() {
+    _pages = [
+      ChatPage(currentCode: widget.currentCode),
+      SettingPage(currentCode: widget.currentCode)
+    ];
     super.initState();
   }
-
-  final List<Widget> _pages = [const ChatPage(), const SettingPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -296,7 +302,8 @@ class _ChatPageState extends State<ChatPage> {
               color: Colors.black12,
             ),
             onPressed: () {
-              Get.back();
+              Get.to(HomePage(currentCode: widget.currentCode),
+                  transition: Transition.noTransition);
             },
           ),
         ),

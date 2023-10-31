@@ -285,7 +285,7 @@ class _MakeHousePage7 extends State<MakeHousePage7> {
                           MakeHousePageFinal(
                             newCode: widget.newCode,
                           ),
-                          transition: Transition.noTransition,
+                          transition: Transition.rightToLeft,
                         );
                       }
                     : null,

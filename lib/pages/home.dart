@@ -10,15 +10,16 @@ import 'chat.dart';
 
 class HomePage extends StatefulWidget {
   final String currentCode;
-  final String houseName;
-  const HomePage(
-      {super.key, required this.currentCode, required this.houseName});
+
+  const HomePage({super.key, required this.currentCode});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  String houseName = '';
+
   int foodCheck = 0;
   int snackCheck = 0;
   int showerCheck = 0;
@@ -77,12 +78,18 @@ class _HomePageState extends State<HomePage> {
   String recentWhat3 = '';
   String recentWhat4 = '';
 
-  final List<Widget> _pages = [const ChatPage(), const SettingPage()];
+  List<Widget> _pages = [];
 
   late Stream<DocumentSnapshot> firestoreStream;
 
   @override
   void initState() {
+    _pages = [
+      ChatPage(currentCode: widget.currentCode),
+      SettingPage(
+        currentCode: widget.currentCode,
+      )
+    ];
     getInfo();
     super.initState();
   }
@@ -126,7 +133,6 @@ class _HomePageState extends State<HomePage> {
     String updateNameTime = '';
     int updateValue = 0;
 
-    // 여기다 추가되는 함수 만들기
     if (type == "밥") {
       if (foodCheck < totalFood) foodCheck++;
       updateValue = foodCheck;
@@ -177,6 +183,7 @@ class _HomePageState extends State<HomePage> {
         .doc(widget.currentCode)
         .get();
 
+    houseName = documentSnapshot1.get('하우스 이름');
     noOfFood = documentSnapshot1.get('식사 개수');
     noOfSnack = documentSnapshot1.get('간식 개수');
     noOfShower = documentSnapshot1.get('목욕 횟수');
@@ -725,7 +732,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          widget.houseName,
+          houseName,
           style: const TextStyle(
             color: Colors.black,
             fontSize: 16,

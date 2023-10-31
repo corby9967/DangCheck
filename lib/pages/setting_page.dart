@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingPage extends StatefulWidget {
-  const SettingPage({super.key});
+  final String currentCode;
+
+  const SettingPage({super.key, required this.currentCode});
 
   @override
   State<SettingPage> createState() => _SettingPageState();
@@ -15,7 +17,16 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   int _index = 0;
 
-  final List<Widget> _pages = [const ChatPage(), const SettingPage()];
+  List<Widget> _pages = [];
+
+  @override
+  void initState() {
+    _pages = [
+      ChatPage(currentCode: widget.currentCode),
+      SettingPage(currentCode: widget.currentCode)
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -276,7 +287,8 @@ class _SettingPageState extends State<SettingPage> {
               color: Colors.black12,
             ),
             onPressed: () {
-              Navigator.pop(context);
+              Get.to(HomePage(currentCode: widget.currentCode),
+                  transition: Transition.noTransition);
             },
           ),
         ),

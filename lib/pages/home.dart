@@ -42,11 +42,6 @@ class _HomePageState extends State<HomePage> {
   bool isMessage3 = false;
   bool isMessage4 = false;
 
-  String message1 = '지원이가 7시간 전에 사료을 줬어멍!';
-  String message2 = '지원이가 1시간 전에 뼈껌을 줬어멍!';
-  String message3 = '지원이가 6시간 전에 목욕을 시켜 줬어멍!';
-  String message4 = '지원이가 4시간 전에 산책을 시켜 줬어멍!';
-
   String showerPeriod = '';
   String walkPeriod = '';
   int noOfFood = 0;
@@ -72,10 +67,15 @@ class _HomePageState extends State<HomePage> {
   int showerTimeDifference = 0;
   int walkTimeDifference = 0;
 
-  String foodWho = '';
-  String snackWho = '';
-  String showerWho = '';
-  String walkWho = '';
+  String nickName = '';
+  String recentWho1 = '';
+  String recentWho2 = '';
+  String recentWho3 = '';
+  String recentWho4 = '';
+  String recentWhat1 = '';
+  String recentWhat2 = '';
+  String recentWhat3 = '';
+  String recentWhat4 = '';
 
   final List<Widget> _pages = [const ChatPage(), const SettingPage()];
 
@@ -126,8 +126,7 @@ class _HomePageState extends State<HomePage> {
     String updateNameTime = '';
     int updateValue = 0;
 
-    //여기다 추가되는 함수 만들기
-
+    // 여기다 추가되는 함수 만들기
     if (type == "밥") {
       if (foodCheck < totalFood) foodCheck++;
       updateValue = foodCheck;
@@ -165,8 +164,9 @@ class _HomePageState extends State<HomePage> {
         .collection(updateNameTime);
 
     collectionReference1.add({
-      'userId': FirebaseAuth.instance.currentUser!.email.toString(),
       'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'what': updateData,
+      'who': nickName,
     });
   }
 
@@ -204,6 +204,13 @@ class _HomePageState extends State<HomePage> {
     snackCheck = documentSnapshot2.get('snack status');
     showerCheck = documentSnapshot2.get('shower status');
     walkCheck = documentSnapshot2.get('walk status');
+
+    DocumentSnapshot documentSnapshot3 = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.email.toString())
+        .get();
+
+    nickName = documentSnapshot3.get('nickname');
 
     setState(() {});
   }
@@ -296,6 +303,8 @@ class _HomePageState extends State<HomePage> {
                                   setState(() {
                                     if (type == '밥') {
                                       updateData = foodList[index];
+                                    } else {
+                                      updateData = snackList[index];
                                     }
                                     for (int i = 0; i < isChecked.length; i++) {
                                       if (i == index) {
@@ -1087,6 +1096,12 @@ class _HomePageState extends State<HomePage> {
                                         foodtime = mostRecentDocument
                                             .get('timestamp') as int;
 
+                                        recentWho1 = mostRecentDocument
+                                            .get('who') as String;
+
+                                        recentWhat1 = mostRecentDocument
+                                            .get('what') as String;
+
                                         foodTimeDifference = (DateTime.now()
                                                     .millisecondsSinceEpoch -
                                                 foodtime) ~/
@@ -1101,22 +1116,23 @@ class _HomePageState extends State<HomePage> {
                                   int timeDifference = foodTimeDifference;
                                   if (timeDifference > 0 &&
                                       timeDifference < 60) {
-                                    return const Message(
-                                        message: '누군가가 방금 전에 사료를 줬어멍!');
+                                    return Message(
+                                        message:
+                                            '$recentWho1가 방금 전에 $recentWhat1를 줬어멍!');
                                   } else if (timeDifference >= 60 &&
                                       timeDifference < 60 * 60) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ 60}분 전에 사료를 줬어멍!');
+                                            '$recentWho1가 ${timeDifference ~/ 60}분 전에 $recentWhat1를 줬어멍!');
                                   } else if (timeDifference >= 60 * 60 &&
                                       timeDifference < 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 사료를 줬어멍!');
+                                            '$recentWho1가 ${timeDifference ~/ (60 * 60)}시간 전에 $recentWhat1를 줬어멍!');
                                   } else if (timeDifference >= 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 사료를 줬어멍!');
+                                            '$recentWho1가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 $recentWhat1를 줬어멍!');
                                   } else {
                                     return const Message(
                                         message: '아직 사료를 안 줬어멍!');
@@ -1148,6 +1164,12 @@ class _HomePageState extends State<HomePage> {
                                         foodtime = mostRecentDocument
                                             .get('timestamp') as int;
 
+                                        recentWho1 = mostRecentDocument
+                                            .get('who') as String;
+
+                                        recentWhat1 = mostRecentDocument
+                                            .get('what') as String;
+
                                         foodTimeDifference = (DateTime.now()
                                                     .millisecondsSinceEpoch -
                                                 foodtime) ~/
@@ -1162,22 +1184,23 @@ class _HomePageState extends State<HomePage> {
                                   int timeDifference = foodTimeDifference;
                                   if (timeDifference > 0 &&
                                       timeDifference < 60) {
-                                    return const Message(
-                                        message: '누군가가 방금 전에 사료를 줬어멍!');
+                                    return Message(
+                                        message:
+                                            '$recentWho1가 방금 전에 $recentWhat1를 줬어멍!');
                                   } else if (timeDifference >= 60 &&
                                       timeDifference < 60 * 60) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ 60}분 전에 사료를 줬어멍!');
+                                            '$recentWho1가 ${timeDifference ~/ 60}분 전에 $recentWhat1를 줬어멍!');
                                   } else if (timeDifference >= 60 * 60 &&
                                       timeDifference < 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 사료를 줬어멍!');
+                                            '$recentWho1가 ${timeDifference ~/ (60 * 60)}시간 전에 $recentWhat1를 줬어멍!');
                                   } else if (timeDifference >= 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 사료를 줬어멍!');
+                                            '$recentWho1가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 $recentWhat1를 줬어멍!');
                                   } else {
                                     return const Message(
                                         message: '아직 사료를 안 줬어멍!');
@@ -1210,6 +1233,12 @@ class _HomePageState extends State<HomePage> {
                                         snacktime = mostRecentDocument
                                             .get('timestamp') as int;
 
+                                        recentWho2 = mostRecentDocument
+                                            .get('who') as String;
+
+                                        recentWhat2 = mostRecentDocument
+                                            .get('what') as String;
+
                                         snackTimeDifference = (DateTime.now()
                                                     .millisecondsSinceEpoch -
                                                 snacktime) ~/
@@ -1224,25 +1253,26 @@ class _HomePageState extends State<HomePage> {
                                   int timeDifference = snackTimeDifference;
                                   if (timeDifference > 0 &&
                                       timeDifference < 60) {
-                                    return const Message(
-                                        message: '누군가가 방금 전에 간식을 줬어멍!');
+                                    return Message(
+                                        message:
+                                            '$recentWho2가 방금 전에 $recentWhat2를 줬어멍!');
                                   } else if (timeDifference >= 60 &&
                                       timeDifference < 60 * 60) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ 60}분 전에 간식을 줬어멍!');
+                                            '$recentWho2가 ${timeDifference ~/ 60}분 전에 $recentWhat2를 줬어멍!');
                                   } else if (timeDifference >= 60 * 60 &&
                                       timeDifference < 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 간식을 줬어멍!');
+                                            '$recentWho2가 ${timeDifference ~/ (60 * 60)}시간 전에 $recentWhat2를 줬어멍!');
                                   } else if (timeDifference >= 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 간식을 줬어멍!');
+                                            '$recentWho2가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 $recentWhat2를 줬어멍!');
                                   } else {
                                     return const Message(
-                                        message: '아직 간식을 안 줬어멍!');
+                                        message: '아직 사료를 안 줬어멍!');
                                   }
                                 }),
                           ),
@@ -1271,6 +1301,12 @@ class _HomePageState extends State<HomePage> {
                                         snacktime = mostRecentDocument
                                             .get('timestamp') as int;
 
+                                        recentWho2 = mostRecentDocument
+                                            .get('who') as String;
+
+                                        recentWhat2 = mostRecentDocument
+                                            .get('what') as String;
+
                                         snackTimeDifference = (DateTime.now()
                                                     .millisecondsSinceEpoch -
                                                 snacktime) ~/
@@ -1285,25 +1321,26 @@ class _HomePageState extends State<HomePage> {
                                   int timeDifference = snackTimeDifference;
                                   if (timeDifference > 0 &&
                                       timeDifference < 60) {
-                                    return const Message(
-                                        message: '누군가가 방금 전에 간식을 줬어멍!');
+                                    return Message(
+                                        message:
+                                            '$recentWho2가 방금 전에 $recentWhat2를 줬어멍!');
                                   } else if (timeDifference >= 60 &&
                                       timeDifference < 60 * 60) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ 60}분 전에 간식을 줬어멍!');
+                                            '$recentWho2가 ${timeDifference ~/ 60}분 전에 $recentWhat2를 줬어멍!');
                                   } else if (timeDifference >= 60 * 60 &&
                                       timeDifference < 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 간식을 줬어멍!');
+                                            '$recentWho2가 ${timeDifference ~/ (60 * 60)}시간 전에 $recentWhat2를 줬어멍!');
                                   } else if (timeDifference >= 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 간식을 줬어멍!');
+                                            '$recentWho2가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 $recentWhat2를 줬어멍!');
                                   } else {
                                     return const Message(
-                                        message: '아직 간식을 안 줬어멍!');
+                                        message: '아직 사료를 안 줬어멍!');
                                   }
                                 }),
                           ),
@@ -1333,6 +1370,9 @@ class _HomePageState extends State<HomePage> {
                                         showertime = mostRecentDocument
                                             .get('timestamp') as int;
 
+                                        recentWho3 = mostRecentDocument
+                                            .get('who') as String;
+
                                         showerTimeDifference = (DateTime.now()
                                                     .millisecondsSinceEpoch -
                                                 showertime) ~/
@@ -1347,22 +1387,23 @@ class _HomePageState extends State<HomePage> {
                                   int timeDifference = showerTimeDifference;
                                   if (timeDifference > 0 &&
                                       timeDifference < 60) {
-                                    return const Message(
-                                        message: '누군가가 방금 전에 목욕을 시켜줬어멍!');
+                                    return Message(
+                                        message:
+                                            '$recentWho3가 방금 전에 목욕을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 &&
                                       timeDifference < 60 * 60) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ 60}분 전에 목욕을 시켜줬어멍!');
+                                            '$recentWho3가 ${timeDifference ~/ 60}분 전에 목욕을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 * 60 &&
                                       timeDifference < 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 목욕을 시켜줬어멍!');
+                                            '$recentWho3가 ${timeDifference ~/ (60 * 60)}시간 전에 목욕을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 목욕을 시켜줬어멍!');
+                                            '$recentWho3가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 목욕을 시켜줬어멍!');
                                   } else {
                                     return const Message(
                                         message: '아직 목욕을 안 시켜줬어멍!');
@@ -1394,6 +1435,9 @@ class _HomePageState extends State<HomePage> {
                                         showertime = mostRecentDocument
                                             .get('timestamp') as int;
 
+                                        recentWho3 = mostRecentDocument
+                                            .get('who') as String;
+
                                         showerTimeDifference = (DateTime.now()
                                                     .millisecondsSinceEpoch -
                                                 showertime) ~/
@@ -1408,22 +1452,23 @@ class _HomePageState extends State<HomePage> {
                                   int timeDifference = showerTimeDifference;
                                   if (timeDifference > 0 &&
                                       timeDifference < 60) {
-                                    return const Message(
-                                        message: '누군가가 방금 전에 목욕을 시켜줬어멍!');
+                                    return Message(
+                                        message:
+                                            '$recentWho3가 방금 전에 목욕을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 &&
                                       timeDifference < 60 * 60) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ 60}분 전에 목욕을 시켜줬어멍!');
+                                            '$recentWho3가 ${timeDifference ~/ 60}분 전에 목욕을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 * 60 &&
                                       timeDifference < 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 목욕을 시켜줬어멍!');
+                                            '$recentWho3가 ${timeDifference ~/ (60 * 60)}시간 전에 목욕을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 목욕을 시켜줬어멍!');
+                                            '$recentWho3가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 목욕을 시켜줬어멍!');
                                   } else {
                                     return const Message(
                                         message: '아직 목욕을 안 시켜줬어멍!');
@@ -1456,6 +1501,9 @@ class _HomePageState extends State<HomePage> {
                                         walktime = mostRecentDocument
                                             .get('timestamp') as int;
 
+                                        recentWho4 = mostRecentDocument
+                                            .get('who') as String;
+
                                         walkTimeDifference = (DateTime.now()
                                                     .millisecondsSinceEpoch -
                                                 walktime) ~/
@@ -1470,22 +1518,23 @@ class _HomePageState extends State<HomePage> {
                                   int timeDifference = walkTimeDifference;
                                   if (timeDifference > 0 &&
                                       timeDifference < 60) {
-                                    return const Message(
-                                        message: '누군가가 방금 전에 산책을 시켜줬어멍!');
+                                    return Message(
+                                        message:
+                                            '$recentWho4가 방금 전에 산책을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 &&
                                       timeDifference < 60 * 60) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ 60}분 전에 산책을 시켜줬어멍!');
+                                            '$recentWho4가 ${timeDifference ~/ 60}분 전에 산책을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 * 60 &&
                                       timeDifference < 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 산책을 시켜줬어멍!');
+                                            '$recentWho4가 ${timeDifference ~/ (60 * 60)}시간 전에 산책을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 산책을 시켜줬어멍!');
+                                            '$recentWho4가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 산책을 시켜줬어멍!');
                                   } else {
                                     return const Message(
                                         message: '아직 산책을 안 시켜줬어멍!');
@@ -1517,6 +1566,9 @@ class _HomePageState extends State<HomePage> {
                                         walktime = mostRecentDocument
                                             .get('timestamp') as int;
 
+                                        recentWho4 = mostRecentDocument
+                                            .get('who') as String;
+
                                         walkTimeDifference = (DateTime.now()
                                                     .millisecondsSinceEpoch -
                                                 walktime) ~/
@@ -1531,22 +1583,23 @@ class _HomePageState extends State<HomePage> {
                                   int timeDifference = walkTimeDifference;
                                   if (timeDifference > 0 &&
                                       timeDifference < 60) {
-                                    return const Message(
-                                        message: '누군가가 방금 전에 산책을 시켜줬어멍!');
+                                    return Message(
+                                        message:
+                                            '$recentWho4가 방금 전에 산책을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 &&
                                       timeDifference < 60 * 60) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ 60}분 전에 산책을 시켜줬어멍!');
+                                            '$recentWho4가 ${timeDifference ~/ 60}분 전에 산책을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 * 60 &&
                                       timeDifference < 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 산책을 시켜줬어멍!');
+                                            '$recentWho4가 ${timeDifference ~/ (60 * 60)}시간 전에 산책을 시켜줬어멍!');
                                   } else if (timeDifference >= 60 * 60 * 24) {
                                     return Message(
                                         message:
-                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 산책을 시켜줬어멍!');
+                                            '$recentWho4가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 산책을 시켜줬어멍!');
                                   } else {
                                     return const Message(
                                         message: '아직 산책을 안 시켜줬어멍!');
@@ -1749,7 +1802,7 @@ class _HomePageState extends State<HomePage> {
                 });
                 Get.to(
                   _pages[_selectedIndex],
-                  transition: Transition.noTransition,
+                  transition: Transition.downToUp,
                 );
               },
               elevation: 0,

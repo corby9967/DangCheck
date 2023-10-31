@@ -179,7 +179,6 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
                         Get.to(
                           HomePage(
                             currentCode: widget.newCode,
-                            houseName: houseName,
                           ),
                           transition: Transition.noTransition,
                         );

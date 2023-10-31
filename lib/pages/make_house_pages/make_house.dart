@@ -148,7 +148,7 @@ class _MakeHousePage extends State<MakeHousePage> {
                           saveHouseName();
                           Get.to(
                             MakeHousePage2(newCode: widget.newCode),
-                            transition: Transition.noTransition,
+                            transition: Transition.rightToLeft,
                           );
                         }
                       : null,

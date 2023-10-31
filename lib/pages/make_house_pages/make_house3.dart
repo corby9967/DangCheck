@@ -143,7 +143,7 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
                           MakeHousePage4(
                             newCode: widget.newCode,
                           ),
-                          transition: Transition.noTransition,
+                          transition: Transition.rightToLeft,
                         );
                       }
                     : null,

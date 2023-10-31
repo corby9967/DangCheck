@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage> {
   List foodList = [];
   List snackList = [];
   String updateData = '';
+  String updateCollection = '';
 
   int _selectedIndex = 0;
 
@@ -75,8 +76,6 @@ class _HomePageState extends State<HomePage> {
   String recentWho4 = '';
   String recentWhat1 = '';
   String recentWhat2 = '';
-  String recentWhat3 = '';
-  String recentWhat4 = '';
 
   List<Widget> _pages = [];
 
@@ -103,19 +102,46 @@ class _HomePageState extends State<HomePage> {
       if (foodCheck > 0) foodCheck--;
       updateValue = foodCheck;
       updateName = 'food status';
+      updateCollection = 'food time';
     } else if (type == 2) {
       if (snackCheck > 0) snackCheck--;
       updateValue = snackCheck;
       updateName = 'snack status';
+      updateCollection = 'snack time';
     } else if (type == 3) {
       showerCheck = 0;
       updateValue = showerCheck;
       updateName = 'shower status';
+      updateCollection = 'shower time';
     } else if (type == 4) {
       walkCheck = 0;
       updateValue = walkCheck;
       updateName = 'walk status';
+      updateCollection = 'walk time';
     }
+
+    await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.currentCode)
+        .collection(updateCollection)
+        .orderBy('timestamp', descending: true)
+        .limit(1)
+        .get()
+        .then((querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        final recentDocument = querySnapshot.docs[0];
+
+        recentDocument.reference.delete().then((_) {
+          print("가장 최근 document가 삭제되었습니다.");
+        }).catchError((error) {
+          print("삭제 중 오류 발생: $error");
+        });
+      } else {
+        print("삭제할 document가 없습니다.");
+      }
+    }).catchError((error) {
+      print("데이터 가져오기 중 오류 발생: $error");
+    });
 
     await FirebaseFirestore.instance
         .collection('house')

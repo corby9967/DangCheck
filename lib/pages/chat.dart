@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dangcheck/pages/home.dart';
 import 'package:dangcheck/pages/setting_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +14,11 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   int _index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   final List<Widget> _pages = [const ChatPage(), const SettingPage()];
 
@@ -288,7 +296,7 @@ class _ChatPageState extends State<ChatPage> {
               color: Colors.black12,
             ),
             onPressed: () {
-              Navigator.pop(context);
+              Get.back();
             },
           ),
         ),

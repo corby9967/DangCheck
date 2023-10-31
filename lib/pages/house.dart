@@ -75,8 +75,9 @@ class _HousePageState extends State<HousePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 16),
             SizedBox(
-              height: 120,
+              height: 110,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/pages/make_house_pages/make_house_final.dart';
 import 'package:dangcheck/pages/setting_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -63,7 +64,24 @@ class _HomePageState extends State<HomePage> {
   int showerStatus = 0;
   int walkStatus = 0;
 
+  int foodtime = 0;
+  int snacktime = 0;
+  int showertime = 0;
+  int walktime = 0;
+
+  int foodTimeDifference = 0;
+  int snackTimeDifference = 0;
+  int showerTimeDifference = 0;
+  int walkTimeDifference = 0;
+
+  String foodWho = '';
+  String snackWho = '';
+  String showerWho = '';
+  String walkWho = '';
+
   final List<Widget> _pages = [const ChatPage(), const SettingPage()];
+
+  late Stream<DocumentSnapshot> firestoreStream;
 
   @override
   void initState() {
@@ -71,6 +89,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  /* DB Delete */
   Future removeInfo(int type) async {
     String updateName = '';
     int updateValue = 0;
@@ -103,26 +122,32 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  /* DB Create */
   Future addInfo(String type) async {
     String updateName = '';
+    String updateNameTime = '';
     int updateValue = 0;
 
     if (type == "밥") {
       if (foodStatus < 4) foodStatus++;
       updateValue = foodStatus;
       updateName = 'food status';
+      updateNameTime = 'food time';
     } else if (type == "간식") {
       if (snackStatus < 4) snackStatus++;
       updateValue = snackStatus;
       updateName = 'snack status';
+      updateNameTime = 'snack time';
     } else if (type == "목욕") {
       showerStatus = 1;
       updateValue = showerStatus;
       updateName = 'shower status';
+      updateNameTime = 'shower time';
     } else if (type == "산책") {
       walkStatus = 1;
       updateValue = walkStatus;
       updateName = 'walk status';
+      updateNameTime = 'walk time';
     }
 
     await FirebaseFirestore.instance
@@ -133,8 +158,19 @@ class _HomePageState extends State<HomePage> {
         .update({
       updateName: updateValue,
     });
+
+    CollectionReference collectionReference1 = FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.currentCode)
+        .collection(updateNameTime);
+
+    collectionReference1.add({
+      'userId': FirebaseAuth.instance.currentUser!.email.toString(),
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+    });
   }
 
+  /* DB Read */
   Future getInfo() async {
     DocumentSnapshot documentSnapshot1 = await FirebaseFirestore.instance
         .collection('house')
@@ -168,6 +204,7 @@ class _HomePageState extends State<HomePage> {
     walkStatus = documentSnapshot2.get('walk status');
   }
 
+  /* BottomDrawer1 */
   Future<dynamic> myBottomDrawer(BuildContext context, String type, int no) {
     List<bool> isChecked = [];
     for (int i = 0; i < no; i++) {
@@ -370,6 +407,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /* BottomDrawer2 */
   Future<dynamic> myBottomDrawer2(BuildContext context, String type) {
     bool isTapped = false;
 
@@ -454,21 +492,91 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                type == '목욕'
-                                    ? '$showerPeriod에'
-                                    : '$walkPeriod에',
+                              Row(
+                                children: [
+                                  Text(
+                                    type == '목욕'
+                                        ? '$showerPeriod에'
+                                        : '$walkPeriod에',
+                                  ),
+                                  const SizedBox(width: 7),
+                                  Text(
+                                    type == '목욕'
+                                        ? '$noOfShower번'
+                                        : '$noOfWalk번',
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 7),
-                              Text(
-                                type == '목욕' ? '$noOfShower번' : '$noOfWalk번',
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
-                              ),
-                              const SizedBox(width: 100),
-                              Text('4일 전에 $type했어요'),
+                              StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('house')
+                                      .doc(widget.currentCode)
+                                      .collection(type == '목욕'
+                                          ? 'shower time'
+                                          : 'walk time')
+                                      .orderBy('timestamp', descending: true)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.active) {
+                                      if (snapshot.hasData) {
+                                        final querySnapshot = snapshot.data;
+                                        if (querySnapshot!.docs.isNotEmpty) {
+                                          final mostRecentDocument =
+                                              querySnapshot.docs.first;
+
+                                          type == '목욕'
+                                              ? showertime = mostRecentDocument
+                                                  .get('timestamp') as int
+                                              : walktime = mostRecentDocument
+                                                  .get('timestamp') as int;
+
+                                          type == '목욕'
+                                              ? showerTimeDifference = (DateTime
+                                                              .now()
+                                                          .millisecondsSinceEpoch -
+                                                      showertime) ~/
+                                                  1000
+                                              : walkTimeDifference = (DateTime
+                                                              .now()
+                                                          .millisecondsSinceEpoch -
+                                                      walktime) ~/
+                                                  1000;
+
+                                          print(
+                                              '실시간 시간: $showerTimeDifference초');
+                                        } else {
+                                          print('컬렉션에 문서가 없습니다.');
+                                        }
+                                      }
+                                    }
+                                    int timeDifference = type == '목욕'
+                                        ? showerTimeDifference
+                                        : walkTimeDifference;
+                                    if (timeDifference > 0 &&
+                                        timeDifference < 60) {
+                                      return Text('방금 전에 $type했어요');
+                                    } else if (timeDifference >= 60 &&
+                                        timeDifference < 60 * 60) {
+                                      return Text(
+                                          '${timeDifference ~/ 60}분 전에 $type했어요');
+                                    } else if (timeDifference >= 60 * 60 &&
+                                        timeDifference < 60 * 60 * 24) {
+                                      return Text(
+                                          '${timeDifference ~/ (60 * 60)}시간 전에 $type했어요');
+                                    } else if (timeDifference >= 60 * 60 * 24) {
+                                      return Text(
+                                          '${timeDifference ~/ (60 * 60 * 24)}일 전에 $type했어요');
+                                    } else {
+                                      return Text('아직 $type을 안했어요!');
+                                    }
+                                  }),
                             ],
                           ),
                         ),
@@ -525,6 +633,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /* AlertDialog */
   Future<dynamic> myAlertDialog(BuildContext context) {
     return showDialog(
       context: context,
@@ -602,6 +711,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /* Build */
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -614,6 +724,7 @@ class _HomePageState extends State<HomePage> {
             color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.w600,
+            fontFamily: '210 Gulim',
           ),
         ),
         backgroundColor: const Color(0xFFFFFAF4),
@@ -964,7 +1075,60 @@ class _HomePageState extends State<HomePage> {
                           child: AnimatedOpacity(
                             opacity: 1.0,
                             duration: const Duration(milliseconds: 200),
-                            child: Message(message: message1),
+                            child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('house')
+                                    .doc(widget.currentCode)
+                                    .collection('food time')
+                                    .orderBy('timestamp', descending: true)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.active) {
+                                    if (snapshot.hasData) {
+                                      final querySnapshot = snapshot.data;
+                                      if (querySnapshot!.docs.isNotEmpty) {
+                                        final mostRecentDocument =
+                                            querySnapshot.docs.first;
+
+                                        foodtime = mostRecentDocument
+                                            .get('timestamp') as int;
+
+                                        foodTimeDifference = (DateTime.now()
+                                                    .millisecondsSinceEpoch -
+                                                foodtime) ~/
+                                            1000;
+
+                                        print('실시간 시간: $foodTimeDifference초');
+                                      } else {
+                                        print('컬렉션에 문서가 없습니다.');
+                                      }
+                                    }
+                                  }
+                                  int timeDifference = foodTimeDifference;
+                                  if (timeDifference > 0 &&
+                                      timeDifference < 60) {
+                                    return const Message(
+                                        message: '누군가가 방금 전에 사료를 줬어멍!');
+                                  } else if (timeDifference >= 60 &&
+                                      timeDifference < 60 * 60) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ 60}분 전에 사료를 줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 &&
+                                      timeDifference < 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 사료를 줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 사료를 줬어멍!');
+                                  } else {
+                                    return const Message(
+                                        message: '아직 사료를 안 줬어멍!');
+                                  }
+                                }),
                           ),
                         )
                       : Positioned(
@@ -972,7 +1136,60 @@ class _HomePageState extends State<HomePage> {
                           child: AnimatedOpacity(
                             opacity: 0.0,
                             duration: const Duration(milliseconds: 200),
-                            child: Message(message: message1),
+                            child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('house')
+                                    .doc(widget.currentCode)
+                                    .collection('food time')
+                                    .orderBy('timestamp', descending: true)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.active) {
+                                    if (snapshot.hasData) {
+                                      final querySnapshot = snapshot.data;
+                                      if (querySnapshot!.docs.isNotEmpty) {
+                                        final mostRecentDocument =
+                                            querySnapshot.docs.first;
+
+                                        foodtime = mostRecentDocument
+                                            .get('timestamp') as int;
+
+                                        foodTimeDifference = (DateTime.now()
+                                                    .millisecondsSinceEpoch -
+                                                foodtime) ~/
+                                            1000;
+
+                                        print('실시간 시간: $foodTimeDifference초');
+                                      } else {
+                                        print('컬렉션에 문서가 없습니다.');
+                                      }
+                                    }
+                                  }
+                                  int timeDifference = foodTimeDifference;
+                                  if (timeDifference > 0 &&
+                                      timeDifference < 60) {
+                                    return const Message(
+                                        message: '누군가가 방금 전에 사료를 줬어멍!');
+                                  } else if (timeDifference >= 60 &&
+                                      timeDifference < 60 * 60) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ 60}분 전에 사료를 줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 &&
+                                      timeDifference < 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 사료를 줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 사료를 줬어멍!');
+                                  } else {
+                                    return const Message(
+                                        message: '아직 사료를 안 줬어멍!');
+                                  }
+                                }),
                           ),
                         ),
                   isMessage2
@@ -981,7 +1198,60 @@ class _HomePageState extends State<HomePage> {
                           child: AnimatedOpacity(
                             opacity: 1.0,
                             duration: const Duration(milliseconds: 200),
-                            child: Message(message: message2),
+                            child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('house')
+                                    .doc(widget.currentCode)
+                                    .collection('snack time')
+                                    .orderBy('timestamp', descending: true)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.active) {
+                                    if (snapshot.hasData) {
+                                      final querySnapshot = snapshot.data;
+                                      if (querySnapshot!.docs.isNotEmpty) {
+                                        final mostRecentDocument =
+                                            querySnapshot.docs.first;
+
+                                        snacktime = mostRecentDocument
+                                            .get('timestamp') as int;
+
+                                        snackTimeDifference = (DateTime.now()
+                                                    .millisecondsSinceEpoch -
+                                                snacktime) ~/
+                                            1000;
+
+                                        print('실시간 시간: $snackTimeDifference초');
+                                      } else {
+                                        print('컬렉션에 문서가 없습니다.');
+                                      }
+                                    }
+                                  }
+                                  int timeDifference = snackTimeDifference;
+                                  if (timeDifference > 0 &&
+                                      timeDifference < 60) {
+                                    return const Message(
+                                        message: '누군가가 방금 전에 간식을 줬어멍!');
+                                  } else if (timeDifference >= 60 &&
+                                      timeDifference < 60 * 60) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ 60}분 전에 간식을 줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 &&
+                                      timeDifference < 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 간식을 줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 간식을 줬어멍!');
+                                  } else {
+                                    return const Message(
+                                        message: '아직 간식을 안 줬어멍!');
+                                  }
+                                }),
                           ),
                         )
                       : Positioned(
@@ -989,7 +1259,60 @@ class _HomePageState extends State<HomePage> {
                           child: AnimatedOpacity(
                             opacity: 0.0,
                             duration: const Duration(milliseconds: 200),
-                            child: Message(message: message2),
+                            child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('house')
+                                    .doc(widget.currentCode)
+                                    .collection('snack time')
+                                    .orderBy('timestamp', descending: true)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.active) {
+                                    if (snapshot.hasData) {
+                                      final querySnapshot = snapshot.data;
+                                      if (querySnapshot!.docs.isNotEmpty) {
+                                        final mostRecentDocument =
+                                            querySnapshot.docs.first;
+
+                                        snacktime = mostRecentDocument
+                                            .get('timestamp') as int;
+
+                                        snackTimeDifference = (DateTime.now()
+                                                    .millisecondsSinceEpoch -
+                                                snacktime) ~/
+                                            1000;
+
+                                        print('실시간 시간: $snackTimeDifference초');
+                                      } else {
+                                        print('컬렉션에 문서가 없습니다.');
+                                      }
+                                    }
+                                  }
+                                  int timeDifference = snackTimeDifference;
+                                  if (timeDifference > 0 &&
+                                      timeDifference < 60) {
+                                    return const Message(
+                                        message: '누군가가 방금 전에 간식을 줬어멍!');
+                                  } else if (timeDifference >= 60 &&
+                                      timeDifference < 60 * 60) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ 60}분 전에 간식을 줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 &&
+                                      timeDifference < 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 간식을 줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 간식을 줬어멍!');
+                                  } else {
+                                    return const Message(
+                                        message: '아직 간식을 안 줬어멍!');
+                                  }
+                                }),
                           ),
                         ),
                   isMessage3
@@ -998,7 +1321,60 @@ class _HomePageState extends State<HomePage> {
                           child: AnimatedOpacity(
                             opacity: 1.0,
                             duration: const Duration(milliseconds: 200),
-                            child: Message(message: message3),
+                            child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('house')
+                                    .doc(widget.currentCode)
+                                    .collection('shower time')
+                                    .orderBy('timestamp', descending: true)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.active) {
+                                    if (snapshot.hasData) {
+                                      final querySnapshot = snapshot.data;
+                                      if (querySnapshot!.docs.isNotEmpty) {
+                                        final mostRecentDocument =
+                                            querySnapshot.docs.first;
+
+                                        showertime = mostRecentDocument
+                                            .get('timestamp') as int;
+
+                                        showerTimeDifference = (DateTime.now()
+                                                    .millisecondsSinceEpoch -
+                                                showertime) ~/
+                                            1000;
+
+                                        print('실시간 시간: $showerTimeDifference초');
+                                      } else {
+                                        print('컬렉션에 문서가 없습니다.');
+                                      }
+                                    }
+                                  }
+                                  int timeDifference = showerTimeDifference;
+                                  if (timeDifference > 0 &&
+                                      timeDifference < 60) {
+                                    return const Message(
+                                        message: '누군가가 방금 전에 목욕을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 &&
+                                      timeDifference < 60 * 60) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ 60}분 전에 목욕을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 &&
+                                      timeDifference < 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 목욕을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 목욕을 시켜줬어멍!');
+                                  } else {
+                                    return const Message(
+                                        message: '아직 목욕을 안 시켜줬어멍!');
+                                  }
+                                }),
                           ),
                         )
                       : Positioned(
@@ -1006,7 +1382,60 @@ class _HomePageState extends State<HomePage> {
                           child: AnimatedOpacity(
                             opacity: 0.0,
                             duration: const Duration(milliseconds: 200),
-                            child: Message(message: message3),
+                            child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('house')
+                                    .doc(widget.currentCode)
+                                    .collection('shower time')
+                                    .orderBy('timestamp', descending: true)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.active) {
+                                    if (snapshot.hasData) {
+                                      final querySnapshot = snapshot.data;
+                                      if (querySnapshot!.docs.isNotEmpty) {
+                                        final mostRecentDocument =
+                                            querySnapshot.docs.first;
+
+                                        showertime = mostRecentDocument
+                                            .get('timestamp') as int;
+
+                                        showerTimeDifference = (DateTime.now()
+                                                    .millisecondsSinceEpoch -
+                                                showertime) ~/
+                                            1000;
+
+                                        print('실시간 시간: $showerTimeDifference초');
+                                      } else {
+                                        print('컬렉션에 문서가 없습니다.');
+                                      }
+                                    }
+                                  }
+                                  int timeDifference = showerTimeDifference;
+                                  if (timeDifference > 0 &&
+                                      timeDifference < 60) {
+                                    return const Message(
+                                        message: '누군가가 방금 전에 목욕을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 &&
+                                      timeDifference < 60 * 60) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ 60}분 전에 목욕을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 &&
+                                      timeDifference < 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 목욕을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 목욕을 시켜줬어멍!');
+                                  } else {
+                                    return const Message(
+                                        message: '아직 목욕을 안 시켜줬어멍!');
+                                  }
+                                }),
                           ),
                         ),
                   isMessage4
@@ -1015,7 +1444,60 @@ class _HomePageState extends State<HomePage> {
                           child: AnimatedOpacity(
                             opacity: 1.0,
                             duration: const Duration(milliseconds: 200),
-                            child: Message(message: message4),
+                            child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('house')
+                                    .doc(widget.currentCode)
+                                    .collection('walk time')
+                                    .orderBy('timestamp', descending: true)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.active) {
+                                    if (snapshot.hasData) {
+                                      final querySnapshot = snapshot.data;
+                                      if (querySnapshot!.docs.isNotEmpty) {
+                                        final mostRecentDocument =
+                                            querySnapshot.docs.first;
+
+                                        walktime = mostRecentDocument
+                                            .get('timestamp') as int;
+
+                                        walkTimeDifference = (DateTime.now()
+                                                    .millisecondsSinceEpoch -
+                                                walktime) ~/
+                                            1000;
+
+                                        print('실시간 시간: $walkTimeDifference초');
+                                      } else {
+                                        print('컬렉션에 문서가 없습니다.');
+                                      }
+                                    }
+                                  }
+                                  int timeDifference = walkTimeDifference;
+                                  if (timeDifference > 0 &&
+                                      timeDifference < 60) {
+                                    return const Message(
+                                        message: '누군가가 방금 전에 산책을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 &&
+                                      timeDifference < 60 * 60) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ 60}분 전에 산책을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 &&
+                                      timeDifference < 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 산책을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 산책을 시켜줬어멍!');
+                                  } else {
+                                    return const Message(
+                                        message: '아직 산책을 안 시켜줬어멍!');
+                                  }
+                                }),
                           ),
                         )
                       : Positioned(
@@ -1023,7 +1505,60 @@ class _HomePageState extends State<HomePage> {
                           child: AnimatedOpacity(
                             opacity: 0.0,
                             duration: const Duration(milliseconds: 200),
-                            child: Message(message: message4),
+                            child: StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('house')
+                                    .doc(widget.currentCode)
+                                    .collection('walk time')
+                                    .orderBy('timestamp', descending: true)
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.active) {
+                                    if (snapshot.hasData) {
+                                      final querySnapshot = snapshot.data;
+                                      if (querySnapshot!.docs.isNotEmpty) {
+                                        final mostRecentDocument =
+                                            querySnapshot.docs.first;
+
+                                        walktime = mostRecentDocument
+                                            .get('timestamp') as int;
+
+                                        walkTimeDifference = (DateTime.now()
+                                                    .millisecondsSinceEpoch -
+                                                walktime) ~/
+                                            1000;
+
+                                        print('실시간 시간: $walkTimeDifference초');
+                                      } else {
+                                        print('컬렉션에 문서가 없습니다.');
+                                      }
+                                    }
+                                  }
+                                  int timeDifference = walkTimeDifference;
+                                  if (timeDifference > 0 &&
+                                      timeDifference < 60) {
+                                    return const Message(
+                                        message: '누군가가 방금 전에 산책을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 &&
+                                      timeDifference < 60 * 60) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ 60}분 전에 산책을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 &&
+                                      timeDifference < 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60)}시간 전에 산책을 시켜줬어멍!');
+                                  } else if (timeDifference >= 60 * 60 * 24) {
+                                    return Message(
+                                        message:
+                                            '누군가가 ${timeDifference ~/ (60 * 60 * 24)}일 전에 산책을 시켜줬어멍!');
+                                  } else {
+                                    return const Message(
+                                        message: '아직 산책을 안 시켜줬어멍!');
+                                  }
+                                }),
                           ),
                         ),
                 ],

@@ -1,3 +1,4 @@
+import 'package:dangcheck/pages/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +10,10 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  int _index = 0;
+
+  final List<Widget> _pages = [const ChatPage(), const SettingPage()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -302,7 +307,16 @@ class _ChatPageState extends State<ChatPage> {
           color: Theme.of(context).colorScheme.primary,
           child: Expanded(
             child: BottomNavigationBar(
-              currentIndex: 0,
+              currentIndex: _index,
+              onTap: (int index) {
+                setState(() {
+                  _index = index;
+                });
+                Get.to(
+                  _pages[_index],
+                  transition: Transition.noTransition,
+                );
+              },
               elevation: 0,
               backgroundColor: Theme.of(context).primaryColor.withAlpha(0),
               selectedFontSize: 13,

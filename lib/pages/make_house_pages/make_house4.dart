@@ -45,7 +45,7 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
         .collection('house')
         .doc(widget.newCode)
         .update({
-      "식사 횟수": feed.toString(),
+      "식사 횟수": feed,
       "식사 메뉴 1": controllers[0].text,
     });
     if (controllers[1].text.isNotEmpty) {
@@ -79,7 +79,7 @@ class _MakeHousePage4 extends State<MakeHousePage4> {
         .collection('house')
         .doc(widget.newCode)
         .update({
-      "음식 개수": foodMenu,
+      "식사 개수": foodMenu,
     });
   }
 

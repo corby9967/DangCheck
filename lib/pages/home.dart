@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dangcheck/pages/make_house_pages/make_house_final.dart';
 import 'package:dangcheck/pages/setting_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -89,8 +90,13 @@ class _HomePageState extends State<HomePage> {
         currentCode: widget.currentCode,
       )
     ];
-    getInfo();
+
     super.initState();
+    const duration = Duration(seconds: 2);
+    Timer.periodic(duration, (Timer t) {
+      //_startListeningToFirestore();
+      getInfo();
+    });
   }
 
   /* DB Delete */
@@ -202,11 +208,86 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  /* 새로운 Stream 형식 getInfo */
+  // StreamSubscription<DocumentSnapshot>? _streamSubscription;
+
+  // @override
+  // void dispose() {
+  //   _streamSubscription?.cancel();
+  //   super.dispose();
+  // }
+
+  // void _startListeningToFirestore() {
+  //   final documentStream = FirebaseFirestore.instance
+  //       .collection('house')
+  //       .doc(widget.currentCode)
+  //       .snapshots();
+
+  //   final documentStream2 = FirebaseFirestore.instance
+  //       .collection('house')
+  //       .doc(widget.currentCode)
+  //       .collection('dog status')
+  //       .doc('status')
+  //       .snapshots();
+
+  //   final documentStream3 = FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(FirebaseAuth.instance.currentUser!.email.toString())
+  //       .snapshots();
+
+  //   _streamSubscription = documentStream.listen((documentSnapshot1) {
+  //     houseName = documentSnapshot1.get('하우스 이름');
+  //     noOfFood = documentSnapshot1.get('식사 개수');
+  //     noOfSnack = documentSnapshot1.get('간식 개수');
+  //     noOfShower = documentSnapshot1.get('목욕 횟수');
+  //     noOfWalk = documentSnapshot1.get('산책 횟수');
+  //     showerPeriod = documentSnapshot1.get('목욕 주기');
+  //     walkPeriod = documentSnapshot1.get('산책 주기');
+  //     totalFood = documentSnapshot1.get('식사 횟수');
+  //     totalSnack = documentSnapshot1.get('간식 횟수');
+
+  //     foodList.clear();
+  //     snackList.clear();
+
+  //     for (int i = 0; i < noOfFood; i++) {
+  //       foodList.add(documentSnapshot1.get('식사 메뉴 ${i + 1}'));
+  //     }
+  //     for (int i = 0; i < noOfSnack; i++) {
+  //       snackList.add(documentSnapshot1.get('간식 메뉴 ${i + 1}'));
+  //     }
+
+  //     setState(() {});
+  //   });
+
+  //   _streamSubscription = documentStream2.listen((documentSnapshot2) {
+  //     foodCheck = documentSnapshot2.get('food status');
+  //     snackCheck = documentSnapshot2.get('snack status');
+  //     showerCheck = documentSnapshot2.get('shower status');
+  //     walkCheck = documentSnapshot2.get('walk status');
+  //   });
+
+  //   _streamSubscription = documentStream3.listen((documentSnapshot3) {
+  //     nickName = documentSnapshot3.get('nickname');
+  //   });
+  // }
+
   /* DB Read */
   Future getInfo() async {
     DocumentSnapshot documentSnapshot1 = await FirebaseFirestore.instance
         .collection('house')
         .doc(widget.currentCode)
+        .get();
+
+    DocumentSnapshot documentSnapshot2 = await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.currentCode)
+        .collection('dog status')
+        .doc('status')
+        .get();
+
+    DocumentSnapshot documentSnapshot3 = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.email.toString())
         .get();
 
     houseName = documentSnapshot1.get('하우스 이름');
@@ -226,22 +307,10 @@ class _HomePageState extends State<HomePage> {
       snackList.add(documentSnapshot1.get('간식 메뉴 ${i + 1}'));
     }
 
-    DocumentSnapshot documentSnapshot2 = await FirebaseFirestore.instance
-        .collection('house')
-        .doc(widget.currentCode)
-        .collection('dog status')
-        .doc('status')
-        .get();
-
     foodCheck = documentSnapshot2.get('food status');
     snackCheck = documentSnapshot2.get('snack status');
     showerCheck = documentSnapshot2.get('shower status');
     walkCheck = documentSnapshot2.get('walk status');
-
-    DocumentSnapshot documentSnapshot3 = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.email.toString())
-        .get();
 
     nickName = documentSnapshot3.get('nickname');
 

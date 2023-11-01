@@ -95,6 +95,52 @@ class _HomePageState extends State<HomePage> {
     getInfo();
   }
 
+  /* DB Read */
+  Future getInfo() async {
+    DocumentSnapshot documentSnapshot1 = await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.currentCode)
+        .get();
+
+    DocumentSnapshot documentSnapshot2 = await FirebaseFirestore.instance
+        .collection('house')
+        .doc(widget.currentCode)
+        .collection('dog status')
+        .doc('status')
+        .get();
+
+    DocumentSnapshot documentSnapshot3 = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.email.toString())
+        .get();
+
+    houseName = documentSnapshot1.get('하우스 이름');
+    noOfFood = documentSnapshot1.get('식사 개수');
+    noOfSnack = documentSnapshot1.get('간식 개수');
+    noOfShower = documentSnapshot1.get('목욕 횟수');
+    noOfWalk = documentSnapshot1.get('산책 횟수');
+    showerPeriod = documentSnapshot1.get('목욕 주기');
+    walkPeriod = documentSnapshot1.get('산책 주기');
+    totalFood = documentSnapshot1.get('식사 횟수');
+    totalSnack = documentSnapshot1.get('간식 횟수');
+
+    for (int i = 0; i < noOfFood; i++) {
+      foodList.add(documentSnapshot1.get('식사 메뉴 ${i + 1}'));
+    }
+    for (int i = 0; i < noOfSnack; i++) {
+      snackList.add(documentSnapshot1.get('간식 메뉴 ${i + 1}'));
+    }
+
+    foodCheck = documentSnapshot2.get('food status');
+    snackCheck = documentSnapshot2.get('snack status');
+    showerCheck = documentSnapshot2.get('shower status');
+    walkCheck = documentSnapshot2.get('walk status');
+
+    nickName = documentSnapshot3.get('nickname');
+
+    setState(() {});
+  }
+
   /* DB Delete */
   Future removeInfo(int type) async {
     String updateName = '';
@@ -202,52 +248,6 @@ class _HomePageState extends State<HomePage> {
       'what': updateData,
       'who': nickName,
     });
-  }
-
-  /* DB Read */
-  Future getInfo() async {
-    DocumentSnapshot documentSnapshot1 = await FirebaseFirestore.instance
-        .collection('house')
-        .doc(widget.currentCode)
-        .get();
-
-    DocumentSnapshot documentSnapshot2 = await FirebaseFirestore.instance
-        .collection('house')
-        .doc(widget.currentCode)
-        .collection('dog status')
-        .doc('status')
-        .get();
-
-    DocumentSnapshot documentSnapshot3 = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.email.toString())
-        .get();
-
-    houseName = documentSnapshot1.get('하우스 이름');
-    noOfFood = documentSnapshot1.get('식사 개수');
-    noOfSnack = documentSnapshot1.get('간식 개수');
-    noOfShower = documentSnapshot1.get('목욕 횟수');
-    noOfWalk = documentSnapshot1.get('산책 횟수');
-    showerPeriod = documentSnapshot1.get('목욕 주기');
-    walkPeriod = documentSnapshot1.get('산책 주기');
-    totalFood = documentSnapshot1.get('식사 횟수');
-    totalSnack = documentSnapshot1.get('간식 횟수');
-
-    for (int i = 0; i < noOfFood; i++) {
-      foodList.add(documentSnapshot1.get('식사 메뉴 ${i + 1}'));
-    }
-    for (int i = 0; i < noOfSnack; i++) {
-      snackList.add(documentSnapshot1.get('간식 메뉴 ${i + 1}'));
-    }
-
-    foodCheck = documentSnapshot2.get('food status');
-    snackCheck = documentSnapshot2.get('snack status');
-    showerCheck = documentSnapshot2.get('shower status');
-    walkCheck = documentSnapshot2.get('walk status');
-
-    nickName = documentSnapshot3.get('nickname');
-
-    setState(() {});
   }
 
   /* BottomDrawer1 */
@@ -675,7 +675,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   /* AlertDialog */
-  Future<dynamic> myAlertDialog(BuildContext context) {
+  Future<dynamic> myAlertDialog(BuildContext context, int time,
+      String recentWhat, String recentWho, String type) {
+    String pastTime = '';
+
+    if (time >= 0 && time < 60) {
+      pastTime = '방금';
+    } else if (time > 60 && time < 60 * 60) {
+      pastTime = '${time ~/ 60}분';
+    } else if (time > 60 * 60 && time < 60 * 60 * 24) {
+      pastTime = '${time ~/ (60 * 60)}시간';
+    } else if (time > 60 * 60 * 24) {
+      pastTime = '${time ~/ (60 * 60 * 24)}일';
+    }
+
     return showDialog(
       context: context,
       builder: (context) {
@@ -689,15 +702,19 @@ class _HomePageState extends State<HomePage> {
             color: Theme.of(context).colorScheme.primary,
             size: 48,
           ),
-          contentPadding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-          content: const SizedBox(
+          contentPadding: const EdgeInsets.fromLTRB(5, 15, 5, 0),
+          content: SizedBox(
             height: 42,
             width: 305,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('1시간 전에 ‘멍멍이표 사료’를 주었습니다.'),
-                Text('그래도 다시 밥을 주시겠습니까?'),
+                (type == '밥' || type == '간식')
+                    ? Text('$pastTime 전에 ‘$recentWhat’를 주었습니다.')
+                    : Text('$pastTime 전에 $recentWho가 $recentWhat를 시켰습니다.'),
+                (type == '밥' || type == '간식')
+                    ? Text('그래도 다시 $type을 주시겠습니까?')
+                    : Text('그래도 다시 $type을 시키겠습니까?'),
               ],
             ),
           ),
@@ -735,7 +752,15 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Get.back();
+                      if (type == '밥') myBottomDrawer(context, type, noOfFood);
+                      if (type == '간식') {
+                        myBottomDrawer(context, type, noOfSnack);
+                      }
+                      if (type == '목욕') {
+                        myBottomDrawer(context, type, noOfShower);
+                      }
+                      if (type == '산책') myBottomDrawer(context, type, noOfWalk);
                     },
                     child: Text(
                       '다시 급여',
@@ -1672,9 +1697,16 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          foodCheck < 4
-                              ? myBottomDrawer(context, '밥', noOfFood)
-                              : myAlertDialog(context);
+                          if (foodCheck > 0) {
+                            if (foodTimeDifference > 60 * 60) {
+                              myBottomDrawer(context, '밥', noOfFood);
+                            } else {
+                              myAlertDialog(context, foodTimeDifference,
+                                  recentWhat1, recentWho1, '밥');
+                            }
+                          } else {
+                            myBottomDrawer(context, '밥', noOfFood);
+                          }
                         },
                         child: const Center(
                           child: Text(
@@ -1706,7 +1738,16 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          myBottomDrawer(context, '간식', noOfSnack);
+                          if (snackCheck > 0) {
+                            if (snackTimeDifference > 60 * 60) {
+                              myBottomDrawer(context, '간식', noOfSnack);
+                            } else {
+                              myAlertDialog(context, snackTimeDifference,
+                                  recentWhat2, recentWho2, '간식');
+                            }
+                          } else {
+                            myBottomDrawer(context, '간식', noOfSnack);
+                          }
                         },
                         child: const Center(
                           child: Text(
@@ -1738,7 +1779,16 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          myBottomDrawer2(context, '목욕');
+                          if (showerCheck > 0) {
+                            if (showerTimeDifference > 60 * 60) {
+                              myBottomDrawer2(context, '목욕');
+                            } else {
+                              myAlertDialog(context, showerTimeDifference, '목욕',
+                                  recentWho3, '목욕');
+                            }
+                          } else {
+                            myBottomDrawer2(context, '목욕');
+                          }
                         },
                         child: const Center(
                           child: Text(
@@ -1770,7 +1820,16 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          myBottomDrawer2(context, '산책');
+                          if (walkCheck > 0) {
+                            if (walkTimeDifference > 60 * 60) {
+                              myBottomDrawer2(context, '산책');
+                            } else {
+                              myAlertDialog(context, walkTimeDifference, '산책',
+                                  recentWho4, '산책');
+                            }
+                          } else {
+                            myBottomDrawer2(context, '산책');
+                          }
                         },
                         child: const Center(
                           child: Text(

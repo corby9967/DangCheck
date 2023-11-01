@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dangcheck/pages/auth.dart';
+import 'package:dangcheck/pages/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dangcheck/pages/house_join.dart';
 import 'package:dangcheck/pages/make_house_pages/make_house.dart';
@@ -83,7 +85,9 @@ class _HousePageState extends State<HousePage> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      FirebaseAuth.instance.signOut();
+                      FirebaseAuth.instance
+                          .signOut()
+                          .then((value) => Get.to(const AuthPage()));
                     },
                     icon: const Icon(Icons.logout),
                   )

@@ -77,6 +77,8 @@ flutter:
     - assets/images/walk_1.png
     - assets/images/dog.png
     - assets/images/dog_profile.png
+    - assets/images/dog2.png
+    - assets/images/dog2_profile.png
     - assets/images/dog_login.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

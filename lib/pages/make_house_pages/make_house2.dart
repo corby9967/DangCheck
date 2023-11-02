@@ -153,7 +153,7 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                 children: [
                   Container(
                     height: 3,
-                    width: 84,
+                    width: (MediaQuery.of(context).size.width - 34) / 8 * 2,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -161,7 +161,7 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                   ),
                   Container(
                     height: 3,
-                    width: 257,
+                    width: (MediaQuery.of(context).size.width - 34) / 8 * 6,
                     decoration: const BoxDecoration(
                       color: Colors.black12,
                       borderRadius: BorderRadius.only(

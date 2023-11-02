@@ -83,7 +83,7 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
               children: [
                 Container(
                   height: 3,
-                  width: 126 + 42 + 42 + 42 + 42 + 47,
+                  width: (MediaQuery.of(context).size.width - 34) / 8 * 8,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -91,7 +91,7 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
                 ),
                 Container(
                   height: 3,
-                  width: 215 - 42 - 42 - 42 - 42 - 47,
+                  width: (MediaQuery.of(context).size.width - 34) / 8 * 0,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(
@@ -110,10 +110,10 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
                 fontWeight: FontWeight.w300,
               ),
             ),
-            const SizedBox(height: 90),
+            const SizedBox(height: 100),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 59, vertical: 40),
-              width: 337,
+              width: (MediaQuery.of(context).size.width - 34),
               height: 250,
               decoration: const BoxDecoration(
                   color: Color(0xFFF2F4F6),
@@ -155,7 +155,7 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
                 ],
               ),
             ),
-            const SizedBox(height: 175),
+            const SizedBox(height: 165),
             SizedBox(
               height: 54,
               width: 356,

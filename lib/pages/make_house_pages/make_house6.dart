@@ -64,7 +64,7 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
               children: [
                 Container(
                   height: 3,
-                  width: 126 + 42 + 42 + 42,
+                  width: (MediaQuery.of(context).size.width - 34) / 8 * 6,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -72,7 +72,7 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
                 ),
                 Container(
                   height: 3,
-                  width: 215 - 42 - 42 - 42,
+                  width: (MediaQuery.of(context).size.width - 34) / 8 * 2,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(
@@ -98,7 +98,7 @@ class _MakeHousePage6 extends State<MakeHousePage6> {
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 11),
-              width: 337,
+              width: (MediaQuery.of(context).size.width - 34),
               height: 64,
               decoration: const BoxDecoration(
                   color: Color(0xFFF2F4F6),

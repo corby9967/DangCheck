@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage> {
   int noOfWalk = 0;
   int totalFood = 0;
   int totalSnack = 0;
+  int iconIndex = 0;
 
   List foodList = [];
   List snackList = [];
@@ -78,6 +79,10 @@ class _HomePageState extends State<HomePage> {
   String recentWhat2 = '';
 
   List<Widget> _pages = [];
+  List<AssetImage> images = [
+    const AssetImage('assets/images/dog.png'),
+    const AssetImage('assets/images/dog2.png'),
+  ];
 
   @override
   void initState() {
@@ -133,6 +138,7 @@ class _HomePageState extends State<HomePage> {
     walkPeriod = documentSnapshot1.get('산책 주기');
     totalFood = documentSnapshot1.get('식사 횟수');
     totalSnack = documentSnapshot1.get('간식 횟수');
+    iconIndex = documentSnapshot1.get('강아지 아이콘');
 
     for (int i = 0; i < noOfFood; i++) {
       foodList.add(documentSnapshot1.get('식사 메뉴 ${i + 1}'));
@@ -811,6 +817,7 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             const SizedBox(height: 20),
             Row(
@@ -1131,17 +1138,17 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const SizedBox(height: 25),
+            const SizedBox(height: 20),
             SizedBox(
               width: 300,
               height: 330,
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  const Image(
+                  Image(
                     width: 190,
                     height: 270,
-                    image: AssetImage('assets/images/dog.png'),
+                    image: images[iconIndex],
                   ),
                   isMessage1
                       ? Positioned(
@@ -1682,7 +1689,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 5),
             SizedBox(
               width: 240,
               height: 222,

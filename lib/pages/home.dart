@@ -608,6 +608,9 @@ class _HomePageState extends State<HomePage> {
                                           print(
                                               '실시간 시간: $showerTimeDifference초');
                                         } else {
+                                          type == '목욕'
+                                              ? showerTimeDifference = 0
+                                              : walkTimeDifference = 0;
                                           print('컬렉션에 문서가 없습니다.');
                                         }
                                       }
@@ -726,7 +729,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 (type == '밥' || type == '간식')
                     ? Text('$pastTime 전에 ‘$recentWhat’를 주었습니다.')
-                    : Text('$pastTime 전에 $recentWho가 $recentWhat를 시켰습니다.'),
+                    : Text('$pastTime 전에 $recentWho가 $recentWhat을 시켰습니다.'),
                 (type == '밥' || type == '간식')
                     ? Text('그래도 다시 $type을 주시겠습니까?')
                     : Text('그래도 다시 $type을 시키겠습니까?'),
@@ -773,12 +776,16 @@ class _HomePageState extends State<HomePage> {
                         myBottomDrawer(context, type, noOfSnack);
                       }
                       if (type == '목욕') {
-                        myBottomDrawer(context, type, noOfShower);
+                        myBottomDrawer2(context, type);
                       }
-                      if (type == '산책') myBottomDrawer(context, type, noOfWalk);
+                      if (type == '산책') myBottomDrawer2(context, type);
                     },
                     child: Text(
-                      '다시 급여',
+                      (type == '밥' || type == '간식')
+                          ? '다시 급여'
+                          : type == '목욕'
+                              ? '다시 목욕'
+                              : '다시 산책',
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.primary),
                     ),

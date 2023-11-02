@@ -274,19 +274,13 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                               : ButtonStyle(
                                   shape: MaterialStateProperty.all(
                                     const RoundedRectangleBorder(
-                                      side: BorderSide(color: Colors.black54),
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(20),
                                       ),
                                     ),
                                   ),
-                                  backgroundColor: MaterialStateProperty.all(boy
-                                      ? Theme.of(context)
-                                          .colorScheme
-                                          .onBackground
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .background),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color(0xffF2F4F6)),
                                 ),
                           onPressed: () {
                             setState(() {
@@ -306,7 +300,7 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                             style: TextStyle(
                               color: boy
                                   ? Theme.of(context).colorScheme.background
-                                  : Theme.of(context).colorScheme.onBackground,
+                                  : const Color(0xff7B7B7B),
                             ),
                           ),
                         ),
@@ -326,20 +320,13 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                               : ButtonStyle(
                                   shape: MaterialStateProperty.all(
                                     const RoundedRectangleBorder(
-                                      side: BorderSide(color: Colors.black54),
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(20),
                                       ),
                                     ),
                                   ),
                                   backgroundColor: MaterialStateProperty.all(
-                                      girl
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onBackground
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .background),
+                                      const Color(0xffF2F4F6)),
                                 ),
                           onPressed: () {
                             setState(() {
@@ -359,7 +346,7 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                             style: TextStyle(
                               color: girl
                                   ? Theme.of(context).colorScheme.background
-                                  : Theme.of(context).colorScheme.onBackground,
+                                  : const Color(0xff7B7B7B),
                             ),
                           ),
                         ),
@@ -395,20 +382,13 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                               : ButtonStyle(
                                   shape: MaterialStateProperty.all(
                                     const RoundedRectangleBorder(
-                                      side: BorderSide(color: Colors.black54),
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(20),
                                       ),
                                     ),
                                   ),
                                   backgroundColor: MaterialStateProperty.all(
-                                      small
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onBackground
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .background),
+                                      const Color(0xffF2F4F6)),
                                 ),
                           onPressed: () {
                             setState(() {
@@ -429,7 +409,7 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                             style: TextStyle(
                               color: small
                                   ? Theme.of(context).colorScheme.background
-                                  : Theme.of(context).colorScheme.onBackground,
+                                  : const Color(0xff7B7B7B),
                             ),
                           ),
                         ),
@@ -449,20 +429,13 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                               : ButtonStyle(
                                   shape: MaterialStateProperty.all(
                                     const RoundedRectangleBorder(
-                                      side: BorderSide(color: Colors.black54),
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(20),
                                       ),
                                     ),
                                   ),
                                   backgroundColor: MaterialStateProperty.all(
-                                      middle
-                                          ? Theme.of(context)
-                                              .colorScheme
-                                              .onBackground
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .background),
+                                      const Color(0xffF2F4F6)),
                                 ),
                           onPressed: () {
                             setState(() {
@@ -483,7 +456,7 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                             style: TextStyle(
                               color: middle
                                   ? Theme.of(context).colorScheme.background
-                                  : Theme.of(context).colorScheme.onBackground,
+                                  : const Color(0xff7B7B7B),
                             ),
                           ),
                         ),
@@ -503,19 +476,13 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                               : ButtonStyle(
                                   shape: MaterialStateProperty.all(
                                     const RoundedRectangleBorder(
-                                      side: BorderSide(color: Colors.black54),
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(20),
                                       ),
                                     ),
                                   ),
-                                  backgroundColor: MaterialStateProperty.all(big
-                                      ? Theme.of(context)
-                                          .colorScheme
-                                          .onBackground
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .background),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      const Color(0xffF2F4F6)),
                                 ),
                           onPressed: () {
                             setState(() {
@@ -536,7 +503,7 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
                             style: TextStyle(
                               color: big
                                   ? Theme.of(context).colorScheme.background
-                                  : Theme.of(context).colorScheme.onBackground,
+                                  : const Color(0xff7B7B7B),
                             ),
                           ),
                         ),

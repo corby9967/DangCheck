@@ -102,10 +102,12 @@ class _HomePageState extends State<HomePage> {
         .snapshots()
         .listen((DocumentSnapshot snapshot) {
       if (snapshot.exists) {
-        foodCheck = snapshot.get('food status');
-        snackCheck = snapshot.get('snack status');
-        showerCheck = snapshot.get('shower status');
-        walkCheck = snapshot.get('walk status');
+        setState(() {
+          foodCheck = snapshot.get('food status');
+          snackCheck = snapshot.get('snack status');
+          showerCheck = snapshot.get('shower status');
+          walkCheck = snapshot.get('walk status');
+        });
       }
     });
   }
@@ -116,13 +118,6 @@ class _HomePageState extends State<HomePage> {
         .collection('house')
         .doc(widget.currentCode)
         .get();
-
-    // DocumentSnapshot documentSnapshot2 = await FirebaseFirestore.instance
-    //     .collection('house')
-    //     .doc(widget.currentCode)
-    //     .collection('dog status')
-    //     .doc('status')
-    //     .get();
 
     DocumentSnapshot documentSnapshot3 = await FirebaseFirestore.instance
         .collection('users')
@@ -145,11 +140,6 @@ class _HomePageState extends State<HomePage> {
     for (int i = 0; i < noOfSnack; i++) {
       snackList.add(documentSnapshot1.get('간식 메뉴 ${i + 1}'));
     }
-
-    // foodCheck = documentSnapshot2.get('food status');
-    // snackCheck = documentSnapshot2.get('snack status');
-    // showerCheck = documentSnapshot2.get('shower status');
-    // walkCheck = documentSnapshot2.get('walk status');
 
     nickName = documentSnapshot3.get('nickname');
 
@@ -817,19 +807,6 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: const Color(0xFFFFFAF4),
         elevation: 0,
-        actions: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  listenForUpdates();
-                },
-                icon: const Icon(Icons.replay_rounded),
-              ),
-              const SizedBox(width: 10),
-            ],
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),

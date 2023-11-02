@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/pages/home.dart';
+import 'package:dangcheck/pages/invite.dart';
 import 'package:dangcheck/pages/setting_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   int _index = 0;
-
   List<Widget> _pages = [];
 
   @override
@@ -35,7 +35,11 @@ class _ChatPageState extends State<ChatPage> {
         automaticallyImplyLeading: false,
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(
+                InvitePage(newCode: widget.currentCode),
+              );
+            },
             child: const Text(
               '초대',
               style: TextStyle(
@@ -320,41 +324,39 @@ class _ChatPageState extends State<ChatPage> {
           elevation: 0,
           notchMargin: 15,
           color: Theme.of(context).colorScheme.primary,
-          child: Expanded(
-            child: BottomNavigationBar(
-              currentIndex: _index,
-              onTap: (int index) {
-                setState(() {
-                  _index = index;
-                });
-                Get.to(
-                  _pages[_index],
-                  transition: Transition.noTransition,
-                );
-              },
-              elevation: 0,
-              backgroundColor: Theme.of(context).primaryColor.withAlpha(0),
-              selectedFontSize: 13,
-              selectedItemColor: Colors.black54,
-              unselectedFontSize: 13,
-              unselectedItemColor: Colors.black54,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.person,
-                    size: 30,
-                  ),
-                  label: "멤버",
+          child: BottomNavigationBar(
+            currentIndex: _index,
+            onTap: (int index) {
+              setState(() {
+                _index = index;
+              });
+              Get.to(
+                _pages[_index],
+                transition: Transition.noTransition,
+              );
+            },
+            elevation: 0,
+            backgroundColor: Theme.of(context).primaryColor.withAlpha(0),
+            selectedFontSize: 13,
+            selectedItemColor: Colors.black54,
+            unselectedFontSize: 13,
+            unselectedItemColor: Colors.black54,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.person,
+                  size: 30,
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.settings,
-                    size: 30,
-                  ),
-                  label: "설정",
+                label: "멤버",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.settings,
+                  size: 30,
                 ),
-              ],
-            ),
+                label: "설정",
+              ),
+            ],
           ),
         ),
       ),

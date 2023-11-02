@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/pages/make_house_pages/make_house4.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,12 @@ class MakeHousePage3 extends StatefulWidget {
 class _MakeHousePage3 extends State<MakeHousePage3> {
   bool isButtonActive = true;
   int feed = 1;
+  int index = 100;
+
+  List<AssetImage> profiles = [
+    const AssetImage('assets/images/dog_profile.png'),
+    const AssetImage('assets/images/dog2_profile.png')
+  ];
 
   @override
   void initState() {
@@ -49,7 +56,7 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
               children: [
                 Container(
                   height: 3,
-                  width: (MediaQuery.of(context).size.width - 34) / 8 * 3,
+                  width: 126,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -57,7 +64,7 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
                 ),
                 Container(
                   height: 3,
-                  width: (MediaQuery.of(context).size.width - 34) / 8 * 5,
+                  width: 215,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(
@@ -85,7 +92,11 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      index--;
+                    });
+                  },
                   icon: const Icon(
                     Icons.arrow_back_ios_rounded,
                     color: Color(0xFF8B95A1),
@@ -101,15 +112,19 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
                     shape: BoxShape.circle,
                     border: Border.all(
                         color: Theme.of(context).colorScheme.primary),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/dog_profile.png'),
+                    image: DecorationImage(
+                      image: profiles[index % 2],
                       alignment: Alignment.bottomCenter,
                       scale: 1.94,
                     ),
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      index++;
+                    });
+                  },
                   icon: const Icon(
                     Icons.arrow_forward_ios_rounded,
                     color: Color(0xFF8B95A1),
@@ -139,6 +154,10 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
                 ),
                 onPressed: isButtonActive
                     ? () {
+                        // FirebaseFirestore.instance
+                        //     .collection('house')
+                        //     .doc(widget.newCode)
+                        //     .update({'강아지 아이콘': index % 2});
                         Get.to(
                           MakeHousePage4(
                             newCode: widget.newCode,

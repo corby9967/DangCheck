@@ -1,4 +1,5 @@
 import 'package:dangcheck/pages/auth.dart';
+import 'package:dangcheck/pages/make_house_pages/make_house_final.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:firebase_core/firebase_core.dart';

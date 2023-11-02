@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-class SignupPage2 extends StatefulWidget {
-  const SignupPage2({super.key});
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
 
   @override
-  State<SignupPage2> createState() => _SignupPageState();
+  State<SignupPage> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<SignupPage2> {
+class _SignupPageState extends State<SignupPage> {
   final emailController = TextEditingController();
   bool isButtonActive = false;
 
@@ -58,7 +58,7 @@ class _SignupPageState extends State<SignupPage2> {
                 children: [
                   Container(
                     height: 3,
-                    width: 69,
+                    width: (MediaQuery.of(context).size.width - 34) / 5 * 1,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -66,7 +66,7 @@ class _SignupPageState extends State<SignupPage2> {
                   ),
                   Container(
                     height: 3,
-                    width: 272,
+                    width: (MediaQuery.of(context).size.width - 34) / 5 * 4,
                     decoration: const BoxDecoration(
                       color: Colors.black12,
                       borderRadius: BorderRadius.only(
@@ -123,7 +123,7 @@ class _SignupPageState extends State<SignupPage2> {
                   onPressed: isButtonActive
                       ? () {
                           Get.to(
-                            SignupPage6(
+                            SignupPage2(
                               email: emailController.text,
                             ),
                             transition: Transition.rightToLeft,

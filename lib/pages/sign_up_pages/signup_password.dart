@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-class SignupPage6 extends StatefulWidget {
+class SignupPage2 extends StatefulWidget {
   final String email;
-  const SignupPage6({required this.email, super.key});
+  const SignupPage2({required this.email, super.key});
 
   @override
-  State<SignupPage6> createState() => _SignupPageState();
+  State<SignupPage2> createState() => _SignupPage2State();
 }
 
-class _SignupPageState extends State<SignupPage6> {
+class _SignupPage2State extends State<SignupPage2> {
   final passwordController = TextEditingController();
   final confirmPassWordController = TextEditingController();
   bool passWordInserted = false;
@@ -59,7 +59,7 @@ class _SignupPageState extends State<SignupPage6> {
             .then(
               (value) => {
                 Navigator.pop(context),
-                Get.to(const SignupPage(), transition: Transition.rightToLeft)
+                Get.to(const SignupPage3(), transition: Transition.rightToLeft)
               },
             );
       } else {
@@ -115,7 +115,7 @@ class _SignupPageState extends State<SignupPage6> {
                 children: [
                   Container(
                     height: 3,
-                    width: 137,
+                    width: (MediaQuery.of(context).size.width - 34) / 5 * 2,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -123,7 +123,7 @@ class _SignupPageState extends State<SignupPage6> {
                   ),
                   Container(
                     height: 3,
-                    width: 204,
+                    width: (MediaQuery.of(context).size.width - 34) / 5 * 3,
                     decoration: const BoxDecoration(
                       color: Colors.black12,
                       borderRadius: BorderRadius.only(

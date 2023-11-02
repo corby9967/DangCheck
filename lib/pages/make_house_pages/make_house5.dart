@@ -114,7 +114,7 @@ class _MakeHousePage5 extends State<MakeHousePage5> {
                 children: [
                   Container(
                     height: 3,
-                    width: 126 + 42 + 42,
+                    width: (MediaQuery.of(context).size.width - 34) / 8 * 5,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -122,7 +122,7 @@ class _MakeHousePage5 extends State<MakeHousePage5> {
                   ),
                   Container(
                     height: 3,
-                    width: 215 - 42 - 42,
+                    width: (MediaQuery.of(context).size.width - 34) / 8 * 3,
                     decoration: const BoxDecoration(
                       color: Colors.black12,
                       borderRadius: BorderRadius.only(
@@ -149,7 +149,7 @@ class _MakeHousePage5 extends State<MakeHousePage5> {
               Center(
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 11),
-                  width: 337,
+                  width: (MediaQuery.of(context).size.width - 34),
                   height: 64,
                   decoration: const BoxDecoration(
                       color: Color(0xFFF2F4F6),
@@ -186,7 +186,7 @@ class _MakeHousePage5 extends State<MakeHousePage5> {
                             width: 5,
                           ),
                           Text(
-                            '$feed끼',
+                            '$feed번',
                             style: const TextStyle(fontSize: 14),
                           ),
                           const SizedBox(
@@ -226,7 +226,7 @@ class _MakeHousePage5 extends State<MakeHousePage5> {
                   children: [
                     const SizedBox(height: 10),
                     const Text(
-                      '🍚 1번째 식사 메뉴',
+                      '🍚 1번째 간식 메뉴',
                       style: TextStyle(fontSize: 14),
                     ),
                     const SizedBox(height: 5),
@@ -237,7 +237,7 @@ class _MakeHousePage5 extends State<MakeHousePage5> {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      '🍚 2번째 식사 메뉴',
+                      '🍚 2번째 간식 메뉴',
                       style: TextStyle(fontSize: 14),
                     ),
                     const SizedBox(height: 5),
@@ -248,7 +248,7 @@ class _MakeHousePage5 extends State<MakeHousePage5> {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      '🍚 3번째 식사 메뉴',
+                      '🍚 3번째 간식 메뉴',
                       style: TextStyle(fontSize: 14),
                     ),
                     const SizedBox(height: 5),
@@ -259,7 +259,7 @@ class _MakeHousePage5 extends State<MakeHousePage5> {
                     ),
                     const SizedBox(height: 20),
                     const Text(
-                      '🍚 4번째 식사 메뉴',
+                      '🍚 4번째 간식 메뉴',
                       style: TextStyle(fontSize: 14),
                     ),
                     const SizedBox(height: 5),

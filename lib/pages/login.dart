@@ -208,7 +208,7 @@ class _LogInPageState extends State<LogInPage> {
                     ),
                   ),
                   onPressed: () {
-                    Get.to(const SignupPage2(),
+                    Get.to(const SignupPage(),
                         transition: Transition.rightToLeft);
                   },
                   child: const Text(

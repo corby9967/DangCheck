@@ -5,14 +5,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+class SignupPage3 extends StatefulWidget {
+  const SignupPage3({super.key});
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  State<SignupPage3> createState() => _SignupPage3State();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _SignupPage3State extends State<SignupPage3> {
   final nickNameController = TextEditingController();
   bool isButtonActive = false;
 
@@ -62,7 +62,7 @@ class _SignupPageState extends State<SignupPage> {
                 children: [
                   Container(
                     height: 3,
-                    width: 205,
+                    width: (MediaQuery.of(context).size.width - 34) / 5 * 3,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -70,7 +70,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   Container(
                     height: 3,
-                    width: 136,
+                    width: (MediaQuery.of(context).size.width - 34) / 5 * 2,
                     decoration: const BoxDecoration(
                       color: Colors.black12,
                       borderRadius: BorderRadius.only(

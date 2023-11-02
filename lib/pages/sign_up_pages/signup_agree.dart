@@ -61,7 +61,7 @@ class _SignupPageState extends State<SignupPage4> {
               children: [
                 Container(
                   height: 3,
-                  width: 273,
+                  width: (MediaQuery.of(context).size.width - 34) / 5 * 4,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -69,7 +69,7 @@ class _SignupPageState extends State<SignupPage4> {
                 ),
                 Container(
                   height: 3,
-                  width: 68,
+                  width: (MediaQuery.of(context).size.width - 34) / 5 * 1,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(

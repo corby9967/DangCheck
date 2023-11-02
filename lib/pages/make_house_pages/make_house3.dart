@@ -154,10 +154,10 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
                 ),
                 onPressed: isButtonActive
                     ? () {
-                        // FirebaseFirestore.instance
-                        //     .collection('house')
-                        //     .doc(widget.newCode)
-                        //     .update({'강아지 아이콘': index % 2});
+                        FirebaseFirestore.instance
+                            .collection('house')
+                            .doc(widget.newCode)
+                            .update({'강아지 아이콘': (index % 2)});
                         Get.to(
                           MakeHousePage4(
                             newCode: widget.newCode,

@@ -26,12 +26,17 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
+      body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
         child: Stack(
           children: [
-            const Image(image: AssetImage('assets/images/splash.png')),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: const Image(image: AssetImage('assets/images/splash.png')),
+            ),
             Positioned(
                 top: 50,
                 left: MediaQuery.of(context).size.width / 2 - 30,

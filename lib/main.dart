@@ -1,4 +1,3 @@
-import 'package:dangcheck/pages/auth.dart';
 import 'package:dangcheck/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';

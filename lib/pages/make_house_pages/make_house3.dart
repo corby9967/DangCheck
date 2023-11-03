@@ -56,7 +56,7 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
               children: [
                 Container(
                   height: 3,
-                  width: 126,
+                  width: (MediaQuery.of(context).size.width - 34) / 8 * 3,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -64,7 +64,7 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
                 ),
                 Container(
                   height: 3,
-                  width: 215,
+                  width: (MediaQuery.of(context).size.width - 34) / 8 * 5,
                   decoration: const BoxDecoration(
                     color: Colors.black12,
                     borderRadius: BorderRadius.only(
@@ -138,7 +138,7 @@ class _MakeHousePage3 extends State<MakeHousePage3> {
             ),
             SizedBox(
               height: 54,
-              width: 356,
+              width: MediaQuery.of(context).size.width,
               child: TextButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(isButtonActive

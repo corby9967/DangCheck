@@ -111,7 +111,7 @@ class _LogInPageState extends State<LogInPage> {
               ),
               SizedBox(
                 height: 54,
-                width: 356,
+                width: MediaQuery.of(context).size.width,
                 child: TextButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(
@@ -182,7 +182,6 @@ class _LogInPageState extends State<LogInPage> {
               const Text(
                 '계정이 없으신가요?',
                 style: TextStyle(
-                  decoration: TextDecoration.underline,
                   color: Colors.black54,
                   fontSize: 11,
                 ),
@@ -192,7 +191,7 @@ class _LogInPageState extends State<LogInPage> {
               ),
               SizedBox(
                 height: 54,
-                width: 356,
+                width: MediaQuery.of(context).size.width,
                 child: TextButton(
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

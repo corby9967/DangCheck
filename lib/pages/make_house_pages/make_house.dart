@@ -127,7 +127,7 @@ class _MakeHousePage extends State<MakeHousePage> {
               ),
               SizedBox(
                 height: 54,
-                width: 356,
+                width: MediaQuery.of(context).size.width,
                 child: TextButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(isButtonActive

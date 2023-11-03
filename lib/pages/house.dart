@@ -105,11 +105,11 @@ class _HousePageState extends State<HousePage> {
               height: 180,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  width: 160,
-                  height: 160,
+                  width: MediaQuery.of(context).size.height / 5,
+                  height: MediaQuery.of(context).size.height / 5,
                   decoration: ShapeDecoration(
                     color: isButtonSelected1
                         ? Theme.of(context).colorScheme.primary
@@ -141,11 +141,11 @@ class _HousePageState extends State<HousePage> {
                   ),
                 ),
                 const SizedBox(
-                  width: 18,
+                  width: 16,
                 ),
                 Container(
-                  width: 160,
-                  height: 160,
+                  width: MediaQuery.of(context).size.height / 5,
+                  height: MediaQuery.of(context).size.height / 5,
                   decoration: ShapeDecoration(
                     color: isButtonSelected2
                         ? Theme.of(context).colorScheme.primary
@@ -187,7 +187,7 @@ class _HousePageState extends State<HousePage> {
             Center(
               child: SizedBox(
                 height: 54,
-                width: 356,
+                width: MediaQuery.of(context).size.width,
                 child: TextButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(

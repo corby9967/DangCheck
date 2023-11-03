@@ -16,7 +16,7 @@ class MyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 54,
-      width: 356,
+      width: MediaQuery.of(context).size.width,
       child: TextField(
         controller: controller,
         obscureText: obscureText,

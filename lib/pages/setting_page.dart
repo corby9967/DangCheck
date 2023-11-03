@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dangcheck/pages/auth.dart';
 import 'package:dangcheck/pages/chat.dart';
 import 'package:dangcheck/pages/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -268,6 +270,69 @@ class _SettingPageState extends State<SettingPage> {
                     ],
                   ),
                 ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              FirebaseAuth.instance
+                  .signOut()
+                  .then((value) => Get.to(const AuthPage()));
+            },
+            child: Container(
+              width: 375,
+              height: 90,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  bottom: BorderSide(color: Colors.black12),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.logout,
+                          size: 30,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.7),
+                        ),
+                        const SizedBox(
+                          width: 25,
+                        ),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '로그 아웃',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text(
+                              '로그 아웃',
+                              style: TextStyle(
+                                color: Colors.black45,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -92,10 +92,34 @@ class _HomePageState extends State<HomePage> {
         currentCode: widget.currentCode,
       )
     ];
-
     super.initState();
+    resetInfo();
     getInfo();
     listenForUpdates();
+  }
+
+  resetInfo() {
+    TimeOfDay scheduledTime = const TimeOfDay(hour: 0, minute: 0);
+
+    DateTime now = DateTime.now();
+    DateTime scheduledDateTime = DateTime(
+        now.year, now.month, now.day, scheduledTime.hour, scheduledTime.minute);
+
+    if (now.isAfter(scheduledDateTime)) {
+      scheduledDateTime = scheduledDateTime.add(const Duration(days: 1));
+    }
+
+    Duration initialDelay = scheduledDateTime.difference(now);
+
+    Timer.periodic(const Duration(days: 1), (timer) {
+      foodCheck = 0;
+      snackCheck = 0;
+    });
+
+    Timer(Duration(milliseconds: initialDelay.inMilliseconds), () {
+      foodCheck = 0;
+      snackCheck = 0;
+    });
   }
 
   void listenForUpdates() {

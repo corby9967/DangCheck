@@ -122,6 +122,7 @@ class _JoinPageState extends State<JoinHousePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppBar(
+                centerTitle: true,
                 backgroundColor: Theme.of(context).colorScheme.background,
                 leading: IconButton(
                   onPressed: () {
@@ -152,6 +153,7 @@ class _JoinPageState extends State<JoinHousePage> {
               ),
               SizedBox(
                 height: 54,
+                width: MediaQuery.of(context).size.width - 34,
                 child: MyTextField(
                   controller: houseCodeController,
                   hintText: '하우스 코드',
@@ -174,34 +176,36 @@ class _JoinPageState extends State<JoinHousePage> {
               const SizedBox(
                 height: 447,
               ),
-              SizedBox(
-                height: 54,
-                width: 356,
-                child: TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(isButtonActive
-                        ? Theme.of(context).colorScheme.primary
-                        : Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.6)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15),
+              Center(
+                child: SizedBox(
+                  height: 54,
+                  width: 356,
+                  child: TextButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(isButtonActive
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.6)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  onPressed: isButtonActive
-                      ? () {
-                          codeVerification();
-                        }
-                      : null,
-                  child: Text(
-                    '입장하기',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.background,
+                    onPressed: isButtonActive
+                        ? () {
+                            codeVerification();
+                          }
+                        : null,
+                    child: Text(
+                      '입장하기',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.background,
+                      ),
                     ),
                   ),
                 ),

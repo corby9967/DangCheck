@@ -167,7 +167,7 @@ class _MakeHousePageFinal extends State<MakeHousePageFinal> {
             const SizedBox(height: 165),
             SizedBox(
               height: 54,
-              width: 356,
+              width: MediaQuery.of(context).size.width,
               child: TextButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(isButtonActive

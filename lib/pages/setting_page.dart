@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/pages/auth.dart';
 import 'package:dangcheck/pages/chat.dart';
 import 'package:dangcheck/pages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -275,9 +273,8 @@ class _SettingPageState extends State<SettingPage> {
           ),
           GestureDetector(
             onTap: () {
-              FirebaseAuth.instance
-                  .signOut()
-                  .then((value) => Get.to(const AuthPage()));
+              FirebaseAuth.instance.signOut().then((value) =>
+                  Get.to(const AuthPage(), transition: Transition.leftToRight));
             },
             child: Container(
               width: 375,
@@ -311,7 +308,7 @@ class _SettingPageState extends State<SettingPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '로그 아웃',
+                              '로그아웃',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -320,7 +317,7 @@ class _SettingPageState extends State<SettingPage> {
                             ),
                             SizedBox(height: 5),
                             Text(
-                              '로그 아웃',
+                              '로그아웃',
                               style: TextStyle(
                                 color: Colors.black45,
                                 fontSize: 13,

@@ -198,7 +198,7 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
               ),
               SizedBox(
                 height: 54,
-                width: 356,
+                width: MediaQuery.of(context).size.width,
                 child: TextField(
                   controller: dogBdayController,
                   decoration: const InputDecoration(
@@ -517,7 +517,7 @@ class _MakeHousePage2 extends State<MakeHousePage2> {
               ),
               SizedBox(
                 height: 54,
-                width: 356,
+                width: MediaQuery.of(context).size.width,
                 child: TextButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(isButtonActive

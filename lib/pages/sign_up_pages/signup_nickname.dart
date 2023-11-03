@@ -107,7 +107,7 @@ class _SignupPage3State extends State<SignupPage3> {
               ),
               SizedBox(
                 height: 54,
-                width: 356,
+                width: MediaQuery.of(context).size.width,
                 child: TextButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(isButtonActive

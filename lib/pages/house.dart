@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dangcheck/pages/auth.dart';
-import 'package:dangcheck/pages/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dangcheck/pages/house_join.dart';
 import 'package:dangcheck/pages/make_house_pages/make_house.dart';
@@ -76,6 +75,7 @@ class _HousePageState extends State<HousePage> {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const SizedBox(height: 16),
             SizedBox(
@@ -102,7 +102,7 @@ class _HousePageState extends State<HousePage> {
               ),
             ),
             const SizedBox(
-              height: 190,
+              height: 180,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -179,50 +179,58 @@ class _HousePageState extends State<HousePage> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 188,
+            const Stack(
+              children: [
+                SizedBox(height: 180),
+              ],
             ),
-            SizedBox(
-              height: 54,
-              width: 356,
-              child: TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(isButtonSelected1 ||
-                          isButtonSelected2
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.primary.withOpacity(0.6)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
+            Center(
+              child: SizedBox(
+                height: 54,
+                width: 356,
+                child: TextButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(
+                        isButtonSelected1 || isButtonSelected2
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.6)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                onPressed: () async {
-                  if (isButtonSelected1) {
-                    finalCode = await generateHouseCode();
-                    Get.to(
-                      MakeHousePage(newCode: finalCode),
-                      transition: Transition.noTransition,
-                    );
-                  } else if (isButtonSelected2) {
-                    Get.to(
-                      const JoinHousePage(),
-                      transition: Transition.noTransition,
-                    );
-                  } else {
-                    null;
-                  }
-                },
-                child: Text(
-                  '다음',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.background,
+                  onPressed: () async {
+                    if (isButtonSelected1) {
+                      finalCode = await generateHouseCode();
+                      Get.to(
+                        MakeHousePage(newCode: finalCode),
+                        transition: Transition.noTransition,
+                      );
+                    } else if (isButtonSelected2) {
+                      Get.to(
+                        const JoinHousePage(),
+                        transition: Transition.noTransition,
+                      );
+                    } else {
+                      null;
+                    }
+                  },
+                  child: Text(
+                    '다음',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.background,
+                    ),
                   ),
                 ),
               ),
             ),
+            SizedBox(height: MediaQuery.of(context).size.width / 16 + 12),
           ],
         ),
       ),

@@ -59,6 +59,7 @@ class _MakeHousePage extends State<MakeHousePage> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               AppBar(
                 backgroundColor: Theme.of(context).colorScheme.background,

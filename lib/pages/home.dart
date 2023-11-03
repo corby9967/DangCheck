@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
   int noOfWalk = 0;
   int totalFood = 0;
   int totalSnack = 0;
-  int iconIndex = 0;
+  int iconIndex = 2;
 
   List foodList = [];
   List snackList = [];
@@ -82,6 +82,7 @@ class _HomePageState extends State<HomePage> {
   List<AssetImage> images = [
     const AssetImage('assets/images/dog.png'),
     const AssetImage('assets/images/dog2.png'),
+    const AssetImage('assets/images/dog_bg.png'),
   ];
 
   @override

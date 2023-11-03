@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     Timer(
-      const Duration(seconds: 3),
+      const Duration(milliseconds: 4500),
       () => Get.to(const AuthPage(), transition: Transition.zoom),
     );
 
@@ -38,8 +38,8 @@ class _SplashPageState extends State<SplashPage> {
                 child: const SpinKitThreeInOut(
                   size: 30,
                   color: Colors.white,
-                  delay: Duration(milliseconds: 20),
-                  duration: Duration(milliseconds: 400),
+                  delay: Duration(milliseconds: 0),
+                  duration: Duration(milliseconds: 250),
                 )),
           ],
         ),

@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     Timer(
-      const Duration(milliseconds: 4500),
+      const Duration(milliseconds: 3700),
       () => Get.to(const AuthPage(), transition: Transition.zoom),
     );
 

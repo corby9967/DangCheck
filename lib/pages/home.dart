@@ -309,7 +309,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   SizedBox(
                     height: 60,
-                    width: 375,
+                    width: MediaQuery.of(context).size.width,
                     child: Center(
                       child: Stack(
                         alignment: Alignment.center,
@@ -439,7 +439,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                 ),
-                                width: 337,
+                                width: MediaQuery.of(context).size.width,
                                 height: 54,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -506,7 +506,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   SizedBox(
                     height: 60,
-                    width: 375,
+                    width: MediaQuery.of(context).size.width,
                     child: Center(
                       child: Stack(
                         alignment: Alignment.center,
@@ -558,7 +558,7 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(height: 7),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 19),
-                          width: 337,
+                          width: MediaQuery.of(context).size.width,
                           height: 54,
                           decoration: ShapeDecoration(
                             color: Colors.white,
@@ -672,7 +672,7 @@ class _HomePageState extends State<HomePage> {
                             });
                           },
                           child: Container(
-                            width: 337,
+                            width: MediaQuery.of(context).size.width,
                             height: 54,
                             decoration: ShapeDecoration(
                               color: isTapped

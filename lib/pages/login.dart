@@ -148,15 +148,16 @@ class _LogInPageState extends State<LogInPage> {
               SizedBox(
                 height: 15,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      width: 278,
+                      width: 200,
+                      height: 20,
                       child: Text(
                         errorMsg,
                         style: const TextStyle(
                             color: Colors.red,
-                            fontSize: 13,
+                            fontSize: 12,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
